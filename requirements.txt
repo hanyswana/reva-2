@@ -3,4 +3,7 @@ numpy
 pandas
 pydeck
 streamlit
+scikit-learn
+flask
 matplotlib
+tensorflow
