@@ -148,11 +148,11 @@ def main():
 
                 # Example conditional block for selecting the correct dataset based on the model's intended use:
         if label == 'Normalized Manhattan (R38)':
-            input_data = absorbance_normalized_manh_df
+            input_data = absorbance_normalized_manh_data
         elif label == 'Normalized Manhattan (R40)':
-            input_data = absorbance_normalized_manh_df
+            input_data = absorbance_normalized_manh_data
         elif label == 'SNV (R49)':
-            input_data = absorbance_snv_df
+            input_data = absorbance_snv_data
         else:
             continue  # Skip if label does not match expected values
 
