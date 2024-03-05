@@ -113,7 +113,7 @@ def json_data():
     # First row of absorbance data
     absorbance_data = absorbance_df.iloc[0]  
  
-    return absorbance_df, absorbance_normalized_euc_df, absorbance_normalized_manh_df, absorbance_baseline_removed_df, absorbance_snv_df, wavelengths
+    return absorbance_df, absorbance_normalized_euc_df, absorbance_normalized_manh_df, absorbance_snv_df, wavelengths
     # return absorbance_df, wavelengths
 
 def load_model(model_dir):
@@ -131,37 +131,53 @@ def predict_with_model(model, input_data):
 def main():
     # Define model paths with labels
     model_paths_with_labels = [
-        ('R39', 'reva-lablink-hb-125-(original-data).csv_r2_0.39_2024-02-15_11-55-27')
+        ('R39', 'reva-lablink-hb-125-(original-data).csv_r2_0.39_2024-02-15_11-55-27'),
+        ('Normalized Manhattan (R38)', 'lablink-hb-norm-manh.csv_best_model_2024-02-23_00-52-51_r38'),
+        ('Normalized Manhattan (R40)', 'lablink-hb-norm-manh.csv_best_model_2024-02-22_02-09-42_r40'),
+        ('SNV (R49)', 'snv_transformed-1.csv_best_model_2024-02-29_22-15-55')
     ]
 
     # Get data from server (simulated here)
-    absorbance_data, absorbance_normalized_euc_data, absorbance_normalized_manh_data, absorbance_baseline_removed_data, absorbance_snv_data, wavelengths = json_data()
+    absorbance_data, absorbance_normalized_euc_data, absorbance_normalized_manh_data, absorbance_snv_data, wavelengths = json_data()
     # absorbance_data, wavelengths = json_data()
 
     for label, model_path in model_paths_with_labels:
         # Load the model
         model = load_model(model_path)
         # st.write(model)
+
+                # Example conditional block for selecting the correct dataset based on the model's intended use:
+        if label == 'predictions_normalized_euc':
+            input_data = absorbance_normalized_euc_df
+        elif label == 'predictions_normalized_manh':
+            input_data = absorbance_normalized_manh_df
+        elif label == 'predictions_snv':
+            input_data = absorbance_snv_df
+        else:
+            continue  # Skip if label does not match expected values
+
+        predictions = predict_with_model(model, input_data)
+        predictions_value = predictions[0][0] 
         
-        # Predict with original absorbance data
-        predictions_original = predict_with_model(model, absorbance_data)
-        predictions_value_original = predictions_original[0][0]
+        # # Predict with original absorbance data
+        # predictions_original = predict_with_model(model, absorbance_data)
+        # predictions_value_original = predictions_original[0][0]
         
-        # Predict with Euclidean normalized absorbance data
-        predictions_normalized_euc = predict_with_model(model, absorbance_normalized_euc_data)
-        predictions_value_normalized_euc = predictions_normalized_euc[0][0]
+        # # Predict with Euclidean normalized absorbance data
+        # predictions_normalized_euc = predict_with_model(model, absorbance_normalized_euc_data)
+        # predictions_value_normalized_euc = predictions_normalized_euc[0][0]
 
-        # Predict with Manhattan normalized absorbance data
-        predictions_normalized_manh = predict_with_model(model, absorbance_normalized_manh_data)
-        predictions_value_normalized_manh = predictions_normalized_manh[0][0]
+        # # Predict with Manhattan normalized absorbance data
+        # predictions_normalized_manh = predict_with_model(model, absorbance_normalized_manh_data)
+        # predictions_value_normalized_manh = predictions_normalized_manh[0][0]
 
-        # # Predict with baseline removed absorbance data
-        # predictions_baseline_removed = predict_with_model(model, absorbance_baseline_removed_data)
-        # predictions_value_baseline_removed = predictions_baseline_removed[0][0]
+        # # # Predict with baseline removed absorbance data
+        # # predictions_baseline_removed = predict_with_model(model, absorbance_baseline_removed_data)
+        # # predictions_value_baseline_removed = predictions_baseline_removed[0][0]
 
-        # Predict with SNV transformed absorbance data
-        predictions_snv = predict_with_model(model, absorbance_snv_data)
-        predictions_value_snv = predictions_snv[0][0]
+        # # Predict with SNV transformed absorbance data
+        # predictions_snv = predict_with_model(model, absorbance_snv_data)
+        # predictions_value_snv = predictions_snv[0][0]
 
     
         st.markdown("""
@@ -170,20 +186,29 @@ def main():
         .value {font-size: 40px; font-weight: bold; color: blue;}
         .high-value {color: red;}
         </style> """, unsafe_allow_html=True)
-    
-        # Add condition for prediction value
-        if predictions_value_original > 25:
-            display_value = f'<span class="high-value">High value : ({predictions_value_original:.1f} g/dL)</span>'
-            display_value2 = f'<span class="high-value">High value : ({predictions_value_normalized_euc:.1f} g/dL)</span>'
-            display_value3 = f'<span class="high-value">High value : ({predictions_value_normalized_manh:.1f} g/dL)</span>'
-            # display_value4 = f'<span class="high-value">High value : ({predictions_value_baseline_removed:.1f} g/dL)</span>'
-            display_value5 = f'<span class="high-value">High value : ({predictions_value_snv:.1f} g/dL)</span>'
+
+                # Add condition for prediction value
+        if predictions_value > 25:
+            display_value = f'<span class="high-value">High value : ({predictions_value:.1f} g/dL)</span>'
         else:
-            display_value = f'<span class="value">{predictions_value_original:.1f} g/dL</span>'
-            display_value2 = f'<span class="value">{predictions_value_normalized_euc:.1f} g/dL</span>'
-            display_value3 = f'<span class="value">{predictions_value_normalized_manh:.1f} g/dL</span>'
-            # display_value4 = f'<span class="value">{predictions_value_baseline_removed:.1f} g/dL</span>'
-            display_value5 = f'<span class="value">{predictions_value_snv:.1f} g/dL</span>'
+            display_value = f'<span class="value">{predictions_value:.1f} g/dL</span>'
+        
+        # Display label and prediction value
+        st.markdown(f'<span class="label">Haemoglobin ({label}):</span><br>{display_value}</p>', unsafe_allow_html=True)
+    
+        # # Add condition for prediction value
+        # if predictions_value_original > 25:
+        #     display_value = f'<span class="high-value">High value : ({predictions_value_original:.1f} g/dL)</span>'
+        #     display_value2 = f'<span class="high-value">High value : ({predictions_value_normalized_euc:.1f} g/dL)</span>'
+        #     display_value3 = f'<span class="high-value">High value : ({predictions_value_normalized_manh:.1f} g/dL)</span>'
+        #     # display_value4 = f'<span class="high-value">High value : ({predictions_value_baseline_removed:.1f} g/dL)</span>'
+        #     display_value5 = f'<span class="high-value">High value : ({predictions_value_snv:.1f} g/dL)</span>'
+        # else:
+        #     display_value = f'<span class="value">{predictions_value_original:.1f} g/dL</span>'
+        #     display_value2 = f'<span class="value">{predictions_value_normalized_euc:.1f} g/dL</span>'
+        #     display_value3 = f'<span class="value">{predictions_value_normalized_manh:.1f} g/dL</span>'
+        #     # display_value4 = f'<span class="value">{predictions_value_baseline_removed:.1f} g/dL</span>'
+        #     display_value5 = f'<span class="value">{predictions_value_snv:.1f} g/dL</span>'
         
         # Display label and prediction value
         st.markdown(f'<span class="label">Haemoglobin :</span><br>{display_value}</p>', unsafe_allow_html=True)
