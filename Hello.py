@@ -77,15 +77,15 @@ def json_data():
     st.write('Original absorbance')
     st.write(absorbance_df)
 
-    # Normalize the absorbance data using Euclidean normalization
-    normalizer = Normalizer(norm='l2')  # Euclidean normalization
-    absorbance_normalized_euc = normalizer.transform(absorbance_df)
-    absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
-    st.write('Euclidean absorbance')
-    st.write(absorbance_normalized_euc_df)
+    # # Normalize the absorbance data using Euclidean normalization
+    # normalizer = Normalizer(norm='l2')  # Euclidean normalization
+    # absorbance_normalized_euc = normalizer.transform(absorbance_df)
+    # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
+    # st.write('Euclidean absorbance')
+    # st.write(absorbance_normalized_euc_df)
 
-    # Convert normalized DataFrame to CSV (optional step, depending on your needs)
-    absorbance_normalized_euc_df.to_csv('absorbance_data_normalized_euc.csv', index=False)
+    # # Convert normalized DataFrame to CSV (optional step, depending on your needs)
+    # absorbance_normalized_euc_df.to_csv('absorbance_data_normalized_euc.csv', index=False)
 
     # Normalize the absorbance data using Manhattan normalization
     normalizer = Normalizer(norm='l1')  # Manhattan normalization
@@ -113,7 +113,7 @@ def json_data():
     # First row of absorbance data
     absorbance_data = absorbance_df.iloc[0]  
  
-    return absorbance_df, absorbance_normalized_euc_df, absorbance_normalized_manh_df, absorbance_snv_df, wavelengths
+    return absorbance_df, absorbance_normalized_manh_df, absorbance_snv_df, wavelengths
     # return absorbance_df, wavelengths
 
 def load_model(model_dir):
@@ -147,11 +147,11 @@ def main():
         # st.write(model)
 
                 # Example conditional block for selecting the correct dataset based on the model's intended use:
-        if label == 'predictions_normalized_euc':
-            input_data = absorbance_normalized_euc_df
-        elif label == 'predictions_normalized_manh':
+        if label == 'Normalized Manhattan (R38)':
             input_data = absorbance_normalized_manh_df
-        elif label == 'predictions_snv':
+        elif label == 'Normalized Manhattan (R40)':
+            input_data = absorbance_normalized_manh_df
+        elif label == 'SNV (R49)':
             input_data = absorbance_snv_df
         else:
             continue  # Skip if label does not match expected values
