@@ -147,7 +147,9 @@ def main():
         # st.write(model)
 
                 # Example conditional block for selecting the correct dataset based on the model's intended use:
-        if label == 'Normalized Manhattan (R38)':
+        if label == 'R39':
+            input_data = absorbance_data
+        elif label == 'Normalized Manhattan (R38)':
             input_data = absorbance_normalized_manh_data
         elif label == 'Normalized Manhattan (R40)':
             input_data = absorbance_normalized_manh_data
@@ -210,12 +212,12 @@ def main():
         #     # display_value4 = f'<span class="value">{predictions_value_baseline_removed:.1f} g/dL</span>'
         #     display_value5 = f'<span class="value">{predictions_value_snv:.1f} g/dL</span>'
         
-        # Display label and prediction value
-        st.markdown(f'<span class="label">Haemoglobin :</span><br>{display_value}</p>', unsafe_allow_html=True)
-        st.markdown(f'<span class="label">Haemoglobin ({label}) Normalized Euclidean:</span><br>{display_value2}</p>', unsafe_allow_html=True)
-        st.markdown(f'<span class="label">Haemoglobin ({label}) Normalized Manhattan:</span><br>{display_value3}</p>', unsafe_allow_html=True)
-        # st.markdown(f'<span class="label">Haemoglobin ({label}) Baseline removal:</span><br>{display_value4}</p>', unsafe_allow_html=True)
-        st.markdown(f'<span class="label">Haemoglobin ({label}) SNV:</span><br>{display_value5}</p>', unsafe_allow_html=True)
+        # # Display label and prediction value
+        # st.markdown(f'<span class="label">Haemoglobin :</span><br>{display_value}</p>', unsafe_allow_html=True)
+        # st.markdown(f'<span class="label">Haemoglobin ({label}) Normalized Euclidean:</span><br>{display_value2}</p>', unsafe_allow_html=True)
+        # st.markdown(f'<span class="label">Haemoglobin ({label}) Normalized Manhattan:</span><br>{display_value3}</p>', unsafe_allow_html=True)
+        # # st.markdown(f'<span class="label">Haemoglobin ({label}) Baseline removal:</span><br>{display_value4}</p>', unsafe_allow_html=True)
+        # st.markdown(f'<span class="label">Haemoglobin ({label}) SNV:</span><br>{display_value5}</p>', unsafe_allow_html=True)
 
 
     # Plotting
