@@ -16,22 +16,19 @@ import numpy as np
 
 # st.markdown('<p class="custom-font">Absorbance data :</p>', unsafe_allow_html=True)
 
-def csv_data(uploaded_file):
-    if uploaded_file is not None:
-        # Assuming the uploaded file is a CSV, read it into a DataFrame
-        df = pd.read_csv(uploaded_file, usecols=range(3, 12))  # Columns D to M have indexes 3 to 11
+def csv_data():
+    # Directly load the specified CSV file
+    file_path = 'snv_baseline_removed_pls_top_10.csv'  # Adjust the path if the file is in a specific folder
+    df = pd.read_csv(file_path, usecols=range(3, 12))  # Columns D to M have indexes 3 to 11
 
-        # Convert to numeric, handling errors by coercing invalid values to NaN
-        df = df.apply(pd.to_numeric, errors='coerce')
+    # Convert to numeric, handling errors by coercing invalid values to NaN
+    df = df.apply(pd.to_numeric, errors='coerce')
 
-        # You might want to process or manipulate the dataframe here as per your requirements
-        wavelengths = df.columns
+    # Extracting wavelengths or column names if needed
+    wavelengths = df.columns
 
-        return df, wavelengths
-    else:
-        st.write("No file uploaded.")
-        return None, None
-        
+    return df, wavelengths
+
 
 def load_model(model_dir):
     if model_dir.endswith('.tflite'):  # Check if model is a TensorFlow Lite model
@@ -64,12 +61,9 @@ def predict_with_model(model, input_data):
         return predictions.numpy()  # Convert predictions to numpy array if needed
 
 def main():
-
-    # Simulate CSV upload through Streamlit file_uploader
-    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     
-    # Get data from uploaded CSV
-    absorbance_data, wavelengths = csv_data(uploaded_file)
+    # Get data directly from the CSV file
+    absorbance_data, wavelengths = csv_data()
     
     # Define model paths with labels
     model_paths_with_labels = [
