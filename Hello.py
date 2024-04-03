@@ -111,7 +111,7 @@ def main():
     
         # # Add condition for prediction value
         # if predictions_value > 25:
-        #     display_value = f'<span class="high-value">High value : ({predictions_value:.1f} g/dL)</span>'
+        #     display_value = f'<span class="high-value">High value : ({predictions_value:.2f} g/dL)</span>'
         # else:
         #     display_value = f'<span class="value">{predictions_value:.1f} g/dL</span>'
         
