@@ -80,7 +80,7 @@ def main():
         model = load_model(model_path)
         # st.write(model)
         
-                # Now process each row in df
+        # Now process each row in df
         for index, row in df.iterrows():
             predictions = predict_with_model(model, row)  # Assuming predict_with_model can handle a single row of DataFrame
             predictions_value = predictions[0][0]  # Assuming each prediction returns a single value
