@@ -62,18 +62,12 @@ def predict_with_model(model, input_data):
         return predictions.numpy()  # Convert predictions to numpy array if needed
     
 def main():
-    # # Define model paths with labels
-    # model_paths_with_labels = [
-    #     ('Ori (R39)', 'reva-lablink-hb-125-(original-data).csv_r2_0.39_2024-02-15_11-55-27'),
-    #     ('TFLite1', 'tflite_model.tflite'),
-    #     ('TFLite2', 'tflite_model4.tflite')
-    # ]
-
         # Define model paths with labels
     model_paths_with_labels = [
         ('SNV + br (R49)', 'snv_baseline_removed_pls_top_10_float32.parquet_best_model_2024-03-31_13-29-57'),
         ('TFLite', 'tflite_model_snv_br_10.tflite'),
-        ('TFLite Q', 'tflite_model_snv_br_10_quant.tflite')
+        ('TFLite Q', 'tflite_model_snv_br_10_quant.tflite'),
+        ('TFLite Q-weight', 'tflite_model_snv_br_10_quant_weight.tflite')
     ]
     
     
@@ -111,7 +105,7 @@ def main():
     
         # # Add condition for prediction value
         # if predictions_value > 25:
-        #     display_value = f'<span class="high-value">High value : ({predictions_value:.2f} g/dL)</span>'
+        #     display_value = f'<span class="high-value">High value : ({predictions_value:.1f} g/dL)</span>'
         # else:
         #     display_value = f'<span class="value">{predictions_value:.1f} g/dL</span>'
         
