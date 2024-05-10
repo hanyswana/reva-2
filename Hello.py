@@ -121,8 +121,6 @@ def json_data():
         processed_versions = (absorbance_df, absorbance_snv_df, absorbance_baseline_removed_df, absorbance_snv_baseline_removed_df,
                               absorbance_normalized_euc_df, absorbance_snv_normalized_euc_df, absorbance_snv_baseline_removed_normalized_euc_df,
                               absorbance_normalized_manh_df, absorbance_snv_normalized_manh_df, absorbance_snv_baseline_removed_normalized_manh_df)
-
-        # processed_versions = (absorbance_snv_baseline_removed_df)
         
         all_processed_dfs.append(processed_versions)
 
@@ -167,23 +165,19 @@ def predict_with_model(model, input_data):
 def main():
 
     model_paths_with_labels = [
-        ('SNV + BR (R47)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%')
+        ('TF (SNV + BR 24-04-01)', 'snv_baseline_removed_pls_top_10_float32.parquet_best_model_2024-03-31_13-29-57'),
+        ('TFL', 'tflite_model_snv_br_10.tflite'),
+        ('TFL Q', 'tflite_model_snv_br_10_quant.tflite'),
+        ('TF (SNV + BR 24-04-03)', 'snv_baseline_removed_pls_top_10_float32.parquet_best_model_2024-04-03_04-18-56'),
+        ('TFL', 'tflite_model_snv_br_10_2024-04-03_04-18-56.tflite'),
+        ('TFL Q', 'tflite_model_snv_br_10_quant_2024-04-03_04-18-56.tflite'),
+        ('TF (SNV + euc 24-04-03)', 'snv_normalized_euclidean_pls_top_10_float32.parquet_best_model_2024-03-30_02-03-57'),
+        ('TFL', 'tflite_model_snv_euc_10_2024-03-30_02-03-57.tflite'),
+        ('TFL Q', 'tflite_model_snv_euc_10_quant_2024-03-30_02-03-57.tflite'),
+        ('TF (SNV + manh 24-04-03)', 'snv_normalized_manhattan_pls_top_10_float32.parquet_best_model_2024-04-01_08-57-51'),
+        ('TFL', 'tflite_model_snv_manh_10_2024-04-01_08-57-51.tflite'),
+        ('TFL Q', 'tflite_model_snv_manh_10_quant_2024-04-01_08-57-51.tflite')
     ]
-
-    # model_paths_with_labels = [
-    #     ('TF (SNV + BR 24-04-01)', 'snv_baseline_removed_pls_top_10_float32.parquet_best_model_2024-03-31_13-29-57'),
-    #     ('TFL', 'tflite_model_snv_br_10.tflite'),
-    #     ('TFL Q', 'tflite_model_snv_br_10_quant.tflite'),
-    #     ('TF (SNV + BR 24-04-03)', 'snv_baseline_removed_pls_top_10_float32.parquet_best_model_2024-04-03_04-18-56'),
-    #     ('TFL', 'tflite_model_snv_br_10_2024-04-03_04-18-56.tflite'),
-    #     ('TFL Q', 'tflite_model_snv_br_10_quant_2024-04-03_04-18-56.tflite'),
-    #     ('TF (SNV + euc 24-04-03)', 'snv_normalized_euclidean_pls_top_10_float32.parquet_best_model_2024-03-30_02-03-57'),
-    #     ('TFL', 'tflite_model_snv_euc_10_2024-03-30_02-03-57.tflite'),
-    #     ('TFL Q', 'tflite_model_snv_euc_10_quant_2024-03-30_02-03-57.tflite'),
-    #     ('TF (SNV + manh 24-04-03)', 'snv_normalized_manhattan_pls_top_10_float32.parquet_best_model_2024-04-01_08-57-51'),
-    #     ('TFL', 'tflite_model_snv_manh_10_2024-04-01_08-57-51.tflite'),
-    #     ('TFL Q', 'tflite_model_snv_manh_10_quant_2024-04-01_08-57-51.tflite')
-    # ]
 
     # Assuming df1 and df2 are your dataframes obtained from API or other sources
     all_processed_dfs, wavelengths = json_data()
