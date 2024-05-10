@@ -72,7 +72,7 @@ def json_data():
     df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
     wavelengths = df1.columns
     absorbance_df = df2.div(df1.values).pow(0.5)
-    st.write(absorbance_df)
+    # st.write(absorbance_df)
 
     # Apply SNV to the absorbance data after baseline removal
     absorbance_snv = snv(absorbance_df.values)
@@ -209,12 +209,12 @@ def main():
         # .high-value {color: red;}
         </style> """, unsafe_allow_html=True)
 
-        if predictions_value_snv_baseline_removed > 15:
-            display_text = 'Above 15 g/dL'
-        elif predictions_value_snv_baseline_removed < 10.9:
-            display_text = 'Below 11 g/dL'
-        else:
-            display_text = f'{predictions_value_snv_baseline_removed:.1f} g/dL'
+        # if predictions_value_snv_baseline_removed > 15:
+        #     display_text = 'Above 15 g/dL'
+        # elif predictions_value_snv_baseline_removed < 10.9:
+        #     display_text = 'Below 11 g/dL'
+        # else:
+        #     display_text = f'{predictions_value_snv_baseline_removed:.1f} g/dL'
             
         # Format the display value with consistent styling
         display_value6 = f'<span class="value">{display_text}</span>'
