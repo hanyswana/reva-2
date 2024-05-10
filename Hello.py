@@ -76,7 +76,7 @@ def json_data():
 
     # Extract first line of data from both API responses and convert to numeric
     df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    df2 = pd.DataFrame(data2).iloc[:5].apply(pd.to_numeric, errors='coerce')
+    df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
     wavelengths = df1.columns
     # st.write('Background')
     # st.write(df1)
@@ -85,8 +85,8 @@ def json_data():
 
     all_processed_dfs = []  # This will hold tuples of all processed versions of each df
     
-    for index, row in df2.iterrows():
-        absorbance_df = df1.div(row.values, axis='columns').pow(2)
+    for index, row in df1.iterrows():
+        absorbance_df = df2.div(row.values, axis='columns').pow(0.5)
         
         # Apply SNV
         absorbance_snv = snv(absorbance_df.values)
@@ -117,12 +117,12 @@ def json_data():
         absorbance_snv_baseline_removed_normalized_manh = normalizer_manh.transform(absorbance_snv_baseline_removed)
         absorbance_snv_baseline_removed_normalized_manh_df = pd.DataFrame(absorbance_snv_baseline_removed_normalized_manh, columns=absorbance_df.columns)
         
-        # # Collect all processed versions for this division result
-        # processed_versions = (absorbance_df, absorbance_snv_df, absorbance_baseline_removed_df, absorbance_snv_baseline_removed_df,
-        #                       absorbance_normalized_euc_df, absorbance_snv_normalized_euc_df, absorbance_snv_baseline_removed_normalized_euc_df,
-        #                       absorbance_normalized_manh_df, absorbance_snv_normalized_manh_df, absorbance_snv_baseline_removed_normalized_manh_df)
+        # Collect all processed versions for this division result
+        processed_versions = (absorbance_df, absorbance_snv_df, absorbance_baseline_removed_df, absorbance_snv_baseline_removed_df,
+                              absorbance_normalized_euc_df, absorbance_snv_normalized_euc_df, absorbance_snv_baseline_removed_normalized_euc_df,
+                              absorbance_normalized_manh_df, absorbance_snv_normalized_manh_df, absorbance_snv_baseline_removed_normalized_manh_df)
 
-        processed_versions = (absorbance_snv_baseline_removed_df)
+        # processed_versions = (absorbance_snv_baseline_removed_df)
         
         all_processed_dfs.append(processed_versions)
 
