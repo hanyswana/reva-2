@@ -46,7 +46,7 @@ def snv(input_data):
         
 def json_data():
     # First API call
-    api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:U4wk_Gn6/BackgroundReading"
+    api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:3Ws6ADLi/bgdata"
     payload1 = {}
     response1 = requests.get(api_url1, params=payload1)
 
@@ -57,7 +57,7 @@ def json_data():
         return None
 
     # Second API call
-    api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:DKaWNKM4/spectral_data"
+    api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:Qc5crfn2/spectraldata"
     payload2 = {}
     response2 = requests.get(api_url2, params=payload2)
 
@@ -71,7 +71,7 @@ def json_data():
     df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
     df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
     wavelengths = df1.columns
-    absorbance_df = df1.div(df2.values).pow(2)
+    absorbance_df = df2.div(df1.values).pow(0.5)
     st.write(absorbance_df)
 
     # Apply SNV to the absorbance data after baseline removal
