@@ -247,6 +247,19 @@ def main():
 
 
     # Plotting
+    st.write('Spectral absorbance')
+    plt.figure(figsize=(10, 4))
+    plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='-', color='b')
+    plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
+    plt.ylabel('Absorbance', fontweight='bold', fontsize=14)
+    plt.xticks(rotation='vertical', fontweight='bold', fontsize=12)
+    plt.yticks(fontweight='bold', fontsize=12)
+    plt.tight_layout()
+    plt.show()
+    st.pyplot(plt)
+
+    # Plotting
+    st.write('Spectral absorbance with preprocess')
     plt.figure(figsize=(10, 4))
     plt.plot(wavelengths, absorbance_snv_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='b')
     plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
