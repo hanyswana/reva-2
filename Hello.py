@@ -97,7 +97,7 @@ def json_data():
     
     absorbance_snv_baseline_removed = baseline_remover.transform(absorbance_snv)
     absorbance_snv_baseline_removed_df = pd.DataFrame(absorbance_snv_baseline_removed, columns=absorbance_df.columns)
-    # st.write(absorbance_snv_baseline_removed_df)
+    st.write(absorbance_snv_baseline_removed_df)
 
     # First row of absorbance data
     absorbance_data = absorbance_df.iloc[0]  
@@ -248,7 +248,7 @@ def main():
 
     # Plotting
     plt.figure(figsize=(10, 4))
-    plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='-', color='b')
+    plt.plot(wavelengths, absorbance_snv_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='b')
     plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
     plt.ylabel('Absorbance', fontweight='bold', fontsize=14)
     plt.xticks(rotation='vertical', fontweight='bold', fontsize=12)
