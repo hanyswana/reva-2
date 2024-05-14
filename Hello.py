@@ -248,7 +248,7 @@ def main():
 
     # Plotting
     plt.figure(figsize=(10, 4))
-    plt.plot(wavelengths, absorbance_snv_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g', label='Preprocessed Absorbance')
+    plt.plot(wavelengths, absorbance_snv_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g', label='Sample')
     plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
     plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
     plt.title('Preprocessed absorbance', fontweight='bold', fontsize=20)
