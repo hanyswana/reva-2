@@ -248,13 +248,16 @@ def main():
 
     # Plotting
     plt.figure(figsize=(10, 4))
-    plt.plot(wavelengths, absorbance_snv_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g')
+    plt.plot(wavelengths, absorbance_snv_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g', label='Preprocessed Absorbance')
+    plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
+    plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
     plt.title('Preprocessed absorbance', fontweight='bold', fontsize=20)
     plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
     plt.ylabel('Absorbance', fontweight='bold', fontsize=14)
     plt.xticks(rotation='vertical', fontweight='bold', fontsize=12)
     plt.yticks(fontweight='bold', fontsize=12)
     plt.tight_layout()
+    plt.legend()
     plt.show()
     st.pyplot(plt)
     
