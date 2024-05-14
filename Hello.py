@@ -11,6 +11,13 @@ import numpy as np
 from datetime import datetime
 import pytz
 
+csv_file_path = 'golden_lablink_snv_baseline_each_batch.csv'
+
+# Load the CSV file
+golden_df = pd.read_csv(csv_file_path)
+# Extract the first row (assuming the first row contains the 'golden' values)
+golden_values = golden_df.iloc[0].values
+
 utc_now = datetime.now(pytz.utc)
 singapore_time = utc_now.astimezone(pytz.timezone('Asia/Singapore'))
 formatted_time = singapore_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -183,7 +190,9 @@ def main():
         predictions_snv_baseline_removed = predict_with_model(model, prediction_data)
         predictions_value_snv_baseline_removed = predictions_snv_baseline_removed[0][0]
 
-    
+        # Calculate correlation with 'golden' values
+        correlation = np.corrcoef(absorbance_snv_baseline_removed_df.iloc[0], golden_values)[0, 1]
+
         st.markdown("""
         <style>
         .label {font-size: 20px; font-weight: bold; color: black;}
@@ -224,6 +233,7 @@ def main():
         # st.markdown(f'<span class="label">Haemoglobin ({label}) Baseline removal:</span><br>{display_value4}</p>', unsafe_allow_html=True)
         # st.markdown(f'<span class="label">Haemoglobin ({label}) SNV:</span><br>{display_value5}</p>', unsafe_allow_html=True)
         st.markdown(f'<span class="label">Haemoglobin ({label}):</span><br>{display_value6}</p>', unsafe_allow_html=True)
+        st.markdown(f'<span class="label">Correlation:</span><br><span class="value">{correlation:.2f}</span>', unsafe_allow_html=True)
 
 
     # Plotting
