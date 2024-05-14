@@ -12,11 +12,11 @@ from datetime import datetime
 import pytz
 
 csv_file_path = 'golden_lablink_snv_baseline_each_batch.csv'
-
-# Load the CSV file
 golden_df = pd.read_csv(csv_file_path)
-# Extract the first row (assuming the first row contains the 'golden' values)
 golden_values = golden_df.iloc[0].values
+
+range_csv_file_path = 'range_lablink_snv_baseline_each_batch.csv'
+range_df = pd.read_csv(range_csv_file_path)
 
 utc_now = datetime.now(pytz.utc)
 singapore_time = utc_now.astimezone(pytz.timezone('Asia/Singapore'))
@@ -154,6 +154,8 @@ def main():
         ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
         
     ]
+    Min = range_df.iloc[0, 1:].values
+    Max = range_df.iloc[1, 1:].values
 
     absorbance_df, absorbance_snv_baseline_removed_df, wavelengths = json_data()
 
@@ -193,6 +195,17 @@ def main():
         # Calculate correlation with 'golden' values
         correlation = np.corrcoef(absorbance_snv_baseline_removed_df.iloc[0], golden_values)[0, 1]
 
+        Min = np.array(Min, dtype=float)
+        Max = np.array(Max, dtype=float)
+
+        # Ensure absorbance_snv_baseline_removed_df values are numpy array
+        absorbance_values = absorbance_snv_baseline_removed_df.values
+
+        out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
+        count_out_of_range = np.sum(out_of_range)
+        total_values = absorbance_values.size
+        percentage_out_of_range = (count_out_of_range / total_values) * 100
+
         st.markdown("""
         <style>
         .label {font-size: 20px; font-weight: bold; color: black;}
@@ -209,23 +222,7 @@ def main():
             
         # Format the display value with consistent styling
         display_value6 = f'<span class="value">{display_text}</span>'
-                
-        # # Add condition for prediction value
-        # if predictions_value_snv_baseline_removed > 25:
-        #     # display_value = f'<span class="high-value">High value : ({predictions_value_original:.1f} g/dL)</span>'
-        #     # display_value2 = f'<span class="high-value">High value : ({predictions_value_normalized_euc:.1f} g/dL)</span>'
-        #     # display_value3 = f'<span class="high-value">High value : ({predictions_value_normalized_manh:.1f} g/dL)</span>'
-        #     # display_value4 = f'<span class="high-value">High value : ({predictions_value_baseline_removed:.1f} g/dL)</span>'
-        #     # display_value5 = f'<span class="high-value">High value : ({predictions_value_snv:.1f} g/dL)</span>'
-        #     display_value6 = f'<span class="high-value">High value : ({predictions_value_snv_baseline_removed:.1f} g/dL)</span>'
-        # else:
-        #     # display_value = f'<span class="value">{predictions_value_original:.1f} g/dL</span>'
-        #     # display_value2 = f'<span class="value">{predictions_value_normalized_euc:.1f} g/dL</span>'
-        #     # display_value3 = f'<span class="value">{predictions_value_normalized_manh:.1f} g/dL</span>'
-        #     # display_value4 = f'<span class="value">{predictions_value_baseline_removed:.1f} g/dL</span>'
-        #     # display_value5 = f'<span class="value">{predictions_value_snv:.1f} g/dL</span>'
-        #     display_value6 = f'<span class="value">{predictions_value_snv_baseline_removed:.1f} g/dL</span>'
-        
+
         # # Display label and prediction value
         # st.markdown(f'<span class="label">Haemoglobin :</span><br>{display_value}</p>', unsafe_allow_html=True)
         # st.markdown(f'<span class="label">Haemoglobin ({label}) Normalized Euclidean:</span><br>{display_value2}</p>', unsafe_allow_html=True)
@@ -234,6 +231,7 @@ def main():
         # st.markdown(f'<span class="label">Haemoglobin ({label}) SNV:</span><br>{display_value5}</p>', unsafe_allow_html=True)
         st.markdown(f'<span class="label">Haemoglobin ({label}):</span><br>{display_value6}</p>', unsafe_allow_html=True)
         st.markdown(f'<span class="label">Correlation:</span><br><span class="value">{correlation:.2f}</span>', unsafe_allow_html=True)
+        st.markdown(f'<span class="label">Percentage of out-of-range values:</span><br><span class="value">{percentage_out_of_range:.2f} %</span>', unsafe_allow_html=True)
 
 
     # Plotting
