@@ -150,7 +150,7 @@ def predict_with_model(model, input_data):
 def main():
     # Define model paths with labels
     model_paths_with_labels = [
-        ('SNV + BR (R47)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
+        # ('SNV + BR (R47)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
         ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
         
     ]
