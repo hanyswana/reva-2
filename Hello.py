@@ -230,8 +230,8 @@ def main():
         # st.markdown(f'<span class="label">Haemoglobin ({label}) Baseline removal:</span><br>{display_value4}</p>', unsafe_allow_html=True)
         # st.markdown(f'<span class="label">Haemoglobin ({label}) SNV:</span><br>{display_value5}</p>', unsafe_allow_html=True)
         st.markdown(f'<span class="label">Haemoglobin ({label}):</span><br>{display_value6}</p>', unsafe_allow_html=True)
-        st.markdown(f'<span class="label">Correlation:</span><br><span class="value">{correlation:.2f}</span>', unsafe_allow_html=True)
-        st.markdown(f'<span class="label">Similarity to training data:</span><br><span class="value">{in_range_percentage:.0f} %</span>', unsafe_allow_html=True)
+        st.markdown(f'<span class="label">Correlation ({label}):</span><br><span class="value">{correlation:.2f}</span>', unsafe_allow_html=True)
+        st.markdown(f'<span class="label">Similarity to training data ({label}):</span><br><span class="value">{in_range_percentage:.0f} %</span>', unsafe_allow_html=True)
 
 
     # Plotting
