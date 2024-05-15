@@ -234,22 +234,23 @@ def main():
         st.markdown(f'<span class="label">Similarity to training data ({label}):</span><br><span class="value">{in_range_percentage:.0f} %</span>', unsafe_allow_html=True)
 
 
-    # Plotting
-    plt.figure(figsize=(10, 4))
-    plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='-', color='b')
-    plt.title('Raw absorbance', fontweight='bold', fontsize=20)
-    plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
-    plt.ylabel('Absorbance', fontweight='bold', fontsize=14)
-    plt.xticks(rotation='vertical', fontweight='bold', fontsize=12)
-    plt.yticks(fontweight='bold', fontsize=12)
-    plt.tight_layout()
-    plt.show()
-    st.pyplot(plt)
+    # # Plotting
+    # plt.figure(figsize=(10, 4))
+    # plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='-', color='b')
+    # plt.title('Raw absorbance', fontweight='bold', fontsize=20)
+    # plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
+    # plt.ylabel('Absorbance', fontweight='bold', fontsize=14)
+    # plt.xticks(rotation='vertical', fontweight='bold', fontsize=12)
+    # plt.yticks(fontweight='bold', fontsize=12)
+    # plt.tight_layout()
+    # plt.show()
+    # st.pyplot(plt)
 
     # Plotting
     plt.figure(figsize=(10, 4))
-    for label, absorbance_snv_baseline_removed in model_results:
-        plt.plot(wavelengths, absorbance_snv_baseline_removed, marker='o', linestyle='-', label=f'Sample {label}')
+    # for label, absorbance_snv_baseline_removed in model_results:
+    #     plt.plot(wavelengths, absorbance_snv_baseline_removed, marker='o', linestyle='-', label=f'Sample {label}')
+    plt.plot(wavelengths, absorbance_snv_baseline_removed, marker='o', linestyle='-', label=f'Sample')
     plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
     plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
     plt.title('Preprocessed absorbance', fontweight='bold', fontsize=20)
