@@ -15,7 +15,7 @@ csv_file_path = 'golden_lablink_snv_baseline_each_batch.csv'
 golden_df = pd.read_csv(csv_file_path)
 golden_values = golden_df.iloc[0].values
 
-range_csv_file_path = 'range_lablink_snv_baseline_each_batch_2.csv'
+range_csv_file_path = 'range_lablink_snv_baseline_each_batch.csv'
 range_df = pd.read_csv(range_csv_file_path)
 
 utc_now = datetime.now(pytz.utc)
