@@ -84,17 +84,11 @@ def json_data():
     # Apply SNV to the absorbance data after baseline removal
     absorbance_snv = snv(absorbance_df.values)
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
-    # st.write('SNV Transformation')
-    # st.write(absorbance_snv_df)
     
     # # Normalize the absorbance data using Euclidean normalization
-    # normalizer = Normalizer(norm='l2')  # Euclidean normalization
-    # absorbance_normalized_euc = normalizer.transform(absorbance_df)
-    # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
-    
     normalizer = Normalizer(norm='l2')  # Euclidean normalization
-    absorbance_snv_normalized_euc = normalizer.transform(absorbance_snv_df)
-    absorbance_snv_normalized_euc_df = pd.DataFrame(absorbance_snv_normalized_euc, columns=absorbance_df.columns)
+    absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
+    absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
     # # Normalize the absorbance data using Manhattan normalization
     # normalizer = Normalizer(norm='l1')  # Manhattan normalization
@@ -103,14 +97,10 @@ def json_data():
 
     # Apply baseline removal to the absorbance data
     baseline_remover = BaselineRemover()
-    # absorbance_baseline_removed = baseline_remover.transform(absorbance_df)
-    # absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
+    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_euc_df)
+    absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
     
-    # absorbance_snv_baseline_removed = baseline_remover.transform(absorbance_snv)
-    # absorbance_snv_baseline_removed_df = pd.DataFrame(absorbance_snv_baseline_removed, columns=absorbance_df.columns)
-
-    absorbance_snv_normalized_euc_baseline_removed = baseline_remover.transform(absorbance_snv_normalized_euc_df)
-    absorbance_snv_normalized_euc_baseline_removed_df = pd.DataFrame(absorbance_snv_normalized_euc_baseline_removed, columns=absorbance_df.columns)
+    absorbance_snv_normalized_euc_baseline_removed_df = absorbance_baseline_removed_df
 
     # First row of absorbance data
     absorbance_data = absorbance_df.iloc[0]  
