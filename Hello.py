@@ -229,7 +229,7 @@ def main():
         elif predictions_value < 0:
             display_text = 'Below 0 g/dL'
         else:
-            display_text = f'{absorbance_snv_normalized_euc_baseline_removed:.1f} g/dL'
+            display_text = f'{predictions_value:.1f} g/dL'
             
         # Format the display value with consistent styling
         display_value6 = f'<span class="value">{display_text}</span>'
