@@ -90,8 +90,8 @@ def json_data():
     # Extracting wavelengths or column names if needed
     wavelengths = df.columns
 
-    absorbance_data = df.iloc[13]
-    st.write(absorbance_data)
+    absorbance_df = df.iloc[13]
+    st.write(absorbance_df)
 
     # Apply SNV to the absorbance data after baseline removal
     absorbance_snv = snv(absorbance_df.values)
