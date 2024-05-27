@@ -155,7 +155,7 @@ def main():
     Min = range_df.iloc[0, 1:].values
     Max = range_df.iloc[1, 1:].values
 
-    absorbance_df, absorbance_snv_df, absorbance_snv_normalized_euc_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths = json_data()
+    absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths = json_data()
 
     for label, model_path in model_paths_with_labels:
 
