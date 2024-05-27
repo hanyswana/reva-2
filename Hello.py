@@ -91,6 +91,10 @@ def json_data():
     # normalizer = Normalizer(norm='l2')  # Euclidean normalization
     # absorbance_normalized_euc = normalizer.transform(absorbance_df)
     # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
+    
+    normalizer = Normalizer(norm='l2')  # Euclidean normalization
+    absorbance_snv_normalized_euc = normalizer.transform(absorbance_snv)
+    absorbance_snv_normalized_euc_df = pd.DataFrame(absorbance_snv_normalized_euc, columns=absorbance_df.columns)
 
     # # Normalize the absorbance data using Manhattan normalization
     # normalizer = Normalizer(norm='l1')  # Manhattan normalization
@@ -102,14 +106,16 @@ def json_data():
     absorbance_baseline_removed = baseline_remover.transform(absorbance_df)
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
     
-    absorbance_snv_baseline_removed = baseline_remover.transform(absorbance_snv)
-    absorbance_snv_baseline_removed_df = pd.DataFrame(absorbance_snv_baseline_removed, columns=absorbance_df.columns)
-    # st.write(absorbance_snv_baseline_removed_df)
+    # absorbance_snv_baseline_removed = baseline_remover.transform(absorbance_snv)
+    # absorbance_snv_baseline_removed_df = pd.DataFrame(absorbance_snv_baseline_removed, columns=absorbance_df.columns)
+
+    absorbance_snv_normalized_euc_baseline_removed = baseline_remover.transform(absorbance_snv_normalized_euc)
+    absorbance_snv_normalized_euc_baseline_removed_df = pd.DataFrame(absorbance_snv_normalized_euc_baseline_removed, columns=absorbance_df.columns)
 
     # First row of absorbance data
     absorbance_data = absorbance_df.iloc[0]  
  
-    return absorbance_df, absorbance_snv_baseline_removed_df, wavelengths
+    return absorbance_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths
 
 def select_for_prediction(absorbance_df, selected_wavelengths):
     return absorbance_df[selected_wavelengths]
@@ -152,18 +158,19 @@ def main():
     model_paths_with_labels = [
         # ('SNV + BR (R47)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%')
         # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
-        ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
+        # ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
+        ('SNV + BR + norm euc (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         
     ]
     Min = range_df.iloc[0, 1:].values
     Max = range_df.iloc[1, 1:].values
 
-    absorbance_df, absorbance_snv_baseline_removed_df, wavelengths = json_data()
+    absorbance_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths = json_data()
 
     for label, model_path in model_paths_with_labels:
 
         selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm']
-        prediction_data = select_for_prediction(absorbance_snv_baseline_removed_df, selected_wavelengths)
+        prediction_data = select_for_prediction(absorbance_snv_normalized_euc_baseline_removed_df, selected_wavelengths)
         # st.write(prediction_data)
         
         model = load_model(model_path)
@@ -190,17 +197,20 @@ def main():
 
         # Predict with SNV and BR transformed absorbance data
         # predictions_snv_baseline_removed = predict_with_model(model, absorbance_snv_baseline_removed_df)
-        predictions_snv_baseline_removed = predict_with_model(model, prediction_data)
-        predictions_value_snv_baseline_removed = predictions_snv_baseline_removed[0][0]
+        # predictions_snv_baseline_removed = predict_with_model(model, prediction_data)
+        # predictions_value_snv_baseline_removed = predictions_snv_baseline_removed[0][0]
+
+        predictions = predict_with_model(model, prediction_data)
+        predictions_value = predictions[0][0]
 
         # Calculate correlation with 'golden' values
-        correlation = np.corrcoef(absorbance_snv_baseline_removed_df.iloc[0], golden_values)[0, 1]
+        correlation = np.corrcoef(absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], golden_values)[0, 1]
 
         Min = np.array(Min, dtype=float)
         Max = np.array(Max, dtype=float)
 
         # Ensure absorbance_snv_baseline_removed_df values are numpy array
-        absorbance_values = absorbance_snv_baseline_removed_df.values
+        absorbance_values = absorbance_snv_normalized_euc_baseline_removed_df.values
 
         out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
         count_out_of_range = np.sum(out_of_range)
@@ -214,12 +224,12 @@ def main():
         # .high-value {color: red;}
         </style> """, unsafe_allow_html=True)
 
-        if predictions_value_snv_baseline_removed > 100:
+        if predictions_value > 100:
             display_text = 'Above 100 g/dL'
-        elif predictions_value_snv_baseline_removed < 0:
+        elif predictions_value < 0:
             display_text = 'Below 0 g/dL'
         else:
-            display_text = f'{predictions_value_snv_baseline_removed:.1f} g/dL'
+            display_text = f'{absorbance_snv_normalized_euc_baseline_removed_df:.1f} g/dL'
             
         # Format the display value with consistent styling
         display_value6 = f'<span class="value">{display_text}</span>'
@@ -251,7 +261,7 @@ def main():
     plt.figure(figsize=(10, 4))
     # for label, absorbance_snv_baseline_removed in model_results:
     #     plt.plot(wavelengths, absorbance_snv_baseline_removed, marker='o', linestyle='-', label=f'Sample {label}')
-    plt.plot(wavelengths, absorbance_snv_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g', label='Sample')
+    plt.plot(wavelengths, absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g', label='Sample')
     plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
     plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
     plt.title('Preprocessed absorbance', fontweight='bold', fontsize=20)
