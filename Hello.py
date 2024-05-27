@@ -105,7 +105,7 @@ def json_data():
     # First row of absorbance data
     absorbance_data = absorbance_df.iloc[0]  
  
-    return absorbance_df, absorbance_snv_df, absorbance_snv_normalized_euc_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths
+    return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths
 
 def select_for_prediction(absorbance_df, selected_wavelengths):
     return absorbance_df[selected_wavelengths]
@@ -212,8 +212,8 @@ def main():
     # Plotting
     plt.figure(figsize=(10, 4))
     plt.plot(wavelengths, absorbance_snv_df.iloc[0], marker='o', linestyle='-', color='b', label='Pp sample (SNV)')
-    plt.plot(wavelengths, absorbance_snv_normalized_euc_df.iloc[0], marker='d', linestyle='-', color='r', label='Pp sample (SNV + norm euc)')
-    plt.plot(wavelengths, absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], marker='s', linestyle='-', color='g', label='Pp (SNV + norm euc + baseline)')
+    plt.plot(wavelengths, absorbance_normalized_euc_df.iloc[0], marker='d', linestyle='-', color='r', label='Pp sample (SNV + norm euc)')
+    plt.plot(wavelengths, absorbance_baseline_removed_df.iloc[0], marker='s', linestyle='-', color='g', label='Pp (SNV + norm euc + baseline)')
     plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='--', color='b', label='Raw sample')
     plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
     plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
