@@ -85,13 +85,13 @@ def json_data():
     df = pd.read_csv(file_path, usecols=range(3, 13))  # Columns D to M have indexes 3 to 11
 
     # Convert to numeric, handling errors by coercing invalid values to NaN
-    df = df.apply(pd.to_numeric, errors='coerce')
-    st.write(df)
+    absorbance_df = df.apply(pd.to_numeric, errors='coerce')
+    st.write(absorbance_df)
     # Extracting wavelengths or column names if needed
     wavelengths = df.columns
 
-    absorbance_df = df.iloc[0]
-    st.write(absorbance_df)
+    # absorbance_df = df.iloc[0]
+    # st.write(absorbance_df)
 
     # Apply SNV to the absorbance data after baseline removal
     absorbance_snv = snv(absorbance_df.values)
