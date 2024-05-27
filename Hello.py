@@ -119,8 +119,8 @@ def json_data():
  
     return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths
 
-def select_for_prediction(absorbance_df, selected_wavelengths):
-    return absorbance_df[selected_wavelengths]
+# def select_for_prediction(absorbance_df, selected_wavelengths):
+#     return absorbance_df[selected_wavelengths]
     
 def load_model(model_dir):
     if model_dir.endswith('.tflite'):
@@ -171,8 +171,8 @@ def main():
 
     for label, model_path in model_paths_with_labels:
 
-        selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm']
-        prediction_data = select_for_prediction(absorbance_snv_normalized_euc_baseline_removed_df, selected_wavelengths)
+        # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm']
+        prediction_data = select_for_prediction(absorbance_snv_normalized_euc_baseline_removed_df, wavelengths)
         # st.write(prediction_data)
         
         model = load_model(model_path)
