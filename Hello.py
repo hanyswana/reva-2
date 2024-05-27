@@ -115,7 +115,7 @@ def json_data():
     # First row of absorbance data
     absorbance_data = absorbance_df.iloc[0]  
  
-    return absorbance_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths
+    return absorbance_df, absorbance_snv_df, absorbance_snv_normalized_euc_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths
 
 def select_for_prediction(absorbance_df, selected_wavelengths):
     return absorbance_df[selected_wavelengths]
@@ -165,7 +165,7 @@ def main():
     Min = range_df.iloc[0, 1:].values
     Max = range_df.iloc[1, 1:].values
 
-    absorbance_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths = json_data()
+    absorbance_df, absorbance_snv_df, absorbance_snv_normalized_euc_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths = json_data()
 
     for label, model_path in model_paths_with_labels:
 
@@ -261,7 +261,9 @@ def main():
 
     # Plotting
     plt.figure(figsize=(10, 4))
-    plt.plot(wavelengths, absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g', label='Preprocessed sample')
+    plt.plot(wavelengths, absorbance_snv_df.iloc[0], marker='o', linestyle='-', color='b', label='Preprocessed 1 sample')
+    plt.plot(wavelengths, absorbance_snv_normalized_euc_df.iloc[0], marker='o', linestyle='-', color='r', label='Preprocessed 2 sample')
+    plt.plot(wavelengths, absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g', label='Preprocessed 3 sample')
     plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='-', color='b', label='Raw sample')
     plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
     plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
