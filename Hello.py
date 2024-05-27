@@ -178,23 +178,6 @@ def main():
         # # Predict with original absorbance data
         # predictions_original = predict_with_model(model, absorbance_df)
         # predictions_value_original = predictions_original[0][0]
-        
-        # # Predict with Euclidean normalized absorbance data
-        # predictions_normalized_euc = predict_with_model(model, absorbance_normalized_euc_data)
-        # predictions_value_normalized_euc = predictions_normalized_euc[0][0]
-
-        # # Predict with baseline removed absorbance data
-        # predictions_baseline_removed = predict_with_model(model, absorbance_baseline_removed_data)
-        # predictions_value_baseline_removed = predictions_baseline_removed[0][0]
-
-        # # Predict with SNV transformed absorbance data
-        # predictions_snv = predict_with_model(model, absorbance_snv_data)
-        # predictions_value_snv = predictions_snv[0][0]
-
-        # Predict with SNV and BR transformed absorbance data
-        # predictions_snv_baseline_removed = predict_with_model(model, absorbance_snv_baseline_removed_df)
-        # predictions_snv_baseline_removed = predict_with_model(model, prediction_data)
-        # predictions_value_snv_baseline_removed = predictions_snv_baseline_removed[0][0]
 
         predictions = predict_with_model(model, prediction_data)
         predictions_value = predictions[0][0]
@@ -230,30 +213,13 @@ def main():
             display_text = f'{predictions_value:.1f} g/dL'
             
         # Format the display value with consistent styling
-        display_value6 = f'<span class="value">{display_text}</span>'
+        display_value = f'<span class="value">{display_text}</span>'
 
         # # Display label and prediction value
-        # st.markdown(f'<span class="label">Haemoglobin :</span><br>{display_value}</p>', unsafe_allow_html=True)
-        # st.markdown(f'<span class="label">Haemoglobin ({label}) Normalized Euclidean:</span><br>{display_value2}</p>', unsafe_allow_html=True)
-        # st.markdown(f'<span class="label">Haemoglobin ({label}) Normalized Manhattan:</span><br>{display_value3}</p>', unsafe_allow_html=True)
-        # st.markdown(f'<span class="label">Haemoglobin ({label}) Baseline removal:</span><br>{display_value4}</p>', unsafe_allow_html=True)
-        # st.markdown(f'<span class="label">Haemoglobin ({label}) SNV:</span><br>{display_value5}</p>', unsafe_allow_html=True)
-        st.markdown(f'<span class="label">Haemoglobin:</span><br>{display_value6}</p>', unsafe_allow_html=True)
+        st.markdown(f'<span class="label">Haemoglobin:</span><br>{display_value}</p>', unsafe_allow_html=True)
         st.markdown(f'<span class="label">Similarity to training data:</span><br><span class="value">{in_range_percentage:.0f} %</span>', unsafe_allow_html=True)
         st.markdown(f'<span class="label">Correlation:</span><br><span class="value">{correlation:.2f}</span>', unsafe_allow_html=True)
 
-
-    # # Plotting
-    # plt.figure(figsize=(10, 4))
-    # plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='-', color='b')
-    # plt.title('Raw absorbance', fontweight='bold', fontsize=20)
-    # plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
-    # plt.ylabel('Absorbance', fontweight='bold', fontsize=14)
-    # plt.xticks(rotation='vertical', fontweight='bold', fontsize=12)
-    # plt.yticks(fontweight='bold', fontsize=12)
-    # plt.tight_layout()
-    # plt.show()
-    # st.pyplot(plt)
 
     # Plotting
     plt.figure(figsize=(10, 4))
