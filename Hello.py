@@ -211,6 +211,7 @@ def main():
 
         # Ensure absorbance_snv_baseline_removed_df values are numpy array
         absorbance_values = absorbance_snv_normalized_euc_baseline_removed_df.values
+        st.write(absorbance_values)
 
         out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
         count_out_of_range = np.sum(out_of_range)
