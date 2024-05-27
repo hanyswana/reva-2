@@ -171,7 +171,7 @@ def main():
 
         selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm']
         prediction_data = select_for_prediction(absorbance_snv_normalized_euc_baseline_removed_df, selected_wavelengths)
-        st.write(prediction_data)
+        # st.write(prediction_data)
         
         model = load_model(model_path)
         
@@ -190,8 +190,6 @@ def main():
 
         # Ensure absorbance_snv_baseline_removed_df values are numpy array
         absorbance_values = absorbance_snv_normalized_euc_baseline_removed_df.values
-        st.write('Pp absorbance')
-        st.write(absorbance_values)
 
         out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
         count_out_of_range = np.sum(out_of_range)
