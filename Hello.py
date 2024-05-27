@@ -92,7 +92,7 @@ def json_data():
     # absorbance_normalized_euc = normalizer.transform(absorbance_df)
     # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
     
-    normalizer = Normalizer(norm='l2')  # Euclidean normalization
+    normalizer = Normalizer(norm='l1')  # Euclidean normalization
     absorbance_snv_normalized_euc = normalizer.transform(absorbance_snv_df)
     absorbance_snv_normalized_euc_df = pd.DataFrame(absorbance_snv_normalized_euc, columns=absorbance_df.columns)
 
