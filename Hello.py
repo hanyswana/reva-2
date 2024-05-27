@@ -109,7 +109,7 @@ def json_data():
     # absorbance_snv_baseline_removed = baseline_remover.transform(absorbance_snv)
     # absorbance_snv_baseline_removed_df = pd.DataFrame(absorbance_snv_baseline_removed, columns=absorbance_df.columns)
 
-    absorbance_snv_normalized_euc_baseline_removed = baseline_remover.transform(absorbance_snv_normalized_euc)
+    absorbance_snv_normalized_euc_baseline_removed = baseline_remover.transform(absorbance_snv_normalized_euc_df)
     absorbance_snv_normalized_euc_baseline_removed_df = pd.DataFrame(absorbance_snv_normalized_euc_baseline_removed, columns=absorbance_df.columns)
 
     # First row of absorbance data
