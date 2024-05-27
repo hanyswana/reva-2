@@ -261,7 +261,7 @@ def main():
 
     # Plotting
     plt.figure(figsize=(10, 4))
-    plt.plot(wavelengths, absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], marker='o', linestyle='-', color='g', label='Preprocessed sample')
+    plt.plot(wavelengths, absorbance_values.iloc[0], marker='o', linestyle='-', color='g', label='Preprocessed sample')
     plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='-', color='b', label='Raw sample')
     plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
     plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
