@@ -103,8 +103,8 @@ def json_data():
 
     # Apply baseline removal to the absorbance data
     baseline_remover = BaselineRemover()
-    absorbance_baseline_removed = baseline_remover.transform(absorbance_df)
-    absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
+    # absorbance_baseline_removed = baseline_remover.transform(absorbance_df)
+    # absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
     
     # absorbance_snv_baseline_removed = baseline_remover.transform(absorbance_snv)
     # absorbance_snv_baseline_removed_df = pd.DataFrame(absorbance_snv_baseline_removed, columns=absorbance_df.columns)
