@@ -121,6 +121,9 @@ def json_data():
 
 # def select_for_prediction(absorbance_df, selected_wavelengths):
 #     return absorbance_df[selected_wavelengths]
+
+def select_for_prediction(absorbance_df, wavelengths):
+    return absorbance_df[wavelengths]
     
 def load_model(model_dir):
     if model_dir.endswith('.tflite'):
