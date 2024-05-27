@@ -81,7 +81,7 @@ def json_data():
     # absorbance_df = df2.div(df1.values).pow(0.5)
     # # st.write(absorbance_df)
 
-        file_path = 'SNV & br 25 data.csv'  # Adjust the path if the file is in a specific folder
+    file_path = 'SNV & br 25 data.csv'  # Adjust the path if the file is in a specific folder
     df = pd.read_csv(file_path, usecols=range(3, 13))  # Columns D to M have indexes 3 to 11
 
     # Convert to numeric, handling errors by coercing invalid values to NaN
