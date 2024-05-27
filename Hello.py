@@ -52,34 +52,46 @@ def snv(input_data):
     return snv_transformed
         
 def json_data():
-    # First API call
-    api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:3Ws6ADLi/bgdata"
-    payload1 = {}
-    response1 = requests.get(api_url1, params=payload1)
+    # # First API call
+    # api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:3Ws6ADLi/bgdata"
+    # payload1 = {}
+    # response1 = requests.get(api_url1, params=payload1)
 
-    if response1.status_code == 200:
-        data1 = response1.json()
-    else:
-        st.write("Error in first API call:", response1.status_code)
-        return None
+    # if response1.status_code == 200:
+    #     data1 = response1.json()
+    # else:
+    #     st.write("Error in first API call:", response1.status_code)
+    #     return None
 
-    # Second API call
-    api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:Qc5crfn2/spectraldata"
-    payload2 = {}
-    response2 = requests.get(api_url2, params=payload2)
+    # # Second API call
+    # api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:Qc5crfn2/spectraldata"
+    # payload2 = {}
+    # response2 = requests.get(api_url2, params=payload2)
 
-    if response2.status_code == 200:
-        data2 = response2.json()
-    else:
-        st.write("Error in second API call:", response2.status_code)
-        return None
+    # if response2.status_code == 200:
+    #     data2 = response2.json()
+    # else:
+    #     st.write("Error in second API call:", response2.status_code)
+    #     return None
 
-    # Extract first line of data from both API responses and convert to numeric
-    df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    wavelengths = df1.columns
-    absorbance_df = df2.div(df1.values).pow(0.5)
-    # st.write(absorbance_df)
+    # # Extract first line of data from both API responses and convert to numeric
+    # df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
+    # df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
+    # wavelengths = df1.columns
+    # absorbance_df = df2.div(df1.values).pow(0.5)
+    # # st.write(absorbance_df)
+
+        file_path = 'SNV & br 25 data.csv'  # Adjust the path if the file is in a specific folder
+    df = pd.read_csv(file_path, usecols=range(3, 13))  # Columns D to M have indexes 3 to 11
+
+    # Convert to numeric, handling errors by coercing invalid values to NaN
+    df = df.apply(pd.to_numeric, errors='coerce')
+    st.write(df)
+    # Extracting wavelengths or column names if needed
+    wavelengths = df.columns
+
+    absorbance_data = df.iloc[13]
+    st.write(absorbance_data)
 
     # Apply SNV to the absorbance data after baseline removal
     absorbance_snv = snv(absorbance_df.values)
