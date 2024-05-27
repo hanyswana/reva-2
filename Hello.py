@@ -183,10 +183,6 @@ def main():
         # predictions_normalized_euc = predict_with_model(model, absorbance_normalized_euc_data)
         # predictions_value_normalized_euc = predictions_normalized_euc[0][0]
 
-        # # Predict with Manhattan normalized absorbance data
-        # predictions_normalized_manh = predict_with_model(model, absorbance_normalized_manh_data)
-        # predictions_value_normalized_manh = predictions_normalized_manh[0][0]
-
         # # Predict with baseline removed absorbance data
         # predictions_baseline_removed = predict_with_model(model, absorbance_baseline_removed_data)
         # predictions_value_baseline_removed = predictions_baseline_removed[0][0]
