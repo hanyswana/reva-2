@@ -81,17 +81,17 @@ def json_data():
     # absorbance_df = df2.div(df1.values).pow(0.5)
     # # st.write(absorbance_df)
 
-    file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'  # Adjust the path if the file is in a specific folder
+    file_path = 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.csv'  # Adjust the path if the file is in a specific folder
     df = pd.read_csv(file_path, usecols=range(0, 19))  # Columns D to M have indexes 3 to 11
 
     # Convert to numeric, handling errors by coercing invalid values to NaN
-    absorbance_df = df.apply(pd.to_numeric, errors='coerce')
-    st.write(absorbance_df)
+    df = df.apply(pd.to_numeric, errors='coerce')
+    st.write(df)
     # Extracting wavelengths or column names if needed
     wavelengths = df.columns
 
-    # absorbance_df = df.iloc[0]
-    # st.write(absorbance_df)
+    # absorbance_data = df.iloc[13]
+    # st.write(absorbance_data)
 
     # Apply SNV to the absorbance data after baseline removal
     absorbance_snv = snv(absorbance_df.values)
