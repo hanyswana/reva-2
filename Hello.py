@@ -166,7 +166,8 @@ def main():
 
     for label, model_path in model_paths_with_labels:
 
-        selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm']
+        # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm']
+        selected_wavelengths = ['415nm', '445nm', '515nm', '555nm', '560nm', '610nm', '680nm', '730nm', '900nm', '940nm']
         prediction_data = select_for_prediction(absorbance_snv_normalized_euc_baseline_removed_df, selected_wavelengths)
         # st.write(prediction_data)
         
