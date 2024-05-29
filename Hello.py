@@ -76,7 +76,7 @@ def json_data():
 
     # CSV ------------------------------------------------------------------------------------------------------------------
     file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'  # Adjust the path if the file is in a specific folder
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path, usecols=range(3, 19))
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
     # absorbance_data = df.iloc[13]
     st.write(absorbance_df)
