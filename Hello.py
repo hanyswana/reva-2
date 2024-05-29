@@ -16,7 +16,7 @@ singapore_time = utc_now.astimezone(pytz.timezone('Asia/Singapore'))
 formatted_time = singapore_time.strftime("%Y-%m-%d %H:%M:%S")
 st.markdown(f"Time: {formatted_time}")
 
-# Custom Baseline Removal Transformer
+
 class BaselineRemover(TransformerMixin, BaseEstimator):
     def __init__(self, *, copy=True):
         self.copy = copy
@@ -38,13 +38,16 @@ class BaselineRemover(TransformerMixin, BaseEstimator):
     def _more_tags(self):
         return {'allow_nan': True}
 
+
 def snv(input_data):
     # Mean centering and scaling by standard deviation for each spectrum
     mean_corrected = input_data - np.mean(input_data, axis=1, keepdims=True)
     snv_transformed = mean_corrected / np.std(mean_corrected, axis=1, keepdims=True)
     return snv_transformed
-        
+
+
 def json_data():
+    # API --------------------------------------------------------------------------------------------------------------------
     # # First API call
     # api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
     # payload1 = {}
@@ -77,26 +80,26 @@ def json_data():
     # CSV ------------------------------------------------------------------------------------------------------------------
     file_path = 'Lablink_134_SNV_norm_eucl_Baseline_sample1.csv'  # Adjust the path if the file is in a specific folder
     df = pd.read_csv(file_path, usecols=range(3, 22))
+    wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
     # absorbance_data = df.iloc[13]
-    st.write(absorbance_df)
-    wavelengths = df.columns
+    # st.write(absorbance_df)
 
-    # Apply SNV to the absorbance data after baseline removal
+    # 1. SNV
     absorbance_snv = snv(absorbance_df.values)
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
     
-    # Normalize the absorbance data using Euclidean normalization
+    # 2. Euclidean normalization
     normalizer = Normalizer(norm='l2')  # Euclidean normalization
     absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
     absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
-    # # Normalize the absorbance data using Manhattan normalization
+    # 3. Manhattan normalization
     # normalizer = Normalizer(norm='l1')  # Manhattan normalization
     # absorbance_normalized_manh = normalizer.transform(absorbance_df)
     # absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
 
-    # Apply baseline removal to the absorbance data
+    # 4. Baseline removal
     baseline_remover = BaselineRemover()
     absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_euc_df)
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
@@ -108,44 +111,44 @@ def json_data():
  
     return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths
 
+
 def select_for_prediction(absorbance_df, selected_wavelengths):
     return absorbance_df[selected_wavelengths]
-    
+
+
 def load_model(model_dir):
     if model_dir.endswith('.tflite'):
-        # Load TensorFlow Lite model
         interpreter = tf.lite.Interpreter(model_path=model_dir)
         interpreter.allocate_tensors()
         return interpreter
     else:
-        # Load TensorFlow SavedModel
         model = tf.saved_model.load(model_dir)
         return model
 
+
 def predict_with_model(model, input_data):
-    if isinstance(model, tf.lite.Interpreter):  # Check if model is TensorFlow Lite Interpreter
+    if isinstance(model, tf.lite.Interpreter):
         input_details = model.get_input_details()
         output_details = model.get_output_details()
         
         # Ensure input data is 2D: [batch_size, num_features]
-        input_data = input_data.values.astype('float32')  # Convert DataFrame to numpy and ensure dtype
+        input_data = input_data.values.astype('float32')
         if input_data.ndim == 1:
             input_data = input_data.reshape(1, -1)  # Reshape if single row input
         
         model.set_tensor(input_details[0]['index'], input_data)
         model.invoke()
         predictions = model.get_tensor(output_details[0]['index'])
-        return predictions  # This will be a numpy array
+        return predictions
     else:
         # Assuming TensorFlow SavedModel prediction logic
-        input_data = input_data.values.astype('float32').reshape(-1, 10)  # Adjust based on your model's expected input
+        input_data = input_data.values.astype('float32').reshape(-1, 10)
         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
         predictions = model(input_tensor)
         return predictions.numpy()
 
 
 def main():
-    # Define model paths with labels
     model_paths_with_labels = [
         # ('SNV + BR (R47)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%')
         # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
@@ -153,6 +156,7 @@ def main():
         ('SNV + BR + norm euc (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         
     ]
+    
     csv_file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'
     golden_df = pd.read_csv(csv_file_path)
     golden_values = golden_df.iloc[0].values
@@ -169,24 +173,16 @@ def main():
         # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API
         selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV
         prediction_data = select_for_prediction(absorbance_snv_normalized_euc_baseline_removed_df, selected_wavelengths)
-        # st.write(prediction_data)
         
         model = load_model(model_path)
-        
-        # # Predict with original absorbance data
-        # predictions_original = predict_with_model(model, absorbance_df)
-        # predictions_value_original = predictions_original[0][0]
 
         predictions = predict_with_model(model, prediction_data)
         predictions_value = predictions[0][0]
 
-        # Calculate correlation with 'golden' values
         correlation = np.corrcoef(absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], golden_values)[0, 1]
 
         Min = np.array(Min, dtype=float)
         Max = np.array(Max, dtype=float)
-
-        # Ensure absorbance_snv_baseline_removed_df values are numpy array
         absorbance_values = absorbance_snv_normalized_euc_baseline_removed_df.values
 
         out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
@@ -208,7 +204,6 @@ def main():
         else:
             display_text = f'{predictions_value:.1f} g/dL'
             
-        # Format the display value with consistent styling
         display_value = f'<span class="value">{display_text}</span>'
 
         # # Display label and prediction value
@@ -216,8 +211,6 @@ def main():
         st.markdown(f'<span class="label">Similarity to training data:</span><br><span class="value">{in_range_percentage:.0f} %</span>', unsafe_allow_html=True)
         st.markdown(f'<span class="label">Correlation:</span><br><span class="value">{correlation:.2f}</span>', unsafe_allow_html=True)
 
-
-    # Plotting
     plt.figure(figsize=(10, 4))
     plt.plot(wavelengths, absorbance_snv_df.iloc[0], marker='o', linestyle='-', color='b', label='Pp sample (SNV)')
     plt.plot(wavelengths, absorbance_normalized_euc_df.iloc[0], marker='d', linestyle='-', color='r', label='Pp sample (SNV + norm euc)')
@@ -234,6 +227,7 @@ def main():
     plt.legend()
     plt.show()
     st.pyplot(plt)
-    
+
+
 if __name__ == "__main__":
     main()
