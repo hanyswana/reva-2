@@ -117,7 +117,7 @@ def json_data():
     Min = reference_df.min().values
     Max = reference_df.max().values
     st.write('Golden')
-    st.write(golden)
+    st.write(golden_values)
  
     return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max
 
