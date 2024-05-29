@@ -112,8 +112,6 @@ def json_data():
     reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
-
-    columns=absorbance_df.columns
     
     golden_values = reference_df.mean().values
     golden_values_df = pd.DataFrame(golden_values)
@@ -121,12 +119,12 @@ def json_data():
     st.write(golden_values)
     
     Min = reference_df.min().values
-    Min_df = pd.DataFrame(Min, columns=columns)
+    Min_df = pd.DataFrame(Min)
     st.write('Min')
     st.write(Min)
     
     Max = reference_df.max().values
-    Max_df = pd.DataFrame(Max, columns=absorbance_df.columns)
+    Max_df = pd.DataFrame(Max)
     st.write('Max')
     st.write(Max)
  
