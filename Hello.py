@@ -78,7 +78,7 @@ def json_data():
     # # st.write(absorbance_df)
 
     # CSV ------------------------------------------------------------------------------------------------------------------
-    file_path = 'Lablink_134_SNV_norm_eucl_Baseline_sample1.csv'  # Adjust the path if the file is in a specific folder
+    file_path = 'Lablink_134_SNV_norm_eucl_Baseline_sample1.csv'
     df = pd.read_csv(file_path, usecols=range(3, 22))
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
@@ -141,7 +141,6 @@ def predict_with_model(model, input_data):
         predictions = model.get_tensor(output_details[0]['index'])
         return predictions
     else:
-        # Assuming TensorFlow SavedModel prediction logic
         input_data = input_data.values.astype('float32').reshape(-1, 10)
         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
         predictions = model(input_tensor)
@@ -183,7 +182,7 @@ def main():
 
         Min = np.array(Min, dtype=float)
         Max = np.array(Max, dtype=float)
-        absorbance_values = absorbance_snv_normalized_euc_baseline_removed_df.values
+        absorbance_values = absorbance_snv_df.values
 
         out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
         count_out_of_range = np.sum(out_of_range)
