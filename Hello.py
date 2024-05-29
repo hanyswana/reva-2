@@ -114,10 +114,19 @@ def json_data():
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
 
     golden_values = reference_df.mean().values
-    Min = reference_df.min().values
-    Max = reference_df.max().values
+    golden_values_df = pd.DataFrame(golden_values, columns=absorbance_df.columns)
     st.write('Golden')
     st.write(golden_values)
+    
+    Min = reference_df.min().values
+    Min_df = pd.DataFrame(Min, columns=absorbance_df.columns)
+    st.write('Min')
+    st.write(Min)
+    
+    Max = reference_df.max().values
+    Max_df = pd.DataFrame(Max, columns=absorbance_df.columns)
+    st.write('Max')
+    st.write(Max)
  
     return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max
 
