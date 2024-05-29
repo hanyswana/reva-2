@@ -131,6 +131,17 @@ def json_data():
     return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max
 
 
+def create_csv(golden_values, Min, Max, wavelengths):
+    data = {
+        'Wavelength': wavelengths,
+        'Golden Values': golden_values,
+        'Min': Min,
+        'Max': Max
+    }
+    df = pd.DataFrame(data)
+    df.to_csv('golden_values_min_max.csv', index=False)
+    st.write(df)
+    
 
 def select_for_prediction(absorbance_df, selected_wavelengths):
     return absorbance_df[selected_wavelengths]
@@ -187,6 +198,8 @@ def main():
 
     absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max = json_data()
 
+    create_csv(golden_values, Min, Max, wavelengths)
+    
     for label, model_path in model_paths_with_labels:
 
         # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API
