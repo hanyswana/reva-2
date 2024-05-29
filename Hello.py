@@ -81,23 +81,19 @@ def json_data():
     # absorbance_df = df2.div(df1.values).pow(0.5)
     # # st.write(absorbance_df)
 
+    # CSV ------------------------------------------------------------------------------------------------------------------
     file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'  # Adjust the path if the file is in a specific folder
-    df = pd.read_csv(file_path)  # Columns D to M have indexes 3 to 11
-
-    # Convert to numeric, handling errors by coercing invalid values to NaN
+    df = pd.read_csv(file_path)
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
-    st.write(absorbance_df)
-    # Extracting wavelengths or column names if needed
-    wavelengths = df.columns
-
     # absorbance_data = df.iloc[13]
-    # st.write(absorbance_data)
+    st.write(absorbance_df)
+    wavelengths = df.columns
 
     # Apply SNV to the absorbance data after baseline removal
     absorbance_snv = snv(absorbance_df.values)
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
     
-    # # Normalize the absorbance data using Euclidean normalization
+    # Normalize the absorbance data using Euclidean normalization
     normalizer = Normalizer(norm='l2')  # Euclidean normalization
     absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
     absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
@@ -132,7 +128,6 @@ def load_model(model_dir):
         # Load TensorFlow SavedModel
         model = tf.saved_model.load(model_dir)
         return model
-
 
 def predict_with_model(model, input_data):
     if isinstance(model, tf.lite.Interpreter):  # Check if model is TensorFlow Lite Interpreter
