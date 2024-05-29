@@ -106,9 +106,6 @@ def json_data():
     
     absorbance_all_pp_df = absorbance_baseline_removed_df
 
-    # First row of absorbance data
-    absorbance_data = absorbance_df.iloc[0]  
-
     reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
@@ -184,7 +181,7 @@ def main():
     for label, model_path in model_paths_with_labels:
 
         # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API
-        selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV
+        selected_wavelengths = ['445 nm', '515 nm', '555 nm', '560 nm', '585 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
         
         model = load_model(model_path)
