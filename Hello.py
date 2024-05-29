@@ -145,7 +145,7 @@ def predict_with_model(model, input_data):
         return predictions  # This will be a numpy array
     else:
         # Assuming TensorFlow SavedModel prediction logic
-        input_data = input_data.values.astype('float32').reshape(-1, 10)  # Adjust based on your model's expected input
+        input_data = input_data.values.astype('float32').reshape(-1, 19)  # Adjust based on your model's expected input
         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
         predictions = model(input_tensor)
         return predictions.numpy()
