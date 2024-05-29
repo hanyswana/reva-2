@@ -114,7 +114,7 @@ def json_data():
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
 
     golden_values = reference_df.mean().values
-    golden_values_df = pd.DataFrame(golden_values, columns=absorbance_df.columns)
+    golden_values_df = pd.DataFrame(golden_values)
     st.write('Golden')
     st.write(golden_values)
     
