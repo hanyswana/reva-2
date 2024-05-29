@@ -177,7 +177,7 @@ def main():
         
     ]
     
-    absorbance_df, absorbance_all_pp_df, golden_values, Min, Max = json_data()
+    absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
 
     create_csv(golden_values, Min, Max, wavelengths)
     
