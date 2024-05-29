@@ -128,7 +128,7 @@ def json_data():
     st.write('Max')
     st.write(Max)
  
-    return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max
+    return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values_df, Min_df, Max_df
 
 
 
@@ -185,7 +185,7 @@ def main():
     # Min = range_df.iloc[0, 1:].values
     # Max = range_df.iloc[1, 1:].values
 
-    absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max = json_data()
+    absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values_df, Min_df, Max_df = json_data()
 
     for label, model_path in model_paths_with_labels:
 
@@ -198,10 +198,10 @@ def main():
         predictions = predict_with_model(model, prediction_data)
         predictions_value = predictions[0][0]
 
-        correlation = np.corrcoef(absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], golden_values)[0, 1]
+        correlation = np.corrcoef(absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], golden_values_df)[0, 1]
 
-        Min = np.array(Min, dtype=float)
-        Max = np.array(Max, dtype=float)
+        Min = np.array(Min_df, dtype=float)
+        Max = np.array(Max_df, dtype=float)
         absorbance_values = absorbance_snv_normalized_euc_baseline_removed_df.values
 
         out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
