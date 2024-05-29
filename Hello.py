@@ -165,14 +165,14 @@ def main():
         
     ]
     
-    csv_file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'
-    golden_df = pd.read_csv(csv_file_path)
-    golden_values = golden_df.iloc[0].values
+    # csv_file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'
+    # golden_df = pd.read_csv(csv_file_path)
+    # golden_values = golden_df.iloc[0].values
     
-    range_csv_file_path = 'range_lablink_snv_norm_euc_baseline_each_batch.csv'
-    range_df = pd.read_csv(range_csv_file_path)
-    Min = range_df.iloc[0, 1:].values
-    Max = range_df.iloc[1, 1:].values
+    # range_csv_file_path = 'range_lablink_snv_norm_euc_baseline_each_batch.csv'
+    # range_df = pd.read_csv(range_csv_file_path)
+    # Min = range_df.iloc[0, 1:].values
+    # Max = range_df.iloc[1, 1:].values
 
     absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max = json_data()
 
