@@ -11,13 +11,6 @@ import numpy as np
 from datetime import datetime
 import pytz
 
-csv_file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'
-golden_df = pd.read_csv(csv_file_path)
-golden_values = golden_df.iloc[0].values
-
-range_csv_file_path = 'range_lablink_snv_norm_euc_baseline_each_batch.csv'
-range_df = pd.read_csv(range_csv_file_path)
-
 utc_now = datetime.now(pytz.utc)
 singapore_time = utc_now.astimezone(pytz.timezone('Asia/Singapore'))
 formatted_time = singapore_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -160,6 +153,12 @@ def main():
         ('SNV + BR + norm euc (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         
     ]
+    csv_file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'
+    golden_df = pd.read_csv(csv_file_path)
+    golden_values = golden_df.iloc[0].values
+    
+    range_csv_file_path = 'range_lablink_snv_norm_euc_baseline_each_batch.csv'
+    range_df = pd.read_csv(range_csv_file_path)
     Min = range_df.iloc[0, 1:].values
     Max = range_df.iloc[1, 1:].values
 
