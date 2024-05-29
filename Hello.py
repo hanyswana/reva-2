@@ -78,7 +78,7 @@ def json_data():
     # # st.write(absorbance_df)
 
     # CSV ------------------------------------------------------------------------------------------------------------------
-    file_path = 'Lablink_134_SNV_norm_eucl_Baseline_sample1.csv'
+    file_path = 'Lablink_134_SNV_norm_manh_Baseline_sample1.csv'
     df = pd.read_csv(file_path, usecols=range(3, 22))
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
@@ -90,45 +90,34 @@ def json_data():
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
     
     # 2. Euclidean normalization
-    normalizer = Normalizer(norm='l2')  # Euclidean normalization
-    absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
-    absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
+    # normalizer = Normalizer(norm='l2')  # Euclidean normalization
+    # absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
+    # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
     # 3. Manhattan normalization
-    # normalizer = Normalizer(norm='l1')  # Manhattan normalization
-    # absorbance_normalized_manh = normalizer.transform(absorbance_df)
-    # absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
+    normalizer = Normalizer(norm='l1')  # Manhattan normalization
+    absorbance_normalized_manh = normalizer.transform(absorbance_snv_df)
+    absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
 
     # 4. Baseline removal
     baseline_remover = BaselineRemover()
-    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_euc_df)
+    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_manh_df)
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
     
-    absorbance_snv_normalized_euc_baseline_removed_df = absorbance_baseline_removed_df
+    absorbance_all_pp_df = absorbance_baseline_removed_df
 
     # First row of absorbance data
     absorbance_data = absorbance_df.iloc[0]  
 
-    reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
+    reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
     
     golden_values = reference_df.mean().values
-    golden_values_df = pd.DataFrame(golden_values)
-    # st.write('Golden')
-    # st.write(golden_values)
-    
     Min = reference_df.min().values
-    Min_df = pd.DataFrame(Min)
-    # st.write('Min')
-    # st.write(Min)
-    
     Max = reference_df.max().values
-    Max_df = pd.DataFrame(Max)
-    # st.write('Max')
-    # st.write(Max)
  
-    return absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max
+    return absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max
 
 
 def create_csv(golden_values, Min, Max, wavelengths):
@@ -183,20 +172,12 @@ def main():
         # ('SNV + BR (R47)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%')
         # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
         # ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
-        ('SNV + BR + norm euc (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
+        # ('SNV + BR + norm euc (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
+        ('SNV + BR + norm manh (R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
         
     ]
     
-    # csv_file_path = 'golden_lablink_snv_norm_euc_baseline_each_batch.csv'
-    # golden_df = pd.read_csv(csv_file_path)
-    # golden_values = golden_df.iloc[0].values
-    
-    # range_csv_file_path = 'range_lablink_snv_norm_euc_baseline_each_batch.csv'
-    # range_df = pd.read_csv(range_csv_file_path)
-    # Min = range_df.iloc[0, 1:].values
-    # Max = range_df.iloc[1, 1:].values
-
-    absorbance_df, absorbance_snv_df, absorbance_normalized_euc_df, absorbance_baseline_removed_df, absorbance_snv_normalized_euc_baseline_removed_df, wavelengths, golden_values, Min, Max = json_data()
+    absorbance_df, absorbance_all_pp_df, golden_values, Min, Max = json_data()
 
     create_csv(golden_values, Min, Max, wavelengths)
     
@@ -204,18 +185,18 @@ def main():
 
         # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API
         selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV
-        prediction_data = select_for_prediction(absorbance_snv_normalized_euc_baseline_removed_df, selected_wavelengths)
+        prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
         
         model = load_model(model_path)
 
         predictions = predict_with_model(model, prediction_data)
         predictions_value = predictions[0][0]
 
-        correlation = np.corrcoef(absorbance_snv_normalized_euc_baseline_removed_df.iloc[0], golden_values)[0, 1]
+        correlation = np.corrcoef(absorbance_all_pp_df.iloc[0], golden_values)[0, 1]
 
         Min = np.array(Min, dtype=float)
         Max = np.array(Max, dtype=float)
-        absorbance_values = absorbance_snv_normalized_euc_baseline_removed_df.values
+        absorbance_values = absorbance_all_pp_df.values
 
         out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
         count_out_of_range = np.sum(out_of_range)
@@ -244,10 +225,8 @@ def main():
         st.markdown(f'<span class="label">Correlation:</span><br><span class="value">{correlation:.2f}</span>', unsafe_allow_html=True)
 
     plt.figure(figsize=(10, 4))
-    plt.plot(wavelengths, absorbance_snv_df.iloc[0], marker='o', linestyle='-', color='b', label='Pp sample (SNV)')
-    plt.plot(wavelengths, absorbance_normalized_euc_df.iloc[0], marker='d', linestyle='-', color='r', label='Pp sample (SNV + norm euc)')
-    plt.plot(wavelengths, absorbance_baseline_removed_df.iloc[0], marker='s', linestyle='-', color='g', label='Pp (SNV + norm euc + baseline)')
-    plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='--', color='b', label='Raw sample')
+    plt.plot(wavelengths, absorbance_all_pp_df.iloc[0], marker='o', linestyle='-', color='b', label='Sample')
+    # plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='--', color='b', label='Raw sample')
     plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
     plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
     plt.title('Absorbance', fontweight='bold', fontsize=20)
