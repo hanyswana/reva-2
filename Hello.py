@@ -133,13 +133,12 @@ def json_data():
 
 def create_csv(golden_values, Min, Max, wavelengths):
     data = {
-        'Wavelength': wavelengths,
-        'Golden Values': golden_values,
-        'Min': Min,
-        'Max': Max
+        'Metric': ['Golden Values', 'Min', 'Max', 'Wavelength'],
+        **{wavelength: values for wavelength, values in zip(wavelengths, [golden_values, Min, Max, wavelengths])}
     }
     df = pd.DataFrame(data)
-    df.to_csv('golden_values_min_max.csv', index=False)
+    df = df.set_index('Metric').T
+    df.to_csv('golden_values_min_max_wavelengths.csv')
     st.write(df)
     
 
