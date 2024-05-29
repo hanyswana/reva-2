@@ -82,7 +82,7 @@ def json_data():
     # # st.write(absorbance_df)
 
     file_path = 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.csv'  # Adjust the path if the file is in a specific folder
-    df = pd.read_csv(file_path, usecols=range(0, 19))  # Columns D to M have indexes 3 to 11
+    df = pd.read_csv(file_path, usecols=range(0, 18))  # Columns D to M have indexes 3 to 11
 
     # Convert to numeric, handling errors by coercing invalid values to NaN
     df = df.apply(pd.to_numeric, errors='coerce')
