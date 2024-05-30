@@ -94,7 +94,7 @@ def json_data():
     # absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
     # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
-    3. Manhattan normalization
+    # 3. Manhattan normalization
     normalizer = Normalizer(norm='l1')  # Manhattan normalization
     absorbance_normalized_manh = normalizer.transform(absorbance_snv_df)
     absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
