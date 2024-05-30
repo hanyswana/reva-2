@@ -89,26 +89,26 @@ def json_data():
     absorbance_snv = snv(absorbance_df.values)
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
     
-    # 2. Euclidean normalization
-    normalizer = Normalizer(norm='l2')  # Euclidean normalization
-    absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
-    absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
+    # # 2. Euclidean normalization
+    # normalizer = Normalizer(norm='l2')  # Euclidean normalization
+    # absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
+    # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
-    # # 3. Manhattan normalization
-    # normalizer = Normalizer(norm='l1')  # Manhattan normalization
-    # absorbance_normalized_manh = normalizer.transform(absorbance_snv_df)
-    # absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
+    # 3. Manhattan normalization
+    normalizer = Normalizer(norm='l1')  # Manhattan normalization
+    absorbance_normalized_manh = normalizer.transform(absorbance_snv_df)
+    absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
 
     # 4. Baseline removal
     baseline_remover = BaselineRemover()
-    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_euc_df)
+    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_manh_df)
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
     
     absorbance_all_pp_df = absorbance_baseline_removed_df
 
     # reference_file_path = 'Lablink_134_SNV_Baseline.csv'
-    # reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
-    reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
+    reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
+    # reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
     
@@ -171,8 +171,8 @@ def main():
         # ('SNV + BR (R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
         # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%'),
         # ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
-        ('SNV +  + norm euc + BR (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
-        # ('SNV + norm manh + BR (R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
+        # ('SNV +  + norm euc + BR (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
+        ('SNV + norm manh + BR (R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
         
     ]
     
@@ -182,8 +182,8 @@ def main():
     
     for label, model_path in model_paths_with_labels:
 
-        # selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR / SNV + BR)
-        selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + euc + BR)
+        selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR / SNV + BR)
+        # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + euc + BR)
         # selected_wavelengths = ['445 nm', '515 nm', '555 nm', '560 nm', '585 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
         
