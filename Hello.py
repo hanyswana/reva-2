@@ -184,7 +184,7 @@ def main():
     
     absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
 
-    pds_model_file = 'C:/Users/hanys.harun/PycharmProjects/pythonprojectTF/calib_transfer/PDS/CT_U6_SNV_Baseline_ws5_1.pkl'
+    pds_model_file = 'CT_U6_SNV_Baseline_ws5_1.pkl'
     absorbance_all_pp_df = apply_pds_model(absorbance_all_pp_df.values, pds_model_file)
     absorbance_all_pp_df = pd.DataFrame(absorbance_all_pp_df, columns=wavelengths)
 
