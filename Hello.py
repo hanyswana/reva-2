@@ -10,6 +10,7 @@ from scipy import sparse
 import numpy as np
 from datetime import datetime
 import pytz
+import pickle
 
 utc_now = datetime.now(pytz.utc)
 singapore_time = utc_now.astimezone(pytz.timezone('Asia/Singapore'))
