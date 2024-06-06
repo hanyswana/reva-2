@@ -119,6 +119,12 @@ def json_data():
     return absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max
 
 
+def apply_pds_model(data, model_file):
+    with open(model_file, 'rb') as f:
+        pds_matrix = pickle.load(f)
+    return np.dot(data, pds_matrix)
+    
+
 def create_csv(golden_values, Min, Max, wavelengths):
     data = {
         'Wavelength': wavelengths,
@@ -178,6 +184,10 @@ def main():
     
     absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
 
+    pds_model_file = 'C:/Users/hanys.harun/PycharmProjects/pythonprojectTF/calib_transfer/PDS/CT_U6_SNV_Baseline_ws5_1.pkl'
+    absorbance_all_pp_df = apply_pds_model(absorbance_all_pp_df.values, pds_model_file)
+    absorbance_all_pp_df = pd.DataFrame(absorbance_all_pp_df, columns=wavelengths)
+
     create_csv(golden_values, Min, Max, wavelengths)
     
     for label, model_path in model_paths_with_labels:
@@ -188,7 +198,6 @@ def main():
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
         
         model = load_model(model_path)
-
         predictions = predict_with_model(model, prediction_data)
         predictions_value = predictions[0][0]
 
