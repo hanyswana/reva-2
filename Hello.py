@@ -120,10 +120,10 @@ def json_data():
     return absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max
 
 
-def apply_pds_model(data, model_file):
-    with open(model_file, 'rb') as f:
-        pds_matrix = pickle.load(f)
-    return np.dot(data, pds_matrix)
+# def apply_pds_model(data, model_file):
+#     with open(model_file, 'rb') as f:
+#         pds_matrix = pickle.load(f)
+#     return np.dot(data, pds_matrix)
     
 
 def create_csv(golden_values, Min, Max, wavelengths):
@@ -185,9 +185,9 @@ def main():
     
     absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
 
-    pds_model_file = 'CT_U6_SNV_Baseline_ws5_1.pkl'
-    absorbance_all_pp_df = apply_pds_model(absorbance_all_pp_df.values, pds_model_file)
-    absorbance_all_pp_df = pd.DataFrame(absorbance_all_pp_df, columns=wavelengths)
+    # pds_model_file = 'CT_U6_SNV_Baseline_ws5_1.pkl'
+    # absorbance_all_pp_df = apply_pds_model(absorbance_all_pp_df.values, pds_model_file)
+    # absorbance_all_pp_df = pd.DataFrame(absorbance_all_pp_df, columns=wavelengths)
 
     create_csv(golden_values, Min, Max, wavelengths)
     
