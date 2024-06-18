@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import requests
 import matplotlib.pyplot as plt
-import tensorflow as tf
+# import tensorflow as tf
 from sklearn.preprocessing import Normalizer
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import FLOAT_DTYPES
