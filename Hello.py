@@ -12,6 +12,9 @@ from datetime import datetime
 import pytz
 import pickle
 import joblib
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
 
 
 utc_now = datetime.now(pytz.utc)
