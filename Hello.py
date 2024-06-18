@@ -54,6 +54,17 @@ def pds_transform(input_data, pds_model):
     return transformed_data
 
 
+def custom_transform(input_data, pds_models):
+    transformed_data = np.zeros_like(input_data)
+
+    for start, end, model in pds_models:
+        slave_segment = input_data[:, start:end]
+        transformed_segment = model.predict(slave_segment)
+        transformed_data[:, start:end] = transformed_segment
+
+    return transformed_data
+
+
 def json_data():
     # API --------------------------------------------------------------------------------------------------------------------
     # First API call
@@ -122,7 +133,7 @@ def json_data():
         pds_model = pickle.load(f)
 
     # Apply the PDS calibration transfer model to the preprocessed data
-    absorbance_transformed = pds_transform(absorbance_baseline_removed_df.values, pds_model)
+    absorbance_transformed = custom_transform(absorbance_baseline_removed_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     
     absorbance_all_pp_df = absorbance_transformed_df
