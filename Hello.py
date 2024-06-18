@@ -13,11 +13,6 @@ import pytz
 import pickle
 import joblib
 
-try:
-    tf_version = tf.__version__
-    st.write(f"TensorFlow version: {tf_version}")
-except AttributeError:
-    st.error("TensorFlow not installed or not compatible.")
 
 utc_now = datetime.now(pytz.utc)
 singapore_time = utc_now.astimezone(pytz.timezone('Asia/Singapore'))
