@@ -48,6 +48,12 @@ def snv(input_data):
     return snv_transformed
 
 
+def custom_transform(input_data, pds_model):
+    coef_matrix, intercept_vector = pds_model
+    transformed_data = np.dot(input_data, coef_matrix.T) + intercept_vector
+    return transformed_data
+
+
 def json_data():
     # API --------------------------------------------------------------------------------------------------------------------
     # First API call
@@ -109,12 +115,8 @@ def json_data():
     # Load the PDS calibration transfer model
     pds_model = joblib.load('pds_model_U6_snv_baseline.joblib')
 
-    # Check if pds_model is a tuple and extract the actual model if needed
-    if isinstance(pds_model, tuple):
-        pds_model = pds_model[0]
-
     # Apply the PDS calibration transfer model to the preprocessed data
-    absorbance_transformed = pds_model.transform(absorbance_baseline_removed_df)
+    absorbance_transformed = custom_transform(absorbance_baseline_removed_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     
     absorbance_all_pp_df = absorbance_transformed_df
