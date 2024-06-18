@@ -1,27 +1,3 @@
-# import tensorflow as tf
-# import streamlit as st
-# from datetime import datetime
-# import pytz
-
-# # Display current time
-# utc_now = datetime.now(pytz.utc)
-# singapore_time = utc_now.astimezone(pytz.timezone('Asia/Singapore'))
-# formatted_time = singapore_time.strftime("%Y-%m-%d %H:%M:%S")
-# st.markdown(f"Time: {formatted_time}")
-
-# # Test TensorFlow
-# def test_tensorflow():
-#     try:
-#         # Create a simple TensorFlow operation
-#         hello = tf.constant('Hello, TensorFlow!')
-#         st.write(f"TensorFlow Test: {hello.numpy().decode('utf-8')}")
-#     except Exception as e:
-#         st.write(f"Error in TensorFlow: {str(e)}")
-
-# if __name__ == "__main__":
-#     test_tensorflow()
-
-
 import pandas as pd
 import streamlit as st
 import requests
