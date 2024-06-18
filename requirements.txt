@@ -6,4 +6,4 @@ streamlit
 scikit-learn
 flask
 matplotlib
-tensorflow
+tensorflow==2.14.0
