@@ -1,19 +1,15 @@
 import pandas as pd
 import streamlit as st
-import requests
+import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from sklearn.preprocessing import Normalizer
+import requests, pytz, pickle, joblib
+from scipy import sparse
+from datetime import datetime
+from sklearn.preprocessing import Normalizer, PolynomialFeatures
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import FLOAT_DTYPES
-from scipy import sparse
-import numpy as np
-from datetime import datetime
-import pytz
-import pickle
-import joblib
 from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 
 
