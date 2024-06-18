@@ -113,7 +113,7 @@ def json_data():
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
 
     # Load the PDS calibration transfer model
-    pds_model = joblib.load('pds_model_U6_snv_baseline.joblib')
+    pds_model = joblib.load('pds_model_U6_snv_baseline.pkl')
 
     # Apply the PDS calibration transfer model to the preprocessed data
     absorbance_transformed = pds_transform(absorbance_baseline_removed_df.values, pds_model)
