@@ -48,9 +48,14 @@ def snv(input_data):
     return snv_transformed
 
 
-def custom_transform(input_data, pds_model):
+def apply_pds(input_data, pds_model):
     coef_matrix, intercept_vector = pds_model
-    transformed_data = np.dot(input_data, coef_matrix.T) + intercept_vector
+    transformed_data = np.zeros(input_data.shape)
+    
+    for i in range(input_data.shape[1]):
+        segment = input_data[:, i]
+        transformed_data[:, i] = np.dot(segment, coef_matrix[i, :]) + intercept_vector[0, i]
+    
     return transformed_data
 
 
@@ -116,7 +121,7 @@ def json_data():
     pds_model = joblib.load('pds_model_U6_snv_baseline.joblib')
 
     # Apply the PDS calibration transfer model to the preprocessed data
-    absorbance_transformed = custom_transform(absorbance_baseline_removed_df.values, pds_model)
+    absorbance_transformed = apply_pds(absorbance_baseline_removed_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     
     absorbance_all_pp_df = absorbance_transformed_df
