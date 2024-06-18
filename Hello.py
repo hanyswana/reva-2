@@ -129,14 +129,14 @@ def json_data():
     # Load the PDS calibration transfer model
     # pds_model = joblib.load('pds_model_U6_snv_baseline.joblib')
     
-    # with open('pds_model_U6_snv_baseline.pkl', 'rb') as f:
-    #     pds_model = pickle.load(f)
-
-    with open('CT_U6_SNV_Baseline_ws5_1.pkl', 'rb') as f:
+    with open('pds_model_U6_snv_baseline.pkl', 'rb') as f:
         pds_model = pickle.load(f)
 
+    # with open('CT_U6_SNV_Baseline_ws5_1.pkl', 'rb') as f:
+    #     pds_model = pickle.load(f)
+
     # Apply the PDS calibration transfer model to the preprocessed data
-    absorbance_transformed = custom_transform(absorbance_baseline_removed_df.values, pds_model)
+    absorbance_transformed = pds_transform(absorbance_baseline_removed_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     
     absorbance_all_pp_df = absorbance_transformed_df
