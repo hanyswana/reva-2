@@ -96,7 +96,7 @@ def json_data():
     # st.write(absorbance_df)
 
     # PDS transformation
-    pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
+    pds_model = joblib.load('pds_model_U11_ori.joblib')
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
 
