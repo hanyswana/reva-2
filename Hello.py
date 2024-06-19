@@ -64,7 +64,7 @@ def custom_transform(input_data, pds_models):
     return transformed_data
 
 
-def json_data(pds_model):
+def json_data():
     # API --------------------------------------------------------------------------------------------------------------------
     # First API call
     api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
@@ -96,7 +96,7 @@ def json_data(pds_model):
     # st.write(absorbance_df)
 
     # PDS transformation
-    # pds_model = joblib.load('pds_model_U11_ori.joblib')
+    pds_model = joblib.load('pds_model_U11_ori.joblib')
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
 
@@ -199,9 +199,6 @@ def predict_with_model(model, input_data):
 
 def main():
 
-    pds_model_path = 'pds_model_U11_ori.joblib'
-    pds_model = joblib.load(pds_model_path)
-
     model_paths_with_labels = [
         ('SNV + BR (R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%')
         # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
@@ -211,7 +208,7 @@ def main():
         
     ]
     
-    absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data(pds_model)
+    absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
 
     create_csv(golden_values, Min, Max, wavelengths)
     
