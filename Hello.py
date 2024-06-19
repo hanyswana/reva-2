@@ -95,6 +95,11 @@ def json_data():
     absorbance_df = df2.div(df1.values).pow(0.5)
     # st.write(absorbance_df)
 
+    # PDS transformation
+    pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
+    absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
+    absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
+
     # CSV ------------------------------------------------------------------------------------------------------------------
     # file_path = 'Lablink_134_SNV_norm_manh_Baseline_sample1.csv'
     # df = pd.read_csv(file_path, usecols=range(3, 22))
@@ -104,8 +109,8 @@ def json_data():
     # # st.write(absorbance_df)
 
     # 1. SNV
-    absorbance_snv = snv(absorbance_df.values)
-    absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
+    absorbance_snv = snv(absorbance_transformed_df.values)
+    absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_transformed_df.columns)
     
     # # 2. Euclidean normalization
     # normalizer = Normalizer(norm='l2')  # Euclidean normalization
@@ -120,17 +125,17 @@ def json_data():
     # 4. Baseline removal
     baseline_remover = BaselineRemover()
     absorbance_baseline_removed = baseline_remover.transform(absorbance_snv_df)
-    absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
+    absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_transformed_df.columns)
 
-    pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
+    # pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
     # with open('pds_model_U6_snv_baseline.pkl', 'rb') as f:
     #     pds_model = pickle.load(f)
 
-    absorbance_transformed = pds_transform(absorbance_baseline_removed_df.values, pds_model)
-    absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
-    absorbance_all_pp_df = absorbance_transformed_df
+    # absorbance_transformed = pds_transform(absorbance_baseline_removed_df.values, pds_model)
+    # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
+    # absorbance_all_pp_df = absorbance_transformed_df
 
-    # absorbance_all_pp_df = absorbance_baseline_removed_df
+    absorbance_all_pp_df = absorbance_baseline_removed_df
 
     reference_file_path = 'Lablink_134_SNV_Baseline.csv'
     # reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
