@@ -122,9 +122,9 @@ def json_data():
     absorbance_baseline_removed = baseline_remover.transform(absorbance_snv_df)
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
 
-    pds_model = joblib.load('pds_model_U6_snv_baseline.joblib')
-    with open('pds_model_U6_snv_baseline.pkl', 'rb') as f:
-        pds_model = pickle.load(f)
+    pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
+    # with open('pds_model_U6_snv_baseline.pkl', 'rb') as f:
+    #     pds_model = pickle.load(f)
 
     absorbance_transformed = pds_transform(absorbance_baseline_removed_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
