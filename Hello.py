@@ -64,7 +64,7 @@ def custom_transform(input_data, pds_models):
     return transformed_data
 
 
-def json_data():
+def json_data(pds_model):
     # API --------------------------------------------------------------------------------------------------------------------
     # First API call
     api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
