@@ -96,9 +96,9 @@ def json_data():
     # st.write(absorbance_df)
 
     # PDS transformation
-    pds_model = joblib.load('CT_U11_ori_pds_model.joblib')
-    absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
-    absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
+    # pds_model = joblib.load('CT_U11_ori_pds_model.joblib')
+    # absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
+    # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
 
     # CSV ------------------------------------------------------------------------------------------------------------------
     # file_path = 'Lablink_134_SNV_norm_manh_Baseline_sample1.csv'
@@ -109,8 +109,8 @@ def json_data():
     # # st.write(absorbance_df)
 
     # 1. SNV
-    absorbance_snv = snv(absorbance_transformed_df.values)
-    absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_transformed_df.columns)
+    absorbance_snv = snv(absorbance_df.values)
+    absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
     
     # # 2. Euclidean normalization
     # normalizer = Normalizer(norm='l2')  # Euclidean normalization
@@ -125,7 +125,7 @@ def json_data():
     # 4. Baseline removal
     baseline_remover = BaselineRemover()
     absorbance_baseline_removed = baseline_remover.transform(absorbance_snv_df)
-    absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_transformed_df.columns)
+    absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
 
     # pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
     # with open('pds_model_U6_snv_baseline.pkl', 'rb') as f:
@@ -200,7 +200,8 @@ def predict_with_model(model, input_data):
 def main():
 
     model_paths_with_labels = [
-        ('SNV + BR (R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%')
+        ('SNV + BR (R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
+        ('SNV + BR (R45) - tflite', 'tflite_model_new_snv_br_quant_2024-05-09_20-22-34_R45_77%.tflite')
         # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
         # ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
         # ('SNV +  + norm euc + BR (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
