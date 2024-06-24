@@ -203,11 +203,11 @@ def predict_with_model(model, input_data):
 def main():
 
     model_paths_with_labels = [
-        ('SNV + BR (R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
+        # ('SNV + BR (R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
         # ('SNV + BR (R45) - tflite', 'tflite_model_new_snv_br_quant_2024-05-09_20-22-34_R45_77%.tflite')
-        ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%'),
-        ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
-        # ('SNV +  + norm euc + BR (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
+        # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%'),
+        # ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
+        ('SNV +  + norm euc + BR (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         # ('SNV + norm manh + BR (R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
         
     ]
@@ -218,8 +218,8 @@ def main():
     
     for label, model_path in model_paths_with_labels:
 
-        selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR / SNV + BR)
-        # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + euc + BR)
+        selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + BR / SNV + euc + BR) - new
+        # selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR) - new
         # selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV (SNV + BR) - new
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
         # st.write(prediction_data)
