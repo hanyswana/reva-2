@@ -102,7 +102,7 @@ def json_data():
 
     # CSV ------------------------------------------------------------------------------------------------------------------
     # file_path = 'Lablink_134_SNV_Baseline_sample1.csv'
-    file_path = 'lablink-134-sample-clean-each-batch-bgrnd.csv'
+    file_path = 'lablink-134-sample-clean-each-batch-bgrnd_sample2.csv'
     df = pd.read_csv(file_path, usecols=range(3, 22))
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
