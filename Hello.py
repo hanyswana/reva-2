@@ -107,7 +107,7 @@ def json_data():
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
     # absorbance_data = df.iloc[13]
-    # st.write(absorbance_df)
+    st.write(absorbance_df)
 
     # 1. SNV
     absorbance_snv = snv(absorbance_df.values)
@@ -137,6 +137,7 @@ def json_data():
     # absorbance_all_pp_df = absorbance_transformed_df
 
     absorbance_all_pp_df = absorbance_baseline_removed_df
+    st.write(absorbance_all_pp_df)
 
     reference_file_path = 'Lablink_134_SNV_Baseline.csv'
     # reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
