@@ -95,10 +95,11 @@ def json_data():
     absorbance_df = df2.div(df1.values).pow(0.5)
     # st.write(absorbance_df)
 
-    # PDS transformation
-    # pds_model = joblib.load('CT_U11_ori_pds_model.joblib')
-    # absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
-    # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
+    PDS transformation
+    pds_model = joblib.load('CT_U11_ori_pds_model.joblib')
+    absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
+    absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
+    absorbance_df = absorbance_transformed_df
 
     # CSV ------------------------------------------------------------------------------------------------------------------
     # # file_path = 'Lablink_134_SNV_Baseline_sample1.csv'
