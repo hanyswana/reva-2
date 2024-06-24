@@ -102,7 +102,7 @@ def json_data():
 
     # CSV ------------------------------------------------------------------------------------------------------------------
     # file_path = 'Lablink_134_SNV_Baseline_sample1.csv'
-    file_path = 'lablink-134-sample-clean-each-batch-bgrnd_sample2.csv'
+    file_path = 'lablink-134-sample-clean-each-batch-bgrnd.csv'
     df = pd.read_csv(file_path, usecols=range(3, 22))
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
@@ -137,7 +137,7 @@ def json_data():
     # absorbance_all_pp_df = absorbance_transformed_df
 
     absorbance_all_pp_df = absorbance_baseline_removed_df
-    st.write(absorbance_all_pp_df)
+    # st.write(absorbance_all_pp_df)
 
     reference_file_path = 'Lablink_134_SNV_Baseline.csv'
     # reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
