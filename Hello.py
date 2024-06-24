@@ -231,7 +231,7 @@ def main():
 
         Min = np.array(Min, dtype=float)
         Max = np.array(Max, dtype=float)
-        absorbance_values = absorbance_all_pp_df.values)
+        absorbance_values = (absorbance_all_pp_df.values)
 
         out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
         count_out_of_range = np.sum(out_of_range)
