@@ -221,7 +221,7 @@ def main():
         # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + euc + BR)
         # selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV (SNV + BR) - new
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
-        st.write(prediction_data)
+        # st.write(prediction_data)
         
         model = load_model(model_path)
         predictions = predict_with_model(model, prediction_data)
