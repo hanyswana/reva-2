@@ -66,34 +66,34 @@ def custom_transform(input_data, pds_models):
 
 def json_data():
     # API --------------------------------------------------------------------------------------------------------------------
-    # First API call
-    api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
-    payload1 = {}
-    response1 = requests.get(api_url1, params=payload1)
+    # # First API call
+    # api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
+    # payload1 = {}
+    # response1 = requests.get(api_url1, params=payload1)
 
-    if response1.status_code == 200:
-        data1 = response1.json()
-    else:
-        st.write("Error in first API call:", response1.status_code)
-        return None
+    # if response1.status_code == 200:
+    #     data1 = response1.json()
+    # else:
+    #     st.write("Error in first API call:", response1.status_code)
+    #     return None
 
-    # Second API call
-    api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:UpqVw9TY/spectraldata_hb"
-    payload2 = {}
-    response2 = requests.get(api_url2, params=payload2)
+    # # Second API call
+    # api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:UpqVw9TY/spectraldata_hb"
+    # payload2 = {}
+    # response2 = requests.get(api_url2, params=payload2)
 
-    if response2.status_code == 200:
-        data2 = response2.json()
-    else:
-        st.write("Error in second API call:", response2.status_code)
-        return None
+    # if response2.status_code == 200:
+    #     data2 = response2.json()
+    # else:
+    #     st.write("Error in second API call:", response2.status_code)
+    #     return None
 
-    # Extract first line of data from both API responses and convert to numeric
-    df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    wavelengths = df1.columns
-    absorbance_df = df2.div(df1.values).pow(0.5)
-    # st.write(absorbance_df)
+    # # Extract first line of data from both API responses and convert to numeric
+    # df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
+    # df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
+    # wavelengths = df1.columns
+    # absorbance_df = df2.div(df1.values).pow(0.5)
+    # # st.write(absorbance_df)
 
     # PDS transformation
     # pds_model = joblib.load('CT_U11_ori_pds_model.joblib')
@@ -101,12 +101,12 @@ def json_data():
     # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
 
     # CSV ------------------------------------------------------------------------------------------------------------------
-    # file_path = 'Lablink_134_SNV_norm_manh_Baseline_sample1.csv'
-    # df = pd.read_csv(file_path, usecols=range(3, 22))
-    # wavelengths = df.columns
-    # absorbance_df = df.apply(pd.to_numeric, errors='coerce')
-    # # absorbance_data = df.iloc[13]
-    # # st.write(absorbance_df)
+    file_path = 'Lablink_134_SNV_Baseline_sample1.csv'
+    df = pd.read_csv(file_path, usecols=range(3, 22))
+    wavelengths = df.columns
+    absorbance_df = df.apply(pd.to_numeric, errors='coerce')
+    # absorbance_data = df.iloc[13]
+    # st.write(absorbance_df)
 
     # 1. SNV
     absorbance_snv = snv(absorbance_df.values)
