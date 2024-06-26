@@ -7,3 +7,4 @@ scikit-learn
 flask
 matplotlib
 tensorflow==2.14.0
+torch
