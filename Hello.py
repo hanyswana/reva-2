@@ -66,50 +66,55 @@ def custom_transform(input_data, pds_models):
 
 def json_data():
     # API --------------------------------------------------------------------------------------------------------------------
-    # First API call
-    api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
-    payload1 = {}
-    response1 = requests.get(api_url1, params=payload1)
+    # # First API call
+    # api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
+    # payload1 = {}
+    # response1 = requests.get(api_url1, params=payload1)
 
-    if response1.status_code == 200:
-        data1 = response1.json()
-    else:
-        st.write("Error in first API call:", response1.status_code)
-        return None
+    # if response1.status_code == 200:
+    #     data1 = response1.json()
+    # else:
+    #     st.write("Error in first API call:", response1.status_code)
+    #     return None
 
-    # Second API call
-    api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:UpqVw9TY/spectraldata_hb"
-    payload2 = {}
-    response2 = requests.get(api_url2, params=payload2)
+    # # Second API call
+    # api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:UpqVw9TY/spectraldata_hb"
+    # payload2 = {}
+    # response2 = requests.get(api_url2, params=payload2)
 
-    if response2.status_code == 200:
-        data2 = response2.json()
-    else:
-        st.write("Error in second API call:", response2.status_code)
-        return None
+    # if response2.status_code == 200:
+    #     data2 = response2.json()
+    # else:
+    #     st.write("Error in second API call:", response2.status_code)
+    #     return None
 
-    # Extract first line of data from both API responses and convert to numeric
-    df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    wavelengths = df1.columns
-    absorbance_df = df2.div(df1.values).pow(0.5)
-    # st.write(absorbance_df)
+    # # Extract first line of data from both API responses and convert to numeric
+    # df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
+    # df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
+    # wavelengths = df1.columns
+    # absorbance_df = df2.div(df1.values).pow(0.5)
+    # # st.write(absorbance_df)
 
+
+    # CSV ------------------------------------------------------------------------------------------------------------------
+    file_path = 'Test_SNV_Baseline_sample1.csv'
+    df = pd.read_csv(file_path, usecols=range(0, 18))
+    # df = pd.read_csv(file_path, usecols=range(3, 22))
+    wavelengths = df.columns
+    absorbance_df = df.apply(pd.to_numeric, errors='coerce')
+    # absorbance_data = df.iloc[13]
+    st.write(absorbance_df)
+
+
+    # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # # PDS transformation
     # pds_model = joblib.load('CT_U11_ori_pds_model.joblib')
     # absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     # absorbance_df = absorbance_transformed_df
 
-    # CSV ------------------------------------------------------------------------------------------------------------------
-    # # file_path = 'Lablink_134_SNV_Baseline_sample1.csv'
-    # file_path = 'lablink-134-sample-clean-each-batch-bgrnd_sample2.csv'
-    # df = pd.read_csv(file_path, usecols=range(3, 22))
-    # wavelengths = df.columns
-    # absorbance_df = df.apply(pd.to_numeric, errors='coerce')
-    # # absorbance_data = df.iloc[13]
-    # st.write(absorbance_df)
 
+    # PREPROCESS ------------------------------------------------------------------------------------------------------------------
     # 1. SNV
     absorbance_snv = snv(absorbance_df.values)
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
@@ -169,60 +174,60 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
     return absorbance_df[selected_wavelengths]
 
 
-# def load_model(model_dir):
-#     if model_dir.endswith('.tflite'):
-#         interpreter = tf.lite.Interpreter(model_path=model_dir)
-#         interpreter.allocate_tensors()
-#         return interpreter
-#     else:
-#         model = tf.saved_model.load(model_dir)
-#         return model
+def load_model(model_dir):
+    if model_dir.endswith('.tflite'):
+        interpreter = tf.lite.Interpreter(model_path=model_dir)
+        interpreter.allocate_tensors()
+        return interpreter
+    else:
+        model = tf.saved_model.load(model_dir)
+        return model
 
 
-# def predict_with_model(model, input_data):
-#     if isinstance(model, tf.lite.Interpreter):
-#         input_details = model.get_input_details()
-#         output_details = model.get_output_details()
+def predict_with_model(model, input_data):
+    if isinstance(model, tf.lite.Interpreter):
+        input_details = model.get_input_details()
+        output_details = model.get_output_details()
         
-#         # Ensure input data is 2D: [batch_size, num_features]
-#         input_data = input_data.values.astype('float32')
-#         if input_data.ndim == 1:
-#             input_data = input_data.reshape(1, -1)  # Reshape if single row input
+        # Ensure input data is 2D: [batch_size, num_features]
+        input_data = input_data.values.astype('float32')
+        if input_data.ndim == 1:
+            input_data = input_data.reshape(1, -1)  # Reshape if single row input
         
-#         model.set_tensor(input_details[0]['index'], input_data)
-#         model.invoke()
-#         predictions = model.get_tensor(output_details[0]['index'])
-#         return predictions
-#     else:
-#         input_data = input_data.values.astype('float32').reshape(-1, 10)
-#         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
-#         predictions = model(input_tensor)
-#         return predictions.numpy()
+        model.set_tensor(input_details[0]['index'], input_data)
+        model.invoke()
+        predictions = model.get_tensor(output_details[0]['index'])
+        return predictions
+    else:
+        input_data = input_data.values.astype('float32').reshape(-1, 10)
+        input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
+        predictions = model(input_tensor)
+        return predictions.numpy()
 
 
-def load_model(model_path):
-    model = torch.load(model_path, map_location=torch.device('cpu'))
-    model.eval()
-    return model
+# def load_model(model_path):
+#     model = torch.load(model_path, map_location=torch.device('cpu'))
+#     model.eval()
+#     return model
 
 
-def predict_with_pytorch_model(model, input_data):
-    input_data = torch.tensor(input_data, dtype=torch.float32)
-    with torch.no_grad():
-        predictions = model(input_data)
-    return predictions.numpy()
+# def predict_with_pytorch_model(model, input_data):
+#     input_data = torch.tensor(input_data, dtype=torch.float32)
+#     with torch.no_grad():
+#         predictions = model(input_data)
+#     return predictions.numpy()
 
 
 def main():
 
     model_paths_with_labels = [
-        # ('SNV + BR (R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%')
+        ('SNV + BR (R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%')
         # ('SNV + BR (R45) - tflite', 'tflite_model_new_snv_br_quant_2024-05-09_20-22-34_R45_77%.tflite')
         # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
         # ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
         # ('SNV +  + norm euc + BR (R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         # ('SNV + norm manh + BR (R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
-        ('SNV + BR (pt)', 'Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37')
+        # ('SNV + BR (pt)', 'Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37')
     ]
     
     absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
