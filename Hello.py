@@ -98,7 +98,7 @@ def json_data():
 
     # CSV ------------------------------------------------------------------------------------------------------------------
     file_path = 'Test_raw_sample1.csv'
-    df = pd.read_csv(file_path, usecols=range(0, 18))
+    df = pd.read_csv(file_path, usecols=range(0, 19))
     # df = pd.read_csv(file_path, usecols=range(3, 22))
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
