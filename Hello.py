@@ -125,14 +125,14 @@ def json_data():
     # absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
     # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
-    # # 3. Manhattan normalization
-    # normalizer = Normalizer(norm='l1')  # Manhattan normalization
-    # absorbance_normalized_manh = normalizer.transform(absorbance_snv_df)
-    # absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
+    # 3. Manhattan normalization
+    normalizer = Normalizer(norm='l1')  # Manhattan normalization
+    absorbance_normalized_manh = normalizer.transform(absorbance_snv_df)
+    absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
 
     # 4. Baseline removal
     baseline_remover = BaselineRemover()
-    absorbance_baseline_removed = baseline_remover.transform(absorbance_snv_df)
+    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_manh_df)
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
 
     # pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
@@ -147,8 +147,8 @@ def json_data():
     # st.write('19 preprocessed data :')
     # st.write(absorbance_all_pp_df)
 
-    reference_file_path = 'Lablink_134_SNV_Baseline.csv'
-    # reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
+    # reference_file_path = 'Lablink_134_SNV_Baseline.csv'
+    reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
     # reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
@@ -238,8 +238,8 @@ def main():
     
     for label, model_path in model_paths_with_labels:
 
-        selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + BR / SNV + euc + BR) - new
-        # selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR) - new
+        # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + BR / SNV + euc + BR) - new
+        selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR) - new
         # selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV (SNV + BR) - new
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
         # st.write('10 selected preprocessed data :')
