@@ -214,9 +214,17 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 
 def load_model(model_path):
     model_file = os.path.join(model_path, 'network.pt')
+    params_file = os.path.join(model_path, 'model_params.json')
+
+    # Load the state dictionary
     state_dict = torch.load(model_file, map_location=torch.device('cpu'))
-    
-    model = TabNetRegressor()  
+
+    # Load model parameters from JSON file
+    with open(params_file, 'r') as file:
+        model_params = json.load(file)['init_params']
+
+    # Initialize the model dynamically with the loaded parameters
+    model = TabNetRegressor(**model_params)
     model.load_state_dict(state_dict)
     model.eval()
     return model
