@@ -260,9 +260,15 @@ def main():
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
         # st.write('10 selected preprocessed data :')
         # st.write(prediction_data)
-        
+
+        # TF/TFLITE MODEL ---------------------------------------------------------------------------------
         model = load_model(model_path)
         predictions = predict_with_model(model, prediction_data)
+
+        # TABNET MODEL ---------------------------------------------------------------------------------
+        model = load_tabnet_model(model_path)
+        predictions = predict_with_tabnet_model(model, prediction_data)
+        
         predictions_value = predictions[0][0] - 1
 
         correlation = np.corrcoef(absorbance_all_pp_df.iloc[0], golden_values)[0, 1]
