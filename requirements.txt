@@ -8,4 +8,4 @@ flask
 matplotlib
 tensorflow==2.14.0
 torch
-os
+pytorch-tabnet
