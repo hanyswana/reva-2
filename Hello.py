@@ -212,27 +212,27 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 
 # TABNET MODEL ------------------------------------------------------------------------------------------------------------------
 
-def load_model(model_path):
-    model_file = os.path.join(model_path, 'network.pt')
-    params_file = os.path.join(model_path, 'model_params.json')
+def load_tabnet_model(model_path):
+    state_dict_path = os.path.join(model_path, 'network.pt')
+    params_file_path = os.path.join(model_path, 'model_params.json')
 
     # Load the state dictionary
-    state_dict = torch.load(model_file, map_location=torch.device('cpu'))
+    state_dict = torch.load(state_dict_path, map_location=torch.device('cpu'))
 
     # Load model parameters from JSON file
-    with open(params_file, 'r') as file:
+    with open(params_file_path, 'r') as file:
         model_params = json.load(file)['init_params']
 
     # Initialize the model dynamically with the loaded parameters
     model = TabNetRegressor(**model_params)
-    model.load_state_dict(state_dict)
+    model.load_model(state_dict)  # Use the correct method to load the state dict
     model.eval()
     return model
 
-def predict_with_pytorch_model(model, input_data):
+def predict_with_tabnet_model(model, input_data):
     input_data = torch.tensor(input_data, dtype=torch.float32)
     with torch.no_grad():
-        predictions = model(input_data)
+        predictions = model.predict(input_data)  # Use the correct method to get predictions
     return predictions.numpy()
 
 
