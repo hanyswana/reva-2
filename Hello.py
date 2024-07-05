@@ -212,7 +212,8 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 # TABNET MODEL ------------------------------------------------------------------------------------------------------------------
 
 def load_model(model_path):
-    model = torch.load(model_path, map_location=torch.device('cpu'))
+    model_file = os.path.join(model_path, 'network.pt')
+    model = torch.load(model_file, map_location=torch.device('cpu'))
     model.eval()
     return model
 
