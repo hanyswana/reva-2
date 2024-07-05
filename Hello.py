@@ -11,6 +11,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import FLOAT_DTYPES
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LinearRegression
+from pytorch_tabnet.tab_network import TabNetRegressor 
 
 
 utc_now = datetime.now(pytz.utc)
@@ -213,10 +214,12 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 
 def load_model(model_path):
     model_file = os.path.join(model_path, 'network.pt')
-    model = torch.load(model_file, map_location=torch.device('cpu'))
+    state_dict = torch.load(model_file, map_location=torch.device('cpu'))
+    
+    model = TabNetRegressor()  
+    model.load_state_dict(state_dict)
     model.eval()
     return model
-
 
 def predict_with_pytorch_model(model, input_data):
     input_data = torch.tensor(input_data, dtype=torch.float32)
