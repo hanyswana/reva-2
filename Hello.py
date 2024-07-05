@@ -11,7 +11,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.utils.validation import FLOAT_DTYPES
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LinearRegression
-from pytorch_tabnet.tab_network import TabNetRegressor 
+from pytorch_tabnet.tab_model import TabNetRegressor 
 
 
 utc_now = datetime.now(pytz.utc)
