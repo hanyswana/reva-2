@@ -121,10 +121,10 @@ def json_data():
     absorbance_snv = snv(absorbance_df.values)
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
     
-    # 2. Euclidean normalization
-    normalizer = Normalizer(norm='l2')  # Euclidean normalization
-    absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
-    absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
+    # # 2. Euclidean normalization
+    # normalizer = Normalizer(norm='l2')  # Euclidean normalization
+    # absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
+    # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
     # # 3. Manhattan normalization
     # normalizer = Normalizer(norm='l1')  # Manhattan normalization
@@ -133,7 +133,7 @@ def json_data():
 
     # 4. Baseline removal
     baseline_remover = BaselineRemover()
-    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_euc_df)
+    absorbance_baseline_removed = baseline_remover.transform(absorbance_snv_df)
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
 
     # pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
@@ -148,9 +148,9 @@ def json_data():
     # st.write('19 preprocessed data :')
     # st.write(absorbance_all_pp_df)
 
-    # reference_file_path = 'Lablink_134_SNV_Baseline.csv'
+    reference_file_path = 'Lablink_134_SNV_Baseline.csv'
     # reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
-    reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
+    # reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
     
@@ -270,14 +270,14 @@ def predict_with_model(model, input_data):
 def main():
 
     model_paths_with_labels = [
-        # ('SNV + BR (tf-R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
+        ('SNV + BR (tf-R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
         # ('SNV + BR (R45) - tflite', 'tflite_model_new_snv_br_quant_2024-05-09_20-22-34_R45_77%.tflite')
         # ('SNV + BR (tf-R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%'),
         # ('SNV + BR (tf-R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%'),
         # ('SNV +  + norm euc + BR (tf-R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         # ('SNV + norm manh + BR (tf-R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
-        # ('SNV + BR (pt)', 'Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip')
-        ('SNV +  + norm euc + BR (tf-R53)', 'corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
+        ('SNV + BR (pt)', 'Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip')
+        # ('SNV +  + norm euc + BR (tf-R53)', 'corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
     ]
     
     absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
