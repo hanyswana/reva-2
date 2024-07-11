@@ -226,57 +226,13 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 
 
 
-# TF/TFLITE/TABNET MODEL ------------------------------------------------------------------------------------------------------------------
-
-def load_model(model_path):
-    if model_path.endswith('.tflite'):
-        interpreter = tf.lite.Interpreter(model_path=model_path)
-        interpreter.allocate_tensors()
-        return interpreter
-    elif model_path.endswith('.zip'):
-        # Unzip and load TabNet model
-        with zipfile.ZipFile(model_path, 'r') as zip_ref:
-            zip_ref.extractall('/tmp/tabnet_model')
-        model_file = [f for f in os.listdir('/tmp/tabnet_model') if f.endswith('.pt')][0]
-        model_path = os.path.join('/tmp/tabnet_model', model_file)
-        
-        model = TabNetRegressor()
-        model.load_model(model_path)
-        return model
-    else:
-        model = tf.saved_model.load(model_path)
-        return model
-
-def predict_with_model(model, input_data):
-    if isinstance(model, tf.lite.Interpreter):
-        input_details = model.get_input_details()
-        output_details = model.get_output_details()
-        
-        input_data = input_data.values.astype('float32')
-        if input_data.ndim == 1:
-            input_data = input_data.reshape(1, -1)
-        
-        model.set_tensor(input_details[0]['index'], input_data)
-        model.invoke()
-        predictions = model.get_tensor(output_details[0]['index'])
-        return predictions
-    elif isinstance(model, TabNetRegressor):
-        input_data = torch.tensor(input_data.values, dtype=torch.float32)
-        with torch.no_grad():
-            predictions = model.predict(input_data)
-        return predictions
-    else:
-        input_data = input_data.values.astype('float32').reshape(-1, 10)
-        input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
-        predictions = model(input_tensor)
-        return predictions.numpy()
-
+# TF/TFLITE/TABNET MODEL -----------------------------------------------------------------------------------------------------------------
 
 
 def main():
 
     model_paths_with_labels = [
-        # ('SNV + BR (TF-R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
+        ('SNV + BR (TF-R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
         # ('SNV + BR (R45) - tflite', 'tflite_model_new_snv_br_quant_2024-05-09_20-22-34_R45_77%.tflite')
         # ('SNV + BR (R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%')
         # ('SNV + BR (R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%')
