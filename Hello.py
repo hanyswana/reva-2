@@ -179,61 +179,50 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 
 # TF/TFLITE MODEL ------------------------------------------------------------------------------------------------------------------
 
-def load_model(model_dir):
-    if model_dir.endswith('.tflite'):
-        interpreter = tf.lite.Interpreter(model_path=model_dir)
-        interpreter.allocate_tensors()
-        return interpreter
-    else:
-        model = tf.saved_model.load(model_dir)
-        return model
+# def load_model(model_dir):
+#     if model_dir.endswith('.tflite'):
+#         interpreter = tf.lite.Interpreter(model_path=model_dir)
+#         interpreter.allocate_tensors()
+#         return interpreter
+#     else:
+#         model = tf.saved_model.load(model_dir)
+#         return model
 
 
-def predict_with_model(model, input_data):
-    if isinstance(model, tf.lite.Interpreter):
-        input_details = model.get_input_details()
-        output_details = model.get_output_details()
+# def predict_with_model(model, input_data):
+#     if isinstance(model, tf.lite.Interpreter):
+#         input_details = model.get_input_details()
+#         output_details = model.get_output_details()
         
-        # Ensure input data is 2D: [batch_size, num_features]
-        input_data = input_data.values.astype('float32')
-        if input_data.ndim == 1:
-            input_data = input_data.reshape(1, -1)  # Reshape if single row input
+#         # Ensure input data is 2D: [batch_size, num_features]
+#         input_data = input_data.values.astype('float32')
+#         if input_data.ndim == 1:
+#             input_data = input_data.reshape(1, -1)  # Reshape if single row input
         
-        model.set_tensor(input_details[0]['index'], input_data)
-        model.invoke()
-        predictions = model.get_tensor(output_details[0]['index'])
-        return predictions
-    else:
-        input_data = input_data.values.astype('float32').reshape(-1, 10)
-        input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
-        predictions = model(input_tensor)
-        return predictions.numpy()
+#         model.set_tensor(input_details[0]['index'], input_data)
+#         model.invoke()
+#         predictions = model.get_tensor(output_details[0]['index'])
+#         return predictions
+#     else:
+#         input_data = input_data.values.astype('float32').reshape(-1, 10)
+#         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
+#         predictions = model(input_tensor)
+#         return predictions.numpy()
 
 
 # TABNET MODEL ------------------------------------------------------------------------------------------------------------------
 
-# def load_tabnet_model(model_path):
-#     state_dict_path = os.path.join(model_path, 'network.pt')
-#     params_file_path = os.path.join(model_path, 'model_params.json')
+def load_tabnet_model(model_path):
+    model = TabNetRegressor()
+    model.load_model(model_path)
+    return model
 
-#     # Load the state dictionary
-#     state_dict = torch.load(state_dict_path, map_location=torch.device('cpu'))
-
-#     # Load model parameters from JSON file
-#     with open(params_file_path, 'r') as file:
-#         model_params = json.load(file)['init_params']
-
-#     # Initialize the model dynamically with the loaded parameters
-#     model = TabNetRegressor(**model_params)
-#     model.load_model(state_dict)  # Use the correct method to load the state dict
-#     model.eval()
-#     return model
 
 def predict_with_tabnet_model(model, input_data):
-    input_data = torch.tensor(input_data, dtype=torch.float32)
+    input_data = torch.tensor(input_data.values, dtype=torch.float32)  # Convert DataFrame to NumPy array and then to tensor
     with torch.no_grad():
-        predictions = model.predict(input_data)  # Use the correct method to get predictions
-    return predictions.numpy()
+        predictions = model.predict(input_data)
+    return predictions
 
 
 def main():
