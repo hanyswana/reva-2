@@ -229,6 +229,44 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 # TF/TFLITE/TABNET MODEL -----------------------------------------------------------------------------------------------------------------
 
 
+def load_model(model_dir):
+    if model_dir.endswith('.tflite'):
+        interpreter = tf.lite.Interpreter(model_path=model_dir)
+        interpreter.allocate_tensors()
+        return interpreter
+    elif model_dir.endswith('.pt.zip') or model_dir.endswith('.pt'):
+        model = TabNetRegressor()
+        model.load_model(model_dir)
+        return model
+    else:
+        model = tf.saved_model.load(model_dir)
+        return model
+
+def predict_with_model(model, input_data):
+    if isinstance(model, tf.lite.Interpreter):
+        input_details = model.get_input_details()
+        output_details = model.get_output_details()
+        
+        input_data = input_data.values.astype('float32')
+        if input_data.ndim == 1:
+            input_data = input_data.reshape(1, -1)
+        
+        model.set_tensor(input_details[0]['index'], input_data)
+        model.invoke()
+        predictions = model.get_tensor(output_details[0]['index'])
+        return predictions
+    elif isinstance(model, TabNetRegressor):
+        input_data = torch.tensor(input_data.values, dtype=torch.float32)
+        with torch.no_grad():
+            predictions = model.predict(input_data)
+        return predictions
+    else:
+        input_data = input_data.values.astype('float32').reshape(-1, 10)
+        input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
+        predictions = model(input_tensor)
+        return predictions.numpy()
+        
+
 def main():
 
     model_paths_with_labels = [
