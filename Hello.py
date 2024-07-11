@@ -292,17 +292,13 @@ def main():
         # st.write('10 selected preprocessed data :')
         # st.write(prediction_data)
 
-        # TF/TFLITE MODEL ---------------------------------------------------------------------------------
+        # TF/TFLITE &&& TF/TFLITE/TABNET MODEL ---------------------------------------------------------------------------------
         # model = load_model(model_path)
         # predictions = predict_with_model(model, prediction_data)
 
         # TABNET MODEL ---------------------------------------------------------------------------------
         # model = load_tabnet_model(model_path)
         # predictions = predict_with_tabnet_model(model, prediction_data)
-
-        # TF/TFLITE/TABNET MODEL ---------------------------------------------------------------------------------
-        model = load_model(model_path)
-        predictions = predict_with_model(model, prediction_data)
         
         predictions_value = predictions[0][0]
 
