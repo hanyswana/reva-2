@@ -233,24 +233,24 @@ def load_model(model_dir):
         interpreter = tf.lite.Interpreter(model_path=model_dir)
         interpreter.allocate_tensors()
         return interpreter
-    elif model_dir.endswith('.pt.ZIP'):
-        model = TabNetRegressor()
-        model.load_model(model_dir)
+    elif model_dir.endswith('.pt.zip'):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with zipfile.ZipFile(model_dir, 'r') as zip_ref:
+                zip_ref.extractall(temp_dir)
+            model = TabNetRegressor()
+            model.load_model(os.path.join(temp_dir, 'model.pt'))
         return model
     else:
         model = tf.saved_model.load(model_dir)
         return model
 
-
 def predict_with_model(model, input_data):
     if isinstance(model, tf.lite.Interpreter):
         input_details = model.get_input_details()
         output_details = model.get_output_details()
-        
         input_data = input_data.values.astype('float32')
         if input_data.ndim == 1:
             input_data = input_data.reshape(1, -1)
-        
         model.set_tensor(input_details[0]['index'], input_data)
         model.invoke()
         predictions = model.get_tensor(output_details[0]['index'])
