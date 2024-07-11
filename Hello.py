@@ -233,7 +233,7 @@ def load_model(model_dir):
         interpreter = tf.lite.Interpreter(model_path=model_dir)
         interpreter.allocate_tensors()
         return interpreter
-    elif model_dir.endswith('.pt'):
+    elif model_dir.endswith('.pt.ZIP'):
         model = TabNetRegressor()
         model.load_model(model_dir)
         return model
