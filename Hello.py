@@ -121,10 +121,10 @@ def json_data():
     absorbance_snv = snv(absorbance_df.values)
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
     
-    # # 2. Euclidean normalization
-    # normalizer = Normalizer(norm='l2')  # Euclidean normalization
-    # absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
-    # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
+    # 2. Euclidean normalization
+    normalizer = Normalizer(norm='l2')  # Euclidean normalization
+    absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
+    absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
     # # 3. Manhattan normalization
     # normalizer = Normalizer(norm='l1')  # Manhattan normalization
@@ -133,7 +133,7 @@ def json_data():
 
     # 4. Baseline removal
     baseline_remover = BaselineRemover()
-    absorbance_baseline_removed = baseline_remover.transform(absorbance_snv_df)
+    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_euc_df)
     absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
 
     # pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
@@ -148,9 +148,9 @@ def json_data():
     # st.write('19 preprocessed data :')
     # st.write(absorbance_all_pp_df)
 
-    reference_file_path = 'Lablink_134_SNV_Baseline.csv'
+    # reference_file_path = 'Lablink_134_SNV_Baseline.csv'
     # reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
-    # reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
+    reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
     
