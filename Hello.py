@@ -293,8 +293,8 @@ def main():
         # st.write(prediction_data)
 
         # TF/TFLITE &&& TF/TFLITE/TABNET MODEL ---------------------------------------------------------------------------------
-        # model = load_model(model_path)
-        # predictions = predict_with_model(model, prediction_data)
+        model = load_model(model_path)
+        predictions = predict_with_model(model, prediction_data)
 
         # TABNET MODEL ---------------------------------------------------------------------------------
         # model = load_tabnet_model(model_path)
