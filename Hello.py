@@ -3,7 +3,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-import requests, pytz, pickle, joblib, torch, os, json, tempfile, zipfile
+import requests, pytz, pickle, joblib, torch, os, json, tempfile, zipfile, onnxruntime as ort
 from scipy import sparse
 from datetime import datetime
 from sklearn.preprocessing import Normalizer, PolynomialFeatures
@@ -238,6 +238,9 @@ def load_model(model_dir):
         model = TabNetRegressor()
         model.load_model(model_dir)
         return model
+    elif model_dir.endswith('.onnx'):
+        session = ort.InferenceSession(model_dir)
+        return session
     else:
         model = tf.saved_model.load(model_dir)
         return model
@@ -260,6 +263,13 @@ def predict_with_model(model, input_data):
         with torch.no_grad():
             predictions = model.predict(input_data)
         return predictions
+    elif isinstance(model, ort.InferenceSession):
+        input_name = model.get_inputs()[0].name
+        input_data = input_data.values.astype('float32')
+        if input_data.ndim == 1:
+            input_data = input_data.reshape(1, -1)
+        predictions = model.run(None, {input_name: input_data})[0]
+        return predictions
     else:
         input_data = input_data.values.astype('float32').reshape(-1, 10)
         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
@@ -270,13 +280,14 @@ def predict_with_model(model, input_data):
 def main():
 
     model_paths_with_labels = [
-        ('SNV + BR (tf-R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
+        # ('SNV + BR (tf-R45)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
         # ('SNV + BR (R45) - tflite', 'tflite_model_new_snv_br_quant_2024-05-09_20-22-34_R45_77%.tflite')
         # ('SNV + BR (tf-R56)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%'),
         # ('SNV + BR (tf-R50)', 'Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%'),
         # ('SNV +  + norm euc + BR (tf-R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         # ('SNV + norm manh + BR (tf-R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
-        ('SNV + BR (pt)', 'Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip')
+        ('SNV + BR (pt)', 'Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip'),
+        ('SNV + BR (onnx)', 'model_snv_br_2024-06-06_14-42-37.onnx')
         # ('SNV +  + norm euc + BR (tf-R53)', 'corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
     ]
     
