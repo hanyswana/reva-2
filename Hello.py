@@ -289,7 +289,8 @@ def main():
         # ('SNV +  + norm euc + BR (tf-R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         # ('SNV + norm manh + BR (tf-R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
         ('SNV + BR (pt)', 'Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip'),
-        ('SNV + BR (onnx)', 'model_snv_br_2024-06-06_14-42-37.onnx')
+        ('SNV + BR (onnx)', 'model_snv_br_2024-06-06_14-42-37.onnx'),
+        ('SNV + BR (onnx-2)', 'model_snv_br_2024-06-06_14-42-37_2.onnx')
         # ('SNV + BR (tf)', 'onnx_model')
         # ('SNV +  + norm euc + BR (tf-R53)', 'corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
     ]
