@@ -229,21 +229,21 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 # TF/TFLITE/TABNET MODEL -----------------------------------------------------------------------------------------------------------------
 
 
-def load_model(model_dir):
-    if model_dir.endswith('.tflite'):
-        interpreter = tf.lite.Interpreter(model_path=model_dir)
-        interpreter.allocate_tensors()
-        return interpreter
-    elif model_dir.endswith('.pt.zip') or model_dir.endswith('.pt'):
-        model = TabNetRegressor()
-        model.load_model(model_dir)
-        return model
-    elif model_dir.endswith('.onnx'):
-        session = ort.InferenceSession(model_dir)
-        return session
-    else:
-        model = tf.saved_model.load(model_dir)
-        return model
+# def load_model(model_dir):
+#     if model_dir.endswith('.tflite'):
+#         interpreter = tf.lite.Interpreter(model_path=model_dir)
+#         interpreter.allocate_tensors()
+#         return interpreter
+#     elif model_dir.endswith('.pt.zip') or model_dir.endswith('.pt'):
+#         model = TabNetRegressor()
+#         model.load_model(model_dir)
+#         return model
+#     elif model_dir.endswith('.onnx'):
+#         session = ort.InferenceSession(model_dir)
+#         return session
+#     else:
+#         model = tf.saved_model.load(model_dir)
+#         return model
 
 
 # def predict_with_model(model, input_data):
@@ -278,6 +278,25 @@ def load_model(model_dir):
 #         return predictions.numpy()
 
 
+def load_model(model_dir):
+    if model_dir.endswith('.tflite'):
+        interpreter = tf.lite.Interpreter(model_path=model_dir)
+        interpreter.allocate_tensors()
+        return interpreter
+    elif model_dir.endswith('.pt.zip') or model_dir.endswith('.pt'):
+        model = TabNetRegressor()
+        model.load_model(model_dir)
+        return model
+    elif model_dir.endswith('.onnx'):
+        session = ort.InferenceSession(model_dir)
+        return session
+    else:
+        model = tf.saved_model.load(model_dir)
+        # Print the model's input signature
+        print(model.signatures['serving_default'])
+        return model
+
+
 def predict_with_model(model, input_data):
     if isinstance(model, tf.lite.Interpreter):
         input_details = model.get_input_details()
@@ -304,13 +323,11 @@ def predict_with_model(model, input_data):
         predictions = model.run(None, {input_name: input_data})[0]
         return predictions
     else:
-        # Ensuring the model expects data in the right format.
-        # Convert DataFrame to a tensor and use a dictionary if the model requires it.
+        # Adjust this based on the signature printed earlier
         input_data = input_data.values.astype('float32').reshape(-1, 10)
-        input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
-        # If your model's serving function expects keyword arguments, modify this part.
-        predictions = model(input_tensor)  # This might need to be model(inputs=input_tensor) depending on the saved model's signature.
-        return predictions.numpy()
+        input_dict = {'input_tensor': input_data}  # Use the actual input name from the signature
+        predictions = model.signatures['serving_default'](**input_dict)
+        return predictions['output_0'].numpy() 
 
         
 
