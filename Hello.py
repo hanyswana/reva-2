@@ -229,55 +229,6 @@ def select_for_prediction(absorbance_df, selected_wavelengths):
 # TF/TFLITE/TABNET MODEL -----------------------------------------------------------------------------------------------------------------
 
 
-# def load_model(model_dir):
-#     if model_dir.endswith('.tflite'):
-#         interpreter = tf.lite.Interpreter(model_path=model_dir)
-#         interpreter.allocate_tensors()
-#         return interpreter
-#     elif model_dir.endswith('.pt.zip') or model_dir.endswith('.pt'):
-#         model = TabNetRegressor()
-#         model.load_model(model_dir)
-#         return model
-#     elif model_dir.endswith('.onnx'):
-#         session = ort.InferenceSession(model_dir)
-#         return session
-#     else:
-#         model = tf.saved_model.load(model_dir)
-#         return model
-
-
-# def predict_with_model(model, input_data):
-#     if isinstance(model, tf.lite.Interpreter):
-#         input_details = model.get_input_details()
-#         output_details = model.get_output_details()
-        
-#         input_data = input_data.values.astype('float32')
-#         if input_data.ndim == 1:
-#             input_data = input_data.reshape(1, -1)
-        
-#         model.set_tensor(input_details[0]['index'], input_data)
-#         model.invoke()
-#         predictions = model.get_tensor(output_details[0]['index'])
-#         return predictions
-#     elif isinstance(model, TabNetRegressor):
-#         input_data = torch.tensor(input_data.values, dtype=torch.float32)
-#         with torch.no_grad():
-#             predictions = model.predict(input_data)
-#         return predictions
-#     elif isinstance(model, ort.InferenceSession):
-#         input_name = model.get_inputs()[0].name
-#         input_data = input_data.values.astype('float32')
-#         if input_data.ndim == 1:
-#             input_data = input_data.reshape(1, -1)
-#         predictions = model.run(None, {input_name: input_data})[0]
-#         return predictions
-#     else:
-#         input_data = input_data.values.astype('float32').reshape(-1, 10)
-#         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
-#         predictions = model(input_tensor)
-#         return predictions.numpy()
-
-
 def load_model(model_dir):
     if model_dir.endswith('.tflite'):
         interpreter = tf.lite.Interpreter(model_path=model_dir)
@@ -292,8 +243,6 @@ def load_model(model_dir):
         return session
     else:
         model = tf.saved_model.load(model_dir)
-        # Print the model's input signature
-        print(model.signatures['serving_default'])
         return model
 
 
@@ -323,11 +272,10 @@ def predict_with_model(model, input_data):
         predictions = model.run(None, {input_name: input_data})[0]
         return predictions
     else:
-        # Adjust this based on the signature printed earlier
         input_data = input_data.values.astype('float32').reshape(-1, 10)
-        input_dict = {'input_tensor': input_data}  # Use the actual input name from the signature
-        predictions = model.signatures['serving_default'](**input_dict)
-        return predictions['output_0'].numpy() 
+        input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
+        predictions = model(input_tensor)
+        return predictions.numpy()
 
         
 
@@ -341,8 +289,8 @@ def main():
         # ('SNV +  + norm euc + BR (tf-R52)', 'Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         # ('SNV + norm manh + BR (tf-R52)', 'Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
         ('SNV + BR (pt)', 'Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip'),
-        ('SNV + BR (onnx)', 'model_snv_br_2024-06-06_14-42-37.onnx'),
-        ('SNV + BR (tf)', 'onnx_model')
+        ('SNV + BR (onnx)', 'model_snv_br_2024-06-06_14-42-37.onnx')
+        # ('SNV + BR (tf)', 'onnx_model')
         # ('SNV +  + norm euc + BR (tf-R53)', 'corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
     ]
     
