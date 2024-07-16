@@ -245,6 +245,39 @@ def load_model(model_dir):
         model = tf.saved_model.load(model_dir)
         return model
 
+
+# def predict_with_model(model, input_data):
+#     if isinstance(model, tf.lite.Interpreter):
+#         input_details = model.get_input_details()
+#         output_details = model.get_output_details()
+        
+#         input_data = input_data.values.astype('float32')
+#         if input_data.ndim == 1:
+#             input_data = input_data.reshape(1, -1)
+        
+#         model.set_tensor(input_details[0]['index'], input_data)
+#         model.invoke()
+#         predictions = model.get_tensor(output_details[0]['index'])
+#         return predictions
+#     elif isinstance(model, TabNetRegressor):
+#         input_data = torch.tensor(input_data.values, dtype=torch.float32)
+#         with torch.no_grad():
+#             predictions = model.predict(input_data)
+#         return predictions
+#     elif isinstance(model, ort.InferenceSession):
+#         input_name = model.get_inputs()[0].name
+#         input_data = input_data.values.astype('float32')
+#         if input_data.ndim == 1:
+#             input_data = input_data.reshape(1, -1)
+#         predictions = model.run(None, {input_name: input_data})[0]
+#         return predictions
+#     else:
+#         input_data = input_data.values.astype('float32').reshape(-1, 10)
+#         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
+#         predictions = model(input_tensor)
+#         return predictions.numpy()
+
+
 def predict_with_model(model, input_data):
     if isinstance(model, tf.lite.Interpreter):
         input_details = model.get_input_details()
@@ -271,10 +304,14 @@ def predict_with_model(model, input_data):
         predictions = model.run(None, {input_name: input_data})[0]
         return predictions
     else:
+        # Ensuring the model expects data in the right format.
+        # Convert DataFrame to a tensor and use a dictionary if the model requires it.
         input_data = input_data.values.astype('float32').reshape(-1, 10)
         input_tensor = tf.convert_to_tensor(input_data, dtype=tf.float32)
-        predictions = model(input_tensor)
+        # If your model's serving function expects keyword arguments, modify this part.
+        predictions = model(input_tensor)  # This might need to be model(inputs=input_tensor) depending on the saved model's signature.
         return predictions.numpy()
+
         
 
 def main():
