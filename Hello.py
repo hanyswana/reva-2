@@ -98,7 +98,7 @@ def json_data():
 
 
     # CSV ------------------------------------------------------------------------------------------------------------------
-    # file_path = 'Test_raw_sample1.csv'
+    # file_path = 'correct-data/Test_raw_sample1.csv'
     # df = pd.read_csv(file_path, usecols=range(0, 19))
     # # df = pd.read_csv(file_path, usecols=range(3, 22))
     # wavelengths = df.columns
@@ -110,7 +110,7 @@ def json_data():
 
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # # PDS transformation
-    # pds_model = joblib.load('CT_U11_ori_pds_model.joblib')
+    # pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
     # absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     # absorbance_df = absorbance_transformed_df
@@ -148,7 +148,7 @@ def json_data():
     # st.write('19 preprocessed data :')
     # st.write(absorbance_all_pp_df)
 
-    reference_file_path = 'Lablink_134_SNV_Baseline.csv'
+    reference_file_path = 'incorrect-data/Lablink_134_SNV_Baseline.csv'
     # reference_file_path = 'Lablink_134_SNV_norm_manh_Baseline.csv'
     # reference_file_path = 'Lablink_134_SNV_norm_eucl_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
