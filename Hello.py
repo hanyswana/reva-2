@@ -310,8 +310,8 @@ def main():
         # selected_wavelengths = ['415 nm', '515 nm', '555 nm', '560 nm', '585 nm', '590 nm', '610 nm', '680 nm', '730 nm', '900 nm'] # for CSV (SNV + euc + BR) - new
         
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
-        st.write('10 selected preprocessed data :')
-        st.write(prediction_data)
+        # st.write('10 selected preprocessed data :')
+        # st.write(prediction_data)
 
         # TF/TFLITE &&& TF/TFLITE/TABNET MODEL ---------------------------------------------------------------------------------
         model = load_model(model_path)
