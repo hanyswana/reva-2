@@ -67,45 +67,46 @@ def custom_transform(input_data, pds_models):
 
 def json_data():
     # API --------------------------------------------------------------------------------------------------------------------
-    # First API call
-    api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
-    payload1 = {}
-    response1 = requests.get(api_url1, params=payload1)
+    # # First API call
+    # api_url1 = "https://x8ki-letl-twmt.n7.xano.io/api:5r4pCOor/bgdata_hb"
+    # payload1 = {}
+    # response1 = requests.get(api_url1, params=payload1)
 
-    if response1.status_code == 200:
-        data1 = response1.json()
-    else:
-        st.write("Error in first API call:", response1.status_code)
-        return None
+    # if response1.status_code == 200:
+    #     data1 = response1.json()
+    # else:
+    #     st.write("Error in first API call:", response1.status_code)
+    #     return None
 
-    # Second API call
-    api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:UpqVw9TY/spectraldata_hb"
-    payload2 = {}
-    response2 = requests.get(api_url2, params=payload2)
+    # # Second API call
+    # api_url2 = "https://x8ki-letl-twmt.n7.xano.io/api:UpqVw9TY/spectraldata_hb"
+    # payload2 = {}
+    # response2 = requests.get(api_url2, params=payload2)
 
-    if response2.status_code == 200:
-        data2 = response2.json()
-    else:
-        st.write("Error in second API call:", response2.status_code)
-        return None
+    # if response2.status_code == 200:
+    #     data2 = response2.json()
+    # else:
+    #     st.write("Error in second API call:", response2.status_code)
+    #     return None
 
-    # Extract first line of data from both API responses and convert to numeric
-    df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
-    wavelengths = df1.columns
-    absorbance_df = df2.div(df1.values).pow(0.5)
-    # st.write(absorbance_df)
+    # # Extract first line of data from both API responses and convert to numeric
+    # df1 = pd.DataFrame(data1).iloc[:1].apply(pd.to_numeric, errors='coerce')
+    # df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
+    # wavelengths = df1.columns
+    # absorbance_df = df2.div(df1.values).pow(0.5)
+    # # st.write(absorbance_df)
 
 
     # CSV ------------------------------------------------------------------------------------------------------------------
     # file_path = 'correct-data/Test_raw_sample1.csv'
-    # df = pd.read_csv(file_path, usecols=range(0, 19))
-    # # df = pd.read_csv(file_path, usecols=range(3, 22))
-    # wavelengths = df.columns
-    # absorbance_df = df.apply(pd.to_numeric, errors='coerce')
-    # # absorbance_data = df.iloc[13]
-    # # st.write('19 raw data :')
-    # # st.write(absorbance_df)
+    file_path = 'correct-data/test_no_ble_alpha_10.csv'
+    df = pd.read_csv(file_path, usecols=range(0, 19))
+    # df = pd.read_csv(file_path, usecols=range(3, 22))
+    wavelengths = df.columns
+    absorbance_df = df.apply(pd.to_numeric, errors='coerce')
+    # absorbance_data = df.iloc[13]
+    st.write('19 raw data :')
+    st.write(absorbance_df)
 
 
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
@@ -145,8 +146,8 @@ def json_data():
     # absorbance_all_pp_df = absorbance_transformed_df
 
     absorbance_all_pp_df = absorbance_baseline_removed_df
-    # st.write('19 preprocessed data :')
-    # st.write(absorbance_all_pp_df)
+    st.write('19 preprocessed data :')
+    st.write(absorbance_all_pp_df)
 
     reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_Baseline.csv'
     # reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_norm_manh_Baseline.csv'
@@ -288,12 +289,12 @@ def main():
         # ('SNV + BR (tf-R50)', 'incorrect-model-lablink/Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%'),
         # ('SNV +  + norm euc + BR (tf-R52)', 'incorrect-model-lablink/Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
         # ('SNV + norm manh + BR (tf-R52)', 'incorrect-model-lablink/Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
-        ('SNV + BR (pt)', 'tabnet-model/Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip'),
-        ('SNV + BR (onnx)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37.onnx'),
-        ('SNV + BR (tflite)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37.tflite'),
-        ('SNV + BR (tflite-quant)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37_quant.tflite')
+        # ('SNV + BR (pt)', 'tabnet-model/Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip'),
+        # ('SNV + BR (onnx)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37.onnx'),
+        # ('SNV + BR (tflite)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37.tflite'),
+        # ('SNV + BR (tflite-quant)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37_quant.tflite')
         # ('SNV + BR (tf)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37')
-        # ('SNV +  + norm euc + BR (tf-R53)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
+        ('SNV +  + norm euc + BR (tf-R53)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
     ]
     
     absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
@@ -302,12 +303,14 @@ def main():
     
     for label, model_path in model_paths_with_labels:
 
-        selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + BR / SNV + euc + BR) - new
+        # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + BR / SNV + euc + BR) - new
         # selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR) - new
         # selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV (SNV + BR) - new
+        selected_wavelengths = ['415 nm', '515 nm', '555 nm', '560 nm', '585 nm', '590 nm', '610 nm', '680 nm', '730 nm', '900 nm'] # for CSV (SNV + euc + BR) - new
+        
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
-        # st.write('10 selected preprocessed data :')
-        # st.write(prediction_data)
+        st.write('10 selected preprocessed data :')
+        st.write(prediction_data)
 
         # TF/TFLITE &&& TF/TFLITE/TABNET MODEL ---------------------------------------------------------------------------------
         model = load_model(model_path)
