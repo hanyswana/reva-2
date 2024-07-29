@@ -94,7 +94,8 @@ def json_data():
     df2 = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')
     wavelengths = df1.columns
     absorbance_df = df2.div(df1.values).pow(0.5)
-    # st.write(absorbance_df)
+    st.write('19 raw data :')
+    st.write(absorbance_df)
 
 
     # CSV ------------------------------------------------------------------------------------------------------------------
@@ -110,11 +111,14 @@ def json_data():
 
 
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
-    # # PDS transformation
-    # pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
-    # absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
-    # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
-    # absorbance_df = absorbance_transformed_df
+    # PDS transformation
+    pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
+    absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
+    absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
+    absorbance_df = absorbance_transformed_df
+    st.write('19 raw data after calibration transfer:')
+    st.write(absorbance_transformed_df)
+    
 
 
     # PREPROCESS ------------------------------------------------------------------------------------------------------------------
@@ -147,8 +151,8 @@ def json_data():
 
     absorbance_all_pp_df = absorbance_snv_df
     
-    # st.write('19 preprocessed data :')
-    # st.write(absorbance_all_pp_df)
+    st.write('19 preprocessed data :')
+    st.write(absorbance_all_pp_df)
 
     reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_Baseline.csv'
     # reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_norm_manh_Baseline.csv'
@@ -359,20 +363,20 @@ def main():
         # st.markdown(f'<span class="label">Similarity score:</span><br><span class="value">{in_range_percentage:.0f} %</span>', unsafe_allow_html=True)
         # st.markdown(f'<span class="label">Correlation:</span><br><span class="value">{correlation:.2f}</span>', unsafe_allow_html=True)
 
-    # plt.figure(figsize=(10, 4))
-    # plt.plot(wavelengths, absorbance_all_pp_df.iloc[0], marker='o', linestyle='-', color='b', label='Sample')
-    # # plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='--', color='b', label='Raw sample')
-    # plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
-    # plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
-    # plt.title('Absorbance', fontweight='bold', fontsize=20)
-    # plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
-    # plt.ylabel('Absorbance', fontweight='bold', fontsize=14)
-    # plt.xticks(rotation='vertical', fontweight='bold', fontsize=12)
-    # plt.yticks(fontweight='bold', fontsize=12)
-    # plt.tight_layout()
-    # plt.legend()
-    # plt.show()
-    # st.pyplot(plt)
+    plt.figure(figsize=(10, 4))
+    plt.plot(wavelengths, absorbance_all_pp_df.iloc[0], marker='o', linestyle='-', color='b', label='Sample')
+    # plt.plot(wavelengths, absorbance_df.iloc[0], marker='o', linestyle='--', color='b', label='Raw sample')
+    plt.plot(wavelengths, Min, linestyle='--', color='r', label='Min')
+    plt.plot(wavelengths, Max, linestyle='--', color='y', label='Max')
+    plt.title('Absorbance', fontweight='bold', fontsize=20)
+    plt.xlabel('Wavelength (nm)', fontweight='bold', fontsize=14)
+    plt.ylabel('Absorbance', fontweight='bold', fontsize=14)
+    plt.xticks(rotation='vertical', fontweight='bold', fontsize=12)
+    plt.yticks(fontweight='bold', fontsize=12)
+    plt.tight_layout()
+    plt.legend()
+    plt.show()
+    st.pyplot(plt)
 
 
 if __name__ == "__main__":
