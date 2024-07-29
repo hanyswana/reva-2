@@ -112,7 +112,8 @@ def json_data():
 
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # PDS transformation
-    pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
+    # pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
+    pds_model = joblib.load('calibration-transfer-model/pds-model-u11.joblib')
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     absorbance_df = absorbance_transformed_df
