@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import requests, pytz, pickle, joblib, torch, os, json, tempfile, zipfile, onnxruntime as ort
-from scipy import sparse
+from scipy import sparse, io
 from datetime import datetime
 from sklearn.preprocessing import Normalizer, PolynomialFeatures
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -113,7 +113,13 @@ def json_data():
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # PDS transformation
     # pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
-    pds_model = joblib.load('calibration-transfer-model/pds-model-u11.joblib')
+    # pds_model = joblib.load('calibration-transfer-model/pds-model-u11.joblib')
+
+    mat_contents = io.loadmat('calibration-transfer-model/pds-model-u116.mat')
+    F = mat_contents['F']  # Adjust these keys based on the structure of your .mat file
+    a = mat_contents['a']
+    pds_model = (F, a)
+
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     absorbance_df = absorbance_transformed_df
