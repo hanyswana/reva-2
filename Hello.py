@@ -305,7 +305,7 @@ def main():
     
     for label, model_path in model_paths_with_labels:
 
-        selected_wavelengths = ['415nm', '515nm', '555nm', '560nm', '585nm', '590nm',  '610nm', '680nm', '730nm', '900nm'] # for API (SNV) - latest new
+        selected_wavelengths = ['_415nm', '_515nm', '_555nm', '_560nm', '_585nm', '_590nm',  '_610nm', '_680nm', '_730nm', '_900nm'] # for API (SNV) - latest new
         # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + BR) - new
         # selected_wavelengths = ['_415nm', '_515nm', '_555nm', '_560nm', '_585nm', '_590nm', '_610nm', '_680nm', '_730nm', '_900nm'] # for API (SNV + euc + BR) - new
         # selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR) - new
