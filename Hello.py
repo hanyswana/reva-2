@@ -56,12 +56,10 @@ def snv(input_data):
 
 
 def pds_transform(input_data, pds_model_path):
-    # Load the .mat file
     mat_contents = sio.loadmat(pds_model_path)
     # Extract the calibration transfer matrix
     ctm = mat_contents['CTM_PDS20240729T151439']
     
-    # Print dimensions for debugging
     st.write("CTM shape:", ctm.shape)
     st.write("Input data shape:", input_data.shape)
     
@@ -69,11 +67,9 @@ def pds_transform(input_data, pds_model_path):
     F = ctm[:, :-1]  # All columns except the last
     a = ctm[:, -1]   # Last column
     
-    # Print shapes of F and a to check
     st.write("F shape:", F.shape)
     st.write("a shape:", a.shape)
-    
-    # Perform the PDS transformation
+
     transformed_data = input_data.dot(F) + a
     return transformed_data
 
