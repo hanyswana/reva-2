@@ -55,24 +55,31 @@ def snv(input_data):
 #     return transformed_data
 
 
+# def pds_transform(input_data, pds_model_path):
+#     mat_contents = sio.loadmat(pds_model_path)
+#     # Extract the calibration transfer matrix
+#     ctm = mat_contents['CTM_PDS20240729T151439']
+    
+#     st.write("CTM shape:", ctm.shape)
+#     st.write("Input data shape:", input_data.shape)
+    
+#     # Assuming the last column of CTM is 'a' and the rest are 'F'
+#     F = ctm[:, :-1]  # All columns except the last
+#     a = ctm[:, -1]   # Last column
+    
+#     st.write("F shape:", F.shape)
+#     st.write("a shape:", a.shape)
+
+#     transformed_data = input_data.dot(F) + a
+    # return transformed_data
+
+
 def pds_transform(input_data, pds_model_path):
     mat_contents = sio.loadmat(pds_model_path)
-    # Extract the calibration transfer matrix
     ctm = mat_contents['CTM_PDS20240729T151439']
-    
-    st.write("CTM shape:", ctm.shape)
-    st.write("Input data shape:", input_data.shape)
-    
-    # Assuming the last column of CTM is 'a' and the rest are 'F'
-    F = ctm[:, :-1]  # All columns except the last
-    a = ctm[:, -1]   # Last column
-    
-    st.write("F shape:", F.shape)
-    st.write("a shape:", a.shape)
-
-    transformed_data = input_data.dot(F) + a
+    transformed_data = np.dot(input_data, ctm)
     return transformed_data
-
+    
 
 def custom_transform(input_data, pds_models):
     transformed_data = np.zeros_like(input_data)
