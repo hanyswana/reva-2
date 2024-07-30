@@ -130,11 +130,22 @@ def json_data():
     # pds_model_path = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
 
     # solo ------------------------
-    pds_model_path = 'calibration-transfer-model/pds-model-u11.xml'
+    # pds_model_path = 'calibration-transfer-model/pds-model-u11.xml'
+
+        pds_model_paths = [
+        'calibration-transfer-model/pds-model-u11.xml',  # XML model
+        'calibration-transfer-model/CT_U11_ori_pds_model.joblib'  # Joblib model
+    ]
     
-    absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
-    absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
-    absorbance_df = absorbance_transformed_df
+    absorbance_df = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')  # assuming this is how you get your initial data
+    
+    for pds_model_path in pds_model_paths:
+        absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
+        absorbance_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)  # update the DataFrame for the next transformation
+    
+    # absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
+    # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
+    # absorbance_df = absorbance_transformed_df
     st.write('19 raw data after calibration transfer:')
     st.write(absorbance_transformed_df)
     
