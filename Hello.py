@@ -132,7 +132,7 @@ def json_data():
     # solo ------------------------
     # pds_model_path = 'calibration-transfer-model/pds-model-u11.xml'
 
-        pds_model_paths = [
+    pds_model_paths = [
         'calibration-transfer-model/pds-model-u11.xml',  # XML model
         'calibration-transfer-model/CT_U11_ori_pds_model.joblib'  # Joblib model
     ]
