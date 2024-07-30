@@ -79,39 +79,6 @@ def snv(input_data):
 #     ctm = mat_contents['CTM_PDS20240729T151439']
 #     transformed_data = np.dot(input_data, ctm)
 #     return transformed_data
-    
-
-def pds_transform(input_data, pds_model_path):
-    mat_contents = sio.loadmat(pds_model_path)
-    st.write("MAT file contents:", mat_contents.keys())  # Display keys of the MAT file for debugging
-    
-    # Load the correct element, assumed to be under 'CTM_PDS20240729T151439'
-    ctm = mat_contents['CTM_PDS20240729T151439']
-    st.write("CTM contents:", ctm)
-    st.write("CTM type:", type(ctm))
-    
-    # Check and display the fields if it's a structured array
-    if isinstance(ctm, np.ndarray) and ctm.dtype.names:
-        st.write("CTM field names:", ctm.dtype.names)
-        # Attempt to extract a usable matrix or scalar
-        if 'matrix' in ctm.dtype.names:  # Adjust 'matrix' field name based on actual contents
-            matrix = ctm['matrix'][0, 0]
-            st.write("Extracted matrix shape:", matrix.shape)
-            transformed_data = np.dot(input_data, matrix)
-        elif 'scalar' in ctm.dtype.names:  # Adjust 'scalar' field name based on actual contents
-            scalar = ctm['scalar'][0, 0]
-            st.write("Applying scalar multiplication")
-            transformed_data = input_data * scalar
-        else:
-            st.write("No suitable transformation data found in CTM.")
-            return input_data
-    else:
-        st.write("Error: CTM is not structured as expected.")
-        return input_data
-    
-    return transformed_data
-
-
 
 
 def custom_transform(input_data, pds_models):
