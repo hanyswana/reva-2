@@ -114,13 +114,18 @@ def json_data():
     # PDS transformation
     # pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
     # pds_model = joblib.load('calibration-transfer-model/pds-model-u11.joblib')
+    # F = mat_contents['F']  # Adjust these keys based on the structure of your .mat file
+    # a = mat_contents['a']
+    # pds_model = (F, a)
 
-    mat_contents = io.loadmat('calibration-transfer-model/pds-model-u11.mat')
-    F = mat_contents['F']  # Adjust these keys based on the structure of your .mat file
-    a = mat_contents['a']
-    pds_model = (F, a)
 
-    absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
+    mat_contents = sio.loadmat('calibration-transfer-model/pds-model-u11.mat')
+    pds_model = mat_contents['CTM_PDS20240729T151439']
+    F = pds_model[0]  # Adjust these index values based on the actual structure
+    a = pds_model[1]
+
+    # absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
+    absorbance_transformed = pds_transform(absorbance_df.values, (F, a))
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     absorbance_df = absorbance_transformed_df
     st.write('19 raw data after calibration transfer:')
