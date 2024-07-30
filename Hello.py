@@ -50,27 +50,27 @@ def snv(input_data):
     return snv_transformed
 
 
-# def pds_transform(input_data, pds_model):
-#     F, a = pds_model
-#     transformed_data = input_data.dot(F) + a
-#     return transformed_data
-
-
 def pds_transform(input_data, pds_model):
-    # Load and parse the XML file
-    tree = ET.parse(pds_model)
-    root = tree.getroot()
-
-    # Extract the standardization matrix and vector
-    stdmat_elements = root.find(".//stdmat").text.strip().split(';')
-    stdvect_elements = root.find(".//stdvect").text.strip().split(',')
-
-    stdmat = np.array([list(map(float, row.split(','))) for row in stdmat_elements if row])
-    stdvect = np.array(list(map(float, stdvect_elements)))
-
-    # Perform the PDS transformation
-    transformed_data = np.dot(input_data, stdmat) + stdvect
+    F, a = pds_model
+    transformed_data = input_data.dot(F) + a
     return transformed_data
+
+
+# def pds_transform(input_data, pds_model):
+#     # Load and parse the XML file
+#     tree = ET.parse(pds_model)
+#     root = tree.getroot()
+
+#     # Extract the standardization matrix and vector
+#     stdmat_elements = root.find(".//stdmat").text.strip().split(';')
+#     stdvect_elements = root.find(".//stdvect").text.strip().split(',')
+
+#     stdmat = np.array([list(map(float, row.split(','))) for row in stdmat_elements if row])
+#     stdvect = np.array(list(map(float, stdvect_elements)))
+
+#     # Perform the PDS transformation
+#     transformed_data = np.dot(input_data, stdmat) + stdvect
+#     return transformed_data
     
 
 def custom_transform(input_data, pds_models):
@@ -131,13 +131,12 @@ def json_data():
 
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # PDS transformation
-    # pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
-    # pds_model = joblib.load('calibration-transfer-model/pds-model-u11.mat')
-    # F = mat_contents['F']  # Adjust these keys based on the structure of your .mat file
-    # a = mat_contents['a']
-    # pds_model = (F, a)
+    pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
+    F = mat_contents['F']  # Adjust these keys based on the structure of your .mat file
+    a = mat_contents['a']
+    pds_model = (F, a)
 
-    pds_model = 'calibration-transfer-model/pds-model-u11.xml'
+    # pds_model = 'calibration-transfer-model/pds-model-u11.xml'
     
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
