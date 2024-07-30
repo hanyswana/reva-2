@@ -62,16 +62,16 @@ def pds_transform(input_data, pds_model_path):
     ctm = mat_contents['CTM_PDS20240729T151439']
     
     # Print dimensions for debugging
-    print("CTM shape:", ctm.shape)
-    print("Input data shape:", input_data.shape)
+    st.write("CTM shape:", ctm.shape)
+    st.write("Input data shape:", input_data.shape)
     
     # Assuming the last column of CTM is 'a' and the rest are 'F'
     F = ctm[:, :-1]  # All columns except the last
     a = ctm[:, -1]   # Last column
     
     # Print shapes of F and a to check
-    print("F shape:", F.shape)
-    print("a shape:", a.shape)
+    st.write("F shape:", F.shape)
+    st.write("a shape:", a.shape)
     
     # Perform the PDS transformation
     transformed_data = input_data.dot(F) + a
