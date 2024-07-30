@@ -56,13 +56,6 @@ def snv(input_data):
 #     return transformed_data
 
 
-# def pds_transform(input_data, pds_model):
-#     mat_contents = sio.loadmat(pds_model)
-#     ctm = mat_contents['CTM_PDS20240729T151439']
-#     transformed_data = np.dot(input_data, ctm)
-#     return transformed_data
-
-
 def pds_transform(input_data, pds_model):
     # Load and parse the XML file
     tree = ET.parse(pds_model)
