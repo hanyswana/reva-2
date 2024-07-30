@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import requests, pytz, pickle, joblib, torch, os, json, tempfile, zipfile, onnxruntime as ort
 import scipy.io as sio
+import xml.etree.ElementTree as ET
 from scipy import sparse, io
 from datetime import datetime
 from sklearn.preprocessing import Normalizer, PolynomialFeatures
@@ -55,12 +56,29 @@ def snv(input_data):
 #     return transformed_data
 
 
-def pds_transform(input_data, pds_model):
-    mat_contents = sio.loadmat(pds_model)
-    ctm = mat_contents['CTM_PDS20240729T151439']
-    transformed_data = np.dot(input_data, ctm)
-    return transformed_data
+# def pds_transform(input_data, pds_model):
+#     mat_contents = sio.loadmat(pds_model)
+#     ctm = mat_contents['CTM_PDS20240729T151439']
+#     transformed_data = np.dot(input_data, ctm)
+#     return transformed_data
 
+
+def pds_transform(input_data, pds_model):
+    # Load and parse the XML file
+    tree = ET.parse(pds_model)
+    root = tree.getroot()
+
+    # Extract the standardization matrix and vector
+    stdmat_elements = root.find(".//stdmat").text.strip().split(';')
+    stdvect_elements = root.find(".//stdvect").text.strip().split(',')
+
+    stdmat = np.array([list(map(float, row.split(','))) for row in stdmat_elements if row])
+    stdvect = np.array(list(map(float, stdvect_elements)))
+
+    # Perform the PDS transformation
+    transformed_data = np.dot(input_data, stdmat) + stdvect
+    return transformed_data
+    
 
 def custom_transform(input_data, pds_models):
     transformed_data = np.zeros_like(input_data)
