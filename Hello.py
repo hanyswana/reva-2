@@ -48,29 +48,6 @@ def snv(input_data):
     mean_corrected = input_data - np.mean(input_data, axis=1, keepdims=True)
     snv_transformed = mean_corrected / np.std(mean_corrected, axis=1, keepdims=True)
     return snv_transformed
-
-
-# def pds_transform(input_data, pds_model):
-#     F, a = pds_model
-#     transformed_data = input_data.dot(F) + a
-#     return transformed_data
-
-
-# # def pds_transform(input_data, pds_model):
-# #     # Load and parse the XML file
-# #     tree = ET.parse(pds_model)
-# #     root = tree.getroot()
-
-# #     # Extract the standardization matrix and vector
-# #     stdmat_elements = root.find(".//stdmat").text.strip().split(';')
-# #     stdvect_elements = root.find(".//stdvect").text.strip().split(',')
-
-# #     stdmat = np.array([list(map(float, row.split(','))) for row in stdmat_elements if row])
-# #     stdvect = np.array(list(map(float, stdvect_elements)))
-
-# #     # Perform the PDS transformation
-# #     transformed_data = np.dot(input_data, stdmat) + stdvect
-# #     return transformed_data
     
 
 def pds_transform(input_data, pds_model_path):
