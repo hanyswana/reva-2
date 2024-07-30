@@ -131,16 +131,6 @@ def json_data():
 
     # solo ------------------------
     pds_model_path = 'calibration-transfer-model/pds-model-u11.xml'
-
-    # pds_model_paths = [
-    #     'calibration-transfer-model/pds-model-u11.xml',  # XML model
-    #     joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')  # Joblib model
-    # ]
-        
-    # for pds_model_path in pds_model_paths:
-    #     absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
-    #     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
-    #     absorbance_df = absorbance_transformed_df
     
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
