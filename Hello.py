@@ -74,12 +74,32 @@ def snv(input_data):
     # return transformed_data
 
 
+# def pds_transform(input_data, pds_model_path):
+#     mat_contents = sio.loadmat(pds_model_path)
+#     ctm = mat_contents['CTM_PDS20240729T151439']
+#     transformed_data = np.dot(input_data, ctm)
+#     return transformed_data
+    
+
 def pds_transform(input_data, pds_model_path):
     mat_contents = sio.loadmat(pds_model_path)
-    ctm = mat_contents['CTM_PDS20240729T151439']
-    transformed_data = np.dot(input_data, ctm)
-    return transformed_data
+    st.write("MAT file contents:", mat_contents.keys())
     
+    ctm = mat_contents['CTM_PDS20240729T151439']
+    st.write("CTM shape:", ctm.shape)
+    st.write("Input data shape:", input_data.shape)
+    
+    if ctm.size == 1:
+        st.write("CTM is a scalar, applying as scalar multiplication.")
+        transformed_data = input_data * ctm
+    elif ctm.shape[1] == input_data.shape[1]:
+        transformed_data = np.dot(input_data, ctm)
+    else:
+        st.write("Error: CTM shape and input data shape are not compatible for dot product.")
+        return input_data
+    return transformed_data
+
+
 
 def custom_transform(input_data, pds_models):
     transformed_data = np.zeros_like(input_data)
