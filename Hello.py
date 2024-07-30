@@ -55,15 +55,24 @@ def snv(input_data):
 #     return transformed_data
 
 
-def pds_transform(input_data, pds_model):
+def pds_transform(input_data, pds_model_path):
     # Load the .mat file
-    mat_contents = sio.loadmat(pds_model)
+    mat_contents = sio.loadmat(pds_model_path)
     # Extract the calibration transfer matrix
     ctm = mat_contents['CTM_PDS20240729T151439']
-    # Assuming the calibration transfer matrix ctm includes both the transformation matrix F and offset vector a
-    # and they are appropriately formatted for the operation below:
-    F = ctm[:, :-1]  # All columns except the last assuming the last column is 'a'
-    a = ctm[:, -1]  # Last column assuming it's 'a'
+    
+    # Print dimensions for debugging
+    print("CTM shape:", ctm.shape)
+    print("Input data shape:", input_data.shape)
+    
+    # Assuming the last column of CTM is 'a' and the rest are 'F'
+    F = ctm[:, :-1]  # All columns except the last
+    a = ctm[:, -1]   # Last column
+    
+    # Print shapes of F and a to check
+    print("F shape:", F.shape)
+    print("a shape:", a.shape)
+    
     # Perform the PDS transformation
     transformed_data = input_data.dot(F) + a
     return transformed_data
@@ -133,9 +142,9 @@ def json_data():
     # a = mat_contents['a']
     # pds_model = (F, a)
 
-    pds_model = 'calibration-transfer-model/pds-model-u11.mat'
+    pds_model_path = 'calibration-transfer-model/pds-model-u11.mat'
     
-    absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
+    absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     absorbance_df = absorbance_transformed_df
     st.write('19 raw data after calibration transfer:')
