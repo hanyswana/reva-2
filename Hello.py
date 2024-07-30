@@ -137,11 +137,12 @@ def json_data():
         'calibration-transfer-model/CT_U11_ori_pds_model.joblib'  # Joblib model
     ]
     
-    absorbance_df = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')  # assuming this is how you get your initial data
+    # absorbance_df = pd.DataFrame(data2).iloc[:1].apply(pd.to_numeric, errors='coerce')  # assuming this is how you get your initial data
     
     for pds_model_path in pds_model_paths:
         absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
-        absorbance_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)  # update the DataFrame for the next transformation
+        absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
+        absorbance_df = absorbance_transformed_df
     
     # absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
     # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
