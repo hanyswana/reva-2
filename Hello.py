@@ -4,7 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import requests, pytz, pickle, joblib, torch, os, json, tempfile, zipfile, onnxruntime as ort
-from scipy import sparse, sio
+import scipy.io as sio
+from scipy import sparse, io
 from datetime import datetime
 from sklearn.preprocessing import Normalizer, PolynomialFeatures
 from sklearn.base import BaseEstimator, TransformerMixin
