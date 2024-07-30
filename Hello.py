@@ -120,9 +120,9 @@ def json_data():
 
     mat_contents = io.loadmat('calibration-transfer-model/pds-model-u11.mat')
     model_data = mat_contents['CTM_PDS20240729T151439'][0, 0]
-    # detail_data = model_data['detail'][0, 0]
-    F = model_data['stdmat'][0, 0]  # Assuming this contains the matrix F
-    a = model_data['stdvect'][0, 0]  # Assuming this contains the vector a
+    detail_data = model_data['detail'][0, 0]
+    F = detail_data['stdmat'][0, 0]  # Assuming this contains the matrix F
+    a = detail_data['stdvect'][0, 0]  # Assuming this contains the vector a
     pds_model = (F, a)
 
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
