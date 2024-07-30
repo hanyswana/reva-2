@@ -118,18 +118,11 @@ def json_data():
     # a = mat_contents['a']
     # pds_model = (F, a)
 
-
     mat_contents = io.loadmat('calibration-transfer-model/pds-model-u11.mat')
-    model_data = mat_contents['CTM_PDS20240729T151439']
-    
-    # If F and a are the first and second elements in a structure or list:
-    F = model_data[0][0]  # Adjust indexing based on actual structure
-    a = model_data[0][1]  # Adjust indexing based on actual structure
-    
-    # If F and a are arrays inside a structured array, you might need:
-    # F = model_data['F'][0]  # Adjust field names and indexing based on actual structure
-    # a = model_data['a'][0]  # Adjust field names and indexing based on actual structure
-
+    model_data = mat_contents['CTM_PDS20240729T151439'][0, 0]
+    detail_data = model_data['detail'][0, 0]
+    F = detail_data['stdmat'][0, 0]  # Assuming this contains the matrix F
+    a = detail_data['stdvect'][0, 0]  # Assuming this contains the vector a
     pds_model = (F, a)
 
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
