@@ -144,7 +144,7 @@ def json_data():
     # a = mat_contents['a']
     # pds_model = (F, a)
 
-    pds_model = 'calibration-transfer-model/pds-model-u11.mat'
+    pds_model = 'calibration-transfer-model/pds-model-u11.xml'
     
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
