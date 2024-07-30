@@ -55,15 +55,17 @@ def snv(input_data):
 #     return transformed_data
 
 
-def load_pds_parameters(mat_path):
-    mat_contents = sio.loadmat(mat_path)
-    F = mat_contents['CTM_PDS20240729T151439']['stdmat'][0, 0]  # Example access, adjust as needed
-    a = mat_contents['CTM_PDS20240729T151439']['stdvect'][0, 0]  # Example access, adjust as needed
-    return F, a
-
-
-def pds_transform(input_data, F, a):
-    transformed_data = np.dot(input_data, F) + a
+def pds_transform(input_data, pds_model):
+    # Load the .mat file
+    mat_contents = sio.loadmat(pds_model)
+    # Extract the calibration transfer matrix
+    ctm = mat_contents['CTM_PDS20240729T151439']
+    # Assuming the calibration transfer matrix ctm includes both the transformation matrix F and offset vector a
+    # and they are appropriately formatted for the operation below:
+    F = ctm[:, :-1]  # All columns except the last assuming the last column is 'a'
+    a = ctm[:, -1]  # Last column assuming it's 'a'
+    # Perform the PDS transformation
+    transformed_data = input_data.dot(F) + a
     return transformed_data
 
 
@@ -126,21 +128,14 @@ def json_data():
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # PDS transformation
     # pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
-    # pds_model = joblib.load('calibration-transfer-model/pds-model-u11.joblib')
+    # pds_model = joblib.load('calibration-transfer-model/pds-model-u11.mat')
     # F = mat_contents['F']  # Adjust these keys based on the structure of your .mat file
     # a = mat_contents['a']
     # pds_model = (F, a)
 
-    # mat_contents = io.loadmat('calibration-transfer-model/pds-model-u11.mat')
-    # # model_data = mat_contents['CTM_PDS20240729T151439'][0, 0]
-    # F = mat_contents['CTM_PDS20240729T151439']['stdmat'][0, 0]  # Assuming this contains the matrix F
-    # a = mat_contents['CTM_PDS20240729T151439']['stdvect'][0, 0]  # Assuming this contains the vector a
-    # pds_model = (F, a)
-
-    F, a = load_pds_parameters('calibration-transfer-model/pds-model-u11.mat')
+    pds_model = 'calibration-transfer-model/pds-model-u11.mat'
     
-    # absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
-    absorbance_transformed = pds_transform(absorbance_df.values, (F, a))
+    absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     absorbance_df = absorbance_transformed_df
     st.write('19 raw data after calibration transfer:')
