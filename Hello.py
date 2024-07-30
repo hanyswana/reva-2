@@ -60,13 +60,14 @@ def pds_transform(input_data, pds_model):
     mat_contents = sio.loadmat(pds_model)
     # Extract the calibration transfer matrix
     ctm = mat_contents['CTM_PDS20240729T151439']
-    # Assuming the calibration transfer matrix ctm includes both the transformation matrix F and offset vector a
-    # and they are appropriately formatted for the operation below:
-    F = ctm[:, :-1]  # All columns except the last assuming the last column is 'a'
-    a = ctm[:, -1]  # Last column assuming it's 'a'
-    # Perform the PDS transformation
-    transformed_data = input_data.dot(F) + a
-    return transformed_data
+    # # Assuming the calibration transfer matrix ctm includes both the transformation matrix F and offset vector a
+    # # and they are appropriately formatted for the operation below:
+    # F = ctm[:, :-1]  # All columns except the last assuming the last column is 'a'
+    # a = ctm[:, -1]  # Last column assuming it's 'a'
+    # # Perform the PDS transformation
+    # transformed_data = input_data.dot(F) + a
+    # return transformed_data
+    return ctm
 
 
 def custom_transform(input_data, pds_models):
