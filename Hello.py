@@ -119,7 +119,7 @@ def json_data():
     # pds_model = (F, a)
 
 
-    mat_contents = sio.loadmat('calibration-transfer-model/pds-model-u11.mat')
+    mat_contents = io.loadmat('calibration-transfer-model/pds-model-u11.mat')
     pds_model = mat_contents['CTM_PDS20240729T151439']
     F = pds_model[0]  # Adjust these index values based on the actual structure
     a = pds_model[1]
