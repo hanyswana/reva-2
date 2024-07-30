@@ -131,11 +131,10 @@ def json_data():
 
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # PDS transformation
+    # pycharm ---------------------
     pds_model = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
-    F = mat_contents['F']  # Adjust these keys based on the structure of your .mat file
-    a = mat_contents['a']
-    pds_model = (F, a)
 
+    # solo ------------------------
     # pds_model = 'calibration-transfer-model/pds-model-u11.xml'
     
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model)
