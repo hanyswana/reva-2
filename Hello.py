@@ -60,8 +60,14 @@ def pds_transform(input_data, pds_model_path):
         stdvect = np.array(list(map(float, stdvect_elements)))
         transformed_data = np.dot(input_data, stdmat) + stdvect
         return transformed_data
+    # elif pds_model_path.endswith('.joblib'):
+    #     pds_model = joblib.load(pds_model_path)
+    #     transformed_data = pds_model.transform(input_data)
+    #     return transformed_data
     elif pds_model_path.endswith('.joblib'):
         pds_model = joblib.load(pds_model_path)
+        if isinstance(pds_model, tuple):
+            pds_model = pds_model[0]  # Extract the model if it's inside a tuple
         transformed_data = pds_model.transform(input_data)
         return transformed_data
     else:
@@ -134,7 +140,7 @@ def json_data():
 
     pds_model_paths = [
         'calibration-transfer-model/pds-model-u11.xml',  # XML model
-        joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')  # Joblib model
+        'calibration-transfer-model/CT_U11_ori_pds_model.joblib'  # Joblib model
     ]
         
     for pds_model_path in pds_model_paths:
