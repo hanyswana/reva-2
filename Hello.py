@@ -62,7 +62,9 @@ def pds_transform(input_data, pds_model_path):
         return transformed_data
     elif pds_model_path.endswith('.joblib'):
         pds_model = joblib.load(pds_model_path)
-        transformed_data = pds_model.transform(input_data)
+        # transformed_data = pds_model.transform(input_data)
+        F, a = pds_model
+        transformed_data = input_data.dot(F) + a
         return transformed_data
     else:
         raise ValueError("Unsupported model format")
