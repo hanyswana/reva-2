@@ -127,7 +127,7 @@ def json_data():
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # PDS transformation
     # pycharm ---------------------
-    pds_model_path = joblib.load('calibration-transfer-model/CT_U11_ori_pds_model.joblib')
+    pds_model_path = 'calibration-transfer-model/CT_U11_ori_pds_model.joblib'
 
     # solo ------------------------
     # pds_model_path = 'calibration-transfer-model/pds-model-u11.xml'
