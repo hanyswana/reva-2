@@ -62,7 +62,6 @@ def pds_transform(input_data, pds_model_path):
         return transformed_data
     elif pds_model_path.endswith('.joblib'):
         pds_model = joblib.load(pds_model_path)
-        # transformed_data = pds_model.transform(input_data)
         F, a = pds_model
         transformed_data = input_data.dot(F) + a
         return transformed_data
@@ -128,6 +127,7 @@ def json_data():
 
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
     # PDS transformation
+    
     # pycharm ---------------------
     pds_model_path = 'calibration-transfer-model/CT_U11_ori_pds_model.joblib'
 
@@ -311,11 +311,6 @@ def main():
 
     model_paths_with_labels = [
         # ('SNV + BR (tf-R45)', 'incorrect-model-lablink/Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
-        # ('SNV + BR (R45) - tflite', 'incorrect-model-lablink/tflite_model_new_snv_br_quant_2024-05-09_20-22-34_R45_77%.tflite')
-        # ('SNV + BR (tf-R56)', 'incorrect-model-lablink/Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-11_02-11-44_R56_81%'),
-        # ('SNV + BR (tf-R50)', 'incorrect-model-lablink/Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-18_04-08-04_R50_78%'),
-        # ('SNV + norm euc + BR (tf-R52)', 'incorrect-model-lablink/Lablink_134_SNV_norm_eucl_Baseline_pls_top_10.parquet_best_model_2024-05-24_05-21-44_R52_78%')
-        # ('SNV + norm manh + BR (tf-R52)', 'incorrect-model-lablink/Lablink_134_SNV_norm_manh_Baseline_pls_top_10.parquet_best_model_2024-05-27_19-43-51_R52_85%')
         # ('SNV + BR (pt)', 'tabnet-model/Lablink_134_SNV_Baseline_pls_top_10_2024-06-06_14-42-37.pt.zip'),
         # ('SNV + BR (onnx)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37.onnx'),
         # ('SNV + BR (tflite)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37.tflite'),
