@@ -1,0 +1,701 @@
+<data class="evrimodel">
+  <modeltype class="string">CALTRANSFER</modeltype>
+  <author class="string">hanys.harun@NPTPM-0652</author>
+  <datasource class="cell" size="[1,2]">
+    <tr>
+      <td>
+        <name class="string">CT_U3_Ori.csv</name>
+        <type class="string">data</type>
+        <author class="string">Created by TEXTREADR</author>
+        <date class="numeric" size="[1,6]">2024,7,31,10,44,24.134</date>
+        <moddate class="numeric" size="[1,6]">2024,7,31,10,44,56.587</moddate>
+        <size class="numeric" size="[1,2]">30,19</size>
+        <include_size class="numeric" size="[1,2]">30,19</include_size>
+        <description class="string" />
+        <uniqueid class="string">hanys.harun@NPTPM-0652@20240731T104423.64314979</uniqueid>
+        <source class="string">Import From: C:\Users\hanys.harun\PycharmProjects\pythonprojectTF\calib_transfer\dataset_ori_ct\CT_U3_Ori.csv (31-Jul-2024 10:44:24.155)</source>
+      </td>
+      <td>
+        <name class="string">CT_U6_Ori.csv</name>
+        <type class="string">data</type>
+        <author class="string">Created by TEXTREADR</author>
+        <date class="numeric" size="[1,6]">2024,7,31,10,44,38.751</date>
+        <moddate class="numeric" size="[1,6]">2024,7,31,10,45,1.286</moddate>
+        <size class="numeric" size="[1,2]">30,19</size>
+        <include_size class="numeric" size="[1,2]">30,19</include_size>
+        <description class="string" />
+        <uniqueid class="string">hanys.harun@NPTPM-0652@20240731T104438.68360896</uniqueid>
+        <source class="string">Import From: C:\Users\hanys.harun\PycharmProjects\pythonprojectTF\calib_transfer\dataset_ori_ct\CT_U6_Ori.csv (31-Jul-2024 10:44:38.769)</source>
+      </td>
+    </tr>
+  </datasource>
+  <date class="string">31-Jul-2024</date>
+  <time class="numeric" size="[1,6]">2024,7,31,10,45,8.287</time>
+  <info class="string">Calibration Transfer Model</info>
+  <userdata class="numeric" size="[0,0]" />
+  <detail>
+    <history class="cell" size="[79,1]">
+      <tr>
+        <td class="string">2024-07-31 10:45:08.294 === Built from template by hanys.harun@NPTPM-0652    [evrimodel]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.318 === Product Information:  Solo_Model_Exporter 9.2.1    [evrimodel]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.470 - model.date = '31-Jul-2024'    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.470 - model.detail.modelname = 'CTM_PDS-20240731T104508'    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.486 - model.detail.preprocessing = {...}    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.502 - model.matchvars = 'off'    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.968 - model.transfermethod = 'pds'    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.968 - model.detail.stdmat = [...]    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.985 - model.detail.stdvect = [...]    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:08.999 - model.detail.options = struct(...)    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.003 - model.datasource{1} = struct(...)    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.019 - model.datasource{2} = struct(...)    [caltransfer]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.102 - model.datasource{1} = struct(...)    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.102 - model.detail.label(1,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.119 - model.detail.label{1,1,1} = '...'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.136 - model.detail.labelname{1,1,1} = 'Sample'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.137 - model.detail.axisscale(1,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.137 - model.detail.axisscale{1,1,1} = []    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.156 - model.detail.axisscalename{1,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.156 - model.detail.axistype{1,1,1} = 'none'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.156 - model.detail.title(1,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.167 - model.detail.title{1,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.169 - model.detail.titlename{1,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.169 - model.detail.class(1,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.169 - model.detail.class{1,1,1} = []    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.169 - model.detail.classname{1,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.184 - model.detail.classlookup(1,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.185 - model.detail.classlookup{1,1,1} = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.185 - model.detail.includ{1,1,1} = [...]    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.201 - model.detail.label(2,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.202 - model.detail.label{2,1,1} = '...'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.202 - model.detail.labelname{2,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.202 - model.detail.axisscale(2,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.202 - model.detail.axisscale{2,1,1} = []    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.202 - model.detail.axisscalename{2,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.202 - model.detail.axistype{2,1,1} = 'none'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.202 - model.detail.title(2,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.218 - model.detail.title{2,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.218 - model.detail.titlename{2,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.218 - model.detail.class(2,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.218 - model.detail.class{2,1,1} = []    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.218 - model.detail.classname{2,1,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.218 - model.detail.classlookup(2,1,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.218 - model.detail.classlookup{2,1,1} = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.218 - model.detail.includ{2,1,1} = [...]    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.234 - model.datasource{2} = struct(...)    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.234 - model.detail.label(1,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.234 - model.detail.label{1,2,1} = '...'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.234 - model.detail.labelname{1,2,1} = 'Sample'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.234 - model.detail.axisscale(1,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.234 - model.detail.axisscale{1,2,1} = []    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.234 - model.detail.axisscalename{1,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.234 - model.detail.axistype{1,2,1} = 'none'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.251 - model.detail.title(1,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.title{1,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.titlename{1,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.class(1,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.class{1,2,1} = []    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.classname{1,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.classlookup(1,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.classlookup{1,2,1} = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.includ{1,2,1} = [...]    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.label(2,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.252 - model.detail.label{2,2,1} = '...'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.268 - model.detail.labelname{2,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.axisscale(2,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.axisscale{2,2,1} = []    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.axisscalename{2,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.axistype{2,2,1} = 'none'    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.title(2,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.title{2,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.titlename{2,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.class(2,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.class{2,2,1} = []    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.classname{2,2,1} = ''    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.269 - model.detail.classlookup(2,2,:) = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.284 - model.detail.classlookup{2,2,1} = {...}    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.285 - model.detail.includ{2,2,1} = [...]    [copydsfields]</td>
+      </tr>
+      <tr>
+        <td class="string">2024-07-31 10:45:09.433 - model.detail.modelname = 'CTM_PDS-20240731T104504'    [ctm_calc_Callback]</td>
+      </tr>
+    </history>
+    <copyparentid class="string" />
+    <data class="cell" size="[1,2]">
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+    </data>
+    <stdmat class="numeric" size="[19,19]">
+      0.245013389344,0.382431473457,0.0385517362764,0.0658714273095,0.165067396569,0.172669818897,0,0,0,0,0,0,0,0,0,0,0,0,0;
+      -0.23653160914,0.0857215582589,0.19500464103,0.161803413453,-0.0564640691301,-1.09569874607,-0.853276478619,0,0,0,0,0,0,0,0,0,0,0,0;
+      0.284769238,-0.385690154645,-0.373773958367,-0.500206748944,-0.430304284399,0.949896804363,0.514072282447,-0.524285010806,0,0,0,0,0,0,0,0,0,0,0;
+      0.613859136991,0.922064061739,0.291716590441,-0.72549541078,-0.374646355473,1.64506422213,0.903872877744,-0.243258574402,-0.764941643421,0,0,0,0,0,0,0,0,0,0;
+      -1.22353237082,-1.86155190654,-0.964486603312,-0.792068947974,-0.545225581984,0.195551590021,0.539716103338,-0.238894574133,1.28150457768,-1.09288425526,0,0,0,0,0,0,0,0,0;
+      -0.0431771780919,-0.118355679633,0.197045538922,0.0850959496595,-0.455128918648,-0.166472528844,-0.296104872863,-0.72937830421,-0.928524251346,-0.661891142119,1.23347028739,0,0,0,0,0,0,0,0;
+      0,0.476052943046,0.126008549721,-0.0366434852147,0.568073408247,0.0559019473632,0.284462321928,0.73517926519,0.574192423478,0.717306925773,-1.72113059736,-0.372105452512,0,0,0,0,0,0,0;
+      0,0,0.50280394844,1.28457112333,1.58276715042,-1.6352576463,-0.42878079738,1.45773312514,0.777952805966,0.348245264644,0.534436604512,-0.835157653838,0.472027730965,0,0,0,0,0,0;
+      0,0,0,-0.0157872348347,0.0279746116249,-0.402861497904,-0.327102438183,0.344496112652,0.450254568495,0.212879518676,-0.439716273733,0.150190994891,-0.25456943468,-0.0928322505207,0,0,0,0,0;
+      0,0,0,0,-0.993715043131,-0.119238324965,-0.918092281645,-1.2624986774,-1.79770959585,0.114777278416,0.490604537691,1.0719319189,-0.0526360427777,0.232192236973,0.0576172765677,0,0,0,0;
+      0,0,0,0,0,0.0547695608715,-0.00799262383434,-0.01190915762,-0.624696234537,0.0274059879657,1.05340186391,-0.0670432484794,0.343040682593,-0.226162613859,-0.219406934438,-0.044020094655,0,0,0;
+      0,0,0,0,0,0,0.149438026484,-0.505520034827,0.066775949034,-0.65398180782,0.597165542948,-0.475298232411,1.04736104639,0.629864110907,0.132100088422,0.229892815011,-0.26961164577,0,0;
+      0,0,0,0,0,0,0,0.524721273599,1.01862173822,-0.131336002274,-0.623844511415,-0.36843272178,-0.115573280434,-0.0703346287243,-0.225794449832,-0.470789929175,-0.648505744517,-0.366593528634,0;
+      0,0,0,0,0,0,0,0,-0.599439347848,0.673152837166,-1.14766470236,0.0447510175683,-0.800399554803,0.149936558378,0.225228003636,0.0613270899009,0.520269017144,-0.136823166425,-0.367786567977;
+      0,0,0,0,0,0,0,0,0,-0.00687120394343,0.381112852328,1.121616271,-0.0137655417841,0.0352432658829,0.344711094836,0.400800550309,0.177366910072,0.90322918495,1.48369679367;
+      0,0,0,0,0,0,0,0,0,0,0.156888066129,-0.348498347553,0.97790583891,0.0463681095552,-0.0698882350966,0.0500373920333,-0.0473107602698,-0.276019920235,-0.606260343695;
+      0,0,0,0,0,0,0,0,0,0,0,-0.00261696821521,-1.29459557621,-0.599667842205,-0.342986252332,-0.363554952902,0.175046030591,-0.492818994119,-0.465703420695;
+      0,0,0,0,0,0,0,0,0,0,0,0,-0.562758814266,-0.759997383436,-0.758011382689,-0.864452588323,-0.319304435094,-0.832693755522,-0.75594802733;
+      0,0,0,0,0,0,0,0,0,0,0,0,0,0.421277907238,0.493458533073,0.436350851744,0.278631142848,0.656559205063,0.339821222292
+    </stdmat>
+    <stdvect class="numeric" size="[1,19]">1.27031111402,1.31998374407,0.850218754388,1.22773770485,1.27351908817,1.33207720163,1.34909682182,1.23958875245,1.31306028788,1.27895789837,0.540649030882,1.02905913983,1.27690574245,1.19086401942,1.28948320549,1.4799272558,1.07182425551,1.45586226005,1.28503603031</stdvect>
+    <block1modified class="numeric" size="[1,1]">0</block1modified>
+    <modelname class="string">CTM_PDS-20240731T104504</modelname>
+    <preprocessing class="cell" size="[1,2]">
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+    </preprocessing>
+    <includ class="cell" size="[2,2]">
+      <tr>
+        <td class="numeric" size="[1,30]">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</td>
+        <td class="numeric" size="[1,30]">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</td>
+      </tr>
+      <tr>
+        <td class="numeric" size="[1,19]">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19</td>
+        <td class="numeric" size="[1,19]">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19</td>
+      </tr>
+    </includ>
+    <label class="cell" size="[2,2]">
+      <tr>
+        <td class="string">
+          <sr>U3-1 </sr>
+          <sr>U3-2 </sr>
+          <sr>U3-3 </sr>
+          <sr>U3-4 </sr>
+          <sr>U3-5 </sr>
+          <sr>U3-6 </sr>
+          <sr>U3-7 </sr>
+          <sr>U3-8 </sr>
+          <sr>U3-9 </sr>
+          <sr>U3-10</sr>
+          <sr>U3-11</sr>
+          <sr>U3-12</sr>
+          <sr>U3-13</sr>
+          <sr>U3-14</sr>
+          <sr>U3-15</sr>
+          <sr>U3-16</sr>
+          <sr>U3-17</sr>
+          <sr>U3-18</sr>
+          <sr>U3-19</sr>
+          <sr>U3-20</sr>
+          <sr>U3-21</sr>
+          <sr>U3-22</sr>
+          <sr>U3-23</sr>
+          <sr>U3-24</sr>
+          <sr>U3-25</sr>
+          <sr>U3-26</sr>
+          <sr>U3-27</sr>
+          <sr>U3-28</sr>
+          <sr>U3-29</sr>
+          <sr>U3-30</sr>
+        </td>
+        <td class="string">
+          <sr>U6-1 </sr>
+          <sr>U6-2 </sr>
+          <sr>U6-3 </sr>
+          <sr>U6-4 </sr>
+          <sr>U6-5 </sr>
+          <sr>U6-6 </sr>
+          <sr>U6-7 </sr>
+          <sr>U6-8 </sr>
+          <sr>U6-9 </sr>
+          <sr>U6-10</sr>
+          <sr>U6-11</sr>
+          <sr>U6-12</sr>
+          <sr>U6-13</sr>
+          <sr>U6-14</sr>
+          <sr>U6-15</sr>
+          <sr>U6-16</sr>
+          <sr>U6-17</sr>
+          <sr>U6-18</sr>
+          <sr>U6-19</sr>
+          <sr>U6-20</sr>
+          <sr>U6-21</sr>
+          <sr>U6-22</sr>
+          <sr>U6-23</sr>
+          <sr>U6-24</sr>
+          <sr>U6-25</sr>
+          <sr>U6-26</sr>
+          <sr>U6-27</sr>
+          <sr>U6-28</sr>
+          <sr>U6-29</sr>
+          <sr>U6-30</sr>
+        </td>
+      </tr>
+      <tr>
+        <td class="string">
+          <sr>415 nm</sr>
+          <sr>445 nm</sr>
+          <sr>480 nm</sr>
+          <sr>515 nm</sr>
+          <sr>555 nm</sr>
+          <sr>560 nm</sr>
+          <sr>585 nm</sr>
+          <sr>590 nm</sr>
+          <sr>610 nm</sr>
+          <sr>630 nm</sr>
+          <sr>645 nm</sr>
+          <sr>680 nm</sr>
+          <sr>705 nm</sr>
+          <sr>730 nm</sr>
+          <sr>760 nm</sr>
+          <sr>810 nm</sr>
+          <sr>860 nm</sr>
+          <sr>900 nm</sr>
+          <sr>940 nm</sr>
+        </td>
+        <td class="string">
+          <sr>415 nm</sr>
+          <sr>445 nm</sr>
+          <sr>480 nm</sr>
+          <sr>515 nm</sr>
+          <sr>555 nm</sr>
+          <sr>560 nm</sr>
+          <sr>585 nm</sr>
+          <sr>590 nm</sr>
+          <sr>610 nm</sr>
+          <sr>630 nm</sr>
+          <sr>645 nm</sr>
+          <sr>680 nm</sr>
+          <sr>705 nm</sr>
+          <sr>730 nm</sr>
+          <sr>760 nm</sr>
+          <sr>810 nm</sr>
+          <sr>860 nm</sr>
+          <sr>900 nm</sr>
+          <sr>940 nm</sr>
+        </td>
+      </tr>
+    </label>
+    <labelname class="cell" size="[2,2]">
+      <tr>
+        <td class="string">Sample</td>
+        <td class="string">Sample</td>
+      </tr>
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+    </labelname>
+    <axisscale class="cell" size="[2,2]">
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+    </axisscale>
+    <axisscalename class="cell" size="[2,2]">
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+    </axisscalename>
+    <axistype class="cell" size="[2,2]">
+      <tr>
+        <td class="string">none</td>
+        <td class="string">none</td>
+      </tr>
+      <tr>
+        <td class="string">none</td>
+        <td class="string">none</td>
+      </tr>
+    </axistype>
+    <imageaxisscale class="cell" size="[2,2]">
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+    </imageaxisscale>
+    <imageaxisscalename class="cell" size="[2,2]">
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+    </imageaxisscalename>
+    <title class="cell" size="[2,2]">
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+    </title>
+    <titlename class="cell" size="[2,2]">
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+    </titlename>
+    <class class="cell" size="[2,2]">
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+      <tr>
+        <td class="numeric" size="[0,0]" />
+        <td class="numeric" size="[0,0]" />
+      </tr>
+    </class>
+    <classname class="cell" size="[2,2]">
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+      <tr>
+        <td class="string" />
+        <td class="string" />
+      </tr>
+    </classname>
+    <classlookup class="cell" size="[2,2]">
+      <tr>
+        <td class="cell" />
+        <td class="cell" />
+      </tr>
+      <tr>
+        <td class="cell" />
+        <td class="cell" />
+      </tr>
+    </classlookup>
+    <options>
+      <display class="string">on</display>
+      <blockdetails class="string">standard</blockdetails>
+      <preprocessing class="cell" size="[1,2]">
+        <tr>
+          <td class="numeric" size="[0,0]" />
+          <td class="numeric" size="[0,0]" />
+        </tr>
+      </preprocessing>
+      <ds>
+        <name class="string">options</name>
+        <waitbar class="string">on</waitbar>
+        <tol class="numeric" size="[1,1]">0.0001</tol>
+        <maxpc class="numeric" size="[0,0]" />
+        <definitions class="function_handle">
+          <function class="string">optiondefs</function>
+          <type class="string">scopedfunction</type>
+          <file class="string">C:\Users\hanys.harun\AppData\Local\Temp\hanys.harun\mcrCache9.9\Solo_M0\Solo_Model_E\PLS_Toolbox\stdgen.m</file>
+          <parentage class="cell" size="[1,2]">
+            <tr>
+              <td class="string">optiondefs</td>
+              <td class="string">stdgen</td>
+            </tr>
+          </parentage>
+        </definitions>
+        <functionname class="string">stdgen</functionname>
+        <center class="numeric" size="[1,1]">1</center>
+        <win class="numeric" size="[1,1]">0</win>
+      </ds>
+      <pds>
+        <win class="numeric" size="[1,1]">11</win>
+        <name class="string">options</name>
+        <waitbar class="string">on</waitbar>
+        <tol class="numeric" size="[1,1]">0.0001</tol>
+        <maxpc class="numeric" size="[0,0]" />
+        <center class="numeric" size="[1,1]">1</center>
+        <definitions class="function_handle">
+          <function class="string">optiondefs</function>
+          <type class="string">scopedfunction</type>
+          <file class="string">C:\Users\hanys.harun\AppData\Local\Temp\hanys.harun\mcrCache9.9\Solo_M0\Solo_Model_E\PLS_Toolbox\stdgen.m</file>
+          <parentage class="cell" size="[1,2]">
+            <tr>
+              <td class="string">optiondefs</td>
+              <td class="string">stdgen</td>
+            </tr>
+          </parentage>
+        </definitions>
+        <functionname class="string">stdgen</functionname>
+      </pds>
+      <dwpds>
+        <win class="numeric" size="[1,2]">11,21</win>
+        <name class="string">options</name>
+        <waitbar class="string">on</waitbar>
+        <tol class="numeric" size="[1,1]">0.0001</tol>
+        <maxpc class="numeric" size="[0,0]" />
+        <center class="numeric" size="[1,1]">1</center>
+        <definitions class="function_handle">
+          <function class="string">optiondefs</function>
+          <type class="string">scopedfunction</type>
+          <file class="string">C:\Users\hanys.harun\AppData\Local\Temp\hanys.harun\mcrCache9.9\Solo_M0\Solo_Model_E\PLS_Toolbox\stdgen.m</file>
+          <parentage class="cell" size="[1,2]">
+            <tr>
+              <td class="string">optiondefs</td>
+              <td class="string">stdgen</td>
+            </tr>
+          </parentage>
+        </definitions>
+        <functionname class="string">stdgen</functionname>
+      </dwpds>
+      <glsw>
+        <a class="numeric" size="[1,1]">0.02</a>
+        <meancenter class="string">yes</meancenter>
+        <gradientthreshold class="numeric" size="[1,1]">0.25</gradientthreshold>
+        <xgradient class="string">no</xgradient>
+        <xgradwindow class="numeric" size="[1,1]">3</xgradwindow>
+        <applymean class="string">yes</applymean>
+        <maxpcs class="numeric" size="[1,1]">50</maxpcs>
+        <maxperclass class="numeric" size="[1,1]">Inf</maxperclass>
+        <classset class="numeric" size="[1,1]">1</classset>
+        <downweight class="string">yes</downweight>
+        <definitions class="function_handle">
+          <function class="string">optiondefs</function>
+          <type class="string">scopedfunction</type>
+          <file class="string">C:\Users\hanys.harun\AppData\Local\Temp\hanys.harun\mcrCache9.9\Solo_M0\Solo_Model_E\PLS_Toolbox\glsw.m</file>
+          <parentage class="cell" size="[1,2]">
+            <tr>
+              <td class="string">optiondefs</td>
+              <td class="string">glsw</td>
+            </tr>
+          </parentage>
+        </definitions>
+        <functionname class="string">glsw</functionname>
+      </glsw>
+      <osc>
+        <y class="numeric" size="[0,0]" />
+        <ncomp class="numeric" size="[0,0]" />
+        <iter class="numeric" size="[1,1]">0</iter>
+        <tol class="numeric" size="[1,1]">99.9</tol>
+        <nofact class="numeric" size="[0,0]" />
+      </osc>
+      <alignmat>
+        <ncomp class="numeric" size="[1,1]">1</ncomp>
+        <name class="string">options</name>
+        <display class="string">on</display>
+        <algorithm class="string">projection</algorithm>
+        <interpolate class="string">linear</interpolate>
+        <definitions class="function_handle">
+          <function class="string">optiondefs</function>
+          <type class="string">scopedfunction</type>
+          <file class="string">C:\Users\hanys.harun\AppData\Local\Temp\hanys.harun\mcrCache9.9\Solo_M0\Solo_Model_E\PLS_Toolbox\alignmat.m</file>
+          <parentage class="cell" size="[1,2]">
+            <tr>
+              <td class="string">optiondefs</td>
+              <td class="string">alignmat</td>
+            </tr>
+          </parentage>
+        </definitions>
+        <functionname class="string">alignmat</functionname>
+      </alignmat>
+      <sst>
+        <ncomp class="numeric" size="[1,1]">1</ncomp>
+        <center class="numeric" size="[1,1]">0</center>
+      </sst>
+      <functionname class="string">caltransfer</functionname>
+    </options>
+  </detail>
+  <transfermethod class="string">pds</transfermethod>
+  <description class="cell" size="[3,1]">
+    <tr>
+      <td class="string">Calibration Transfer model, method stored in model.transfermethod.</td>
+    </tr>
+    <tr>
+      <td class="numeric" size="[0,0]" />
+    </tr>
+    <tr>
+      <td class="numeric" size="[0,0]" />
+    </tr>
+  </description>
+  <glswmodel class="numeric" size="[0,0]" />
+  <nw class="numeric" size="[0,0]" />
+  <np class="numeric" size="[0,0]" />
+  <nt class="numeric" size="[0,0]" />
+  <help class="numeric" size="[0,0]" />
+  <modelversion class="string">9.1</modelversion>
+  <objectproperties>
+    <evrimodelversion class="string">9.1</evrimodelversion>
+    <downgradeinfo class="string">Old version model info in "content" field</downgradeinfo>
+    <parent class="numeric" size="[0,0]" />
+    <plots class="string">none</plots>
+    <display class="string">off</display>
+    <matchvars class="string">off</matchvars>
+    <matchvarsmap class="numeric" size="[0,0]" />
+    <contributions class="string">used</contributions>
+    <reducedstats class="string">off</reducedstats>
+    <calibrate class="numeric" size="[0,0]" />
+  </objectproperties>
+</data>
