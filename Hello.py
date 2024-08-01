@@ -129,10 +129,10 @@ def json_data():
     # PDS transformation
     
     # pycharm ---------------------
-    pds_model_path = 'calibration-transfer-model/py_U6_ori_pds_model.joblib'
+    # pds_model_path = 'calibration-transfer-model/py_U6_ori_pds_model.joblib'
 
     # solo ------------------------
-    # pds_model_path = 'calibration-transfer-model/pds-model-u6.xml'
+    pds_model_path = 'calibration-transfer-model/pds-model-u6.xml'
     
     absorbance_transformed = pds_transform(absorbance_df.values, pds_model_path)
     absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
