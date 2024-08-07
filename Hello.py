@@ -172,8 +172,8 @@ def json_data():
 
     absorbance_all_pp_df = absorbance_snv_df
     
-    st.write('19 preprocessed data :')
-    st.write(absorbance_all_pp_df)
+    # st.write('19 preprocessed data :')
+    # st.write(absorbance_all_pp_df)
 
     reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV.csv'
     # reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_Baseline.csv'
