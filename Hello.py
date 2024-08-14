@@ -345,15 +345,6 @@ def main():
         # predictions = predict_with_tabnet_model(model, prediction_data)
         
         predictions_value = predictions[0][0]
-
-        
-        # PREDICT ALL ROWS IN CSV ----------------------------------------------------------------------
-        rounded_predictions = np.round(predictions, 1)
-        st.write(f'Predictions for {label}:')
-        for i, prediction in enumerate(rounded_predictions):
-            sample_id = sample_ids.iloc[i]
-            st.write(f'Sample {sample_id}: {prediction[0]} g/dL')
-
         
         correlation = np.corrcoef(absorbance_all_pp_df.iloc[0], golden_values)[0, 1]
 
@@ -366,6 +357,17 @@ def main():
         total_values = absorbance_values.size
         in_range_percentage = 100 - ((count_out_of_range / total_values) * 100)
 
+
+        # PREDICT ALL ROWS IN CSV ----------------------------------------------------------------------
+        rounded_predictions = np.round(predictions, 1)
+        st.write(f'Predictions for {label}:')
+        for i, prediction in enumerate(rounded_predictions):
+            sample_id = sample_ids.iloc[i]
+            similarity_score = np.corrcoef(absorbance_all_pp_df.iloc[i], golden_values)[0, 1]
+            similarity_score = round(similarity_score, 0)  # Round similarity score to two decimal places
+            st.write(f'Sample {sample_id}: {prediction[0]} g/dL, Similarity Score: {in_range_percentage}')
+
+        
         st.markdown("""
         <style>
         .label {font-size: 20px; font-weight: bold; color: black;}
