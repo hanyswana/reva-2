@@ -122,8 +122,8 @@ def json_data():
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
     # absorbance_data = df.iloc[13]
-    # st.write('19 raw data :')
-    # st.write(absorbance_df)
+    st.write('19 raw data :')
+    st.write(absorbance_df)
 
 
     # CALIBRATION TRANSFER ------------------------------------------------------------------------------------------------------------------
@@ -173,8 +173,8 @@ def json_data():
 
     absorbance_all_pp_df = absorbance_snv_df
     
-    # st.write('19 preprocessed data :')
-    # st.write(absorbance_all_pp_df)
+    st.write('19 preprocessed data :')
+    st.write(absorbance_all_pp_df)
 
     reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV.csv'
     # reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_Baseline.csv'
@@ -332,8 +332,8 @@ def main():
         # selected_wavelengths = ['415 nm', '515 nm', '555 nm', '560 nm', '585 nm', '590 nm', '610 nm', '680 nm', '730 nm', '900 nm'] # for CSV (SNV + euc + BR) - new
         
         prediction_data = select_for_prediction(absorbance_all_pp_df, selected_wavelengths)
-        # st.write('10 selected preprocessed data :')
-        # st.write(prediction_data)
+        st.write('10 selected preprocessed data :')
+        st.write(prediction_data)
 
         # TF/TFLITE &&& TF/TFLITE/TABNET MODEL ---------------------------------------------------------------------------------
         model = load_model(model_path)
