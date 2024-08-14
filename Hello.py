@@ -370,7 +370,7 @@ def main():
             count_out_of_range = np.sum(out_of_range)
             total_values = absorbance_values.size
             in_range_percentage = 100 - ((count_out_of_range / total_values) * 100)
-            in_range_percentage = round(in_range_percentage, 2)  # Round to two decimal places
+            in_range_percentage = round(in_range_percentage, 0)  # Round to 0 decimal places
 
             st.write(f'Sample {sample_id}: {prediction[0]} g/dL, Similarity Score: {in_range_percentage}%')
 
