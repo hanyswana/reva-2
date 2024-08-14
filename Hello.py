@@ -347,9 +347,9 @@ def main():
 
         
         # PREDICT ALL ROWS IN CSV ----------------------------------------------------------------------
-        predictions = np.round(predictions, 1)
+        rounded_predictions = np.round(predictions, 1)
         st.write(f'Predictions for {label}:')
-        for i, prediction in enumerate(predictions):
+        for i, prediction in enumerate(rounded_predictions):
             st.write(f'Row {i+1}: {prediction[0]} g/dL')
 
         
