@@ -345,6 +345,10 @@ def main():
         
         predictions_value = predictions[0][0]
 
+        st.write(f'Predictions for {label}:')
+        for i, prediction in enumerate(predictions):
+            st.write(f'Row {i+2}: {prediction[0]} g/dL')
+            
         correlation = np.corrcoef(absorbance_all_pp_df.iloc[0], golden_values)[0, 1]
 
         Min = np.array(Min, dtype=float)
@@ -372,7 +376,7 @@ def main():
             
         display_value = f'<span class="value">{display_text}</span>'
 
-        st.markdown(f'<span class="label">Haemoglobin ({label}):</span><br>{display_value}</p>', unsafe_allow_html=True)
+        # st.markdown(f'<span class="label">Haemoglobin ({label}):</span><br>{display_value}</p>', unsafe_allow_html=True)
         # st.markdown(f'<span class="label">Similarity score ({label}):</span><br><span class="value">{in_range_percentage:.0f} %</span>', unsafe_allow_html=True)
         # st.markdown(f'<span class="label">Haemoglobin:</span><br>{display_value}</p>', unsafe_allow_html=True)
         # st.markdown(f'<span class="label">Similarity score:</span><br><span class="value">{in_range_percentage:.0f} %</span>', unsafe_allow_html=True)
