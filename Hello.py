@@ -318,7 +318,7 @@ def main():
         ('SNV (tf-R59)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_top_10.parquet_best_model_2024-07-12_14-12-24_R59_88%') # correct dataset
     ]
     
-    absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max = json_data()
+    absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max, sample_ids = json_data()
 
     create_csv(golden_values, Min, Max, wavelengths)
     
