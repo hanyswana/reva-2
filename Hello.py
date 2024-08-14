@@ -188,7 +188,7 @@ def json_data():
     Min = reference_df.min().values
     Max = reference_df.max().values
  
-    return absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max
+    return absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max, sample_ids
     
 
 def create_csv(golden_values, Min, Max, wavelengths):
