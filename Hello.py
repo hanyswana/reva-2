@@ -314,8 +314,8 @@ def main():
     model_paths_with_labels = [
         # ('SNV + BR (tf-R45)', 'incorrect-model-lablink/Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
         # ('SNV + BR (tf)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37')
-        ('SNV + norm euc + BR (tf-R53)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
-        # ('SNV (tf-R59)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_top_10.parquet_best_model_2024-07-12_14-12-24_R59_88%') # correct dataset
+        # ('SNV + norm euc + BR (tf-R53)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
+        ('SNV (tf-R59)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_top_10.parquet_best_model_2024-07-12_14-12-24_R59_88%') # correct dataset
     ]
     
     absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max, sample_ids = json_data()
