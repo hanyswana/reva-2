@@ -363,9 +363,16 @@ def main():
         st.write(f'Predictions for {label}:')
         for i, prediction in enumerate(rounded_predictions):
             sample_id = sample_ids.iloc[i]
-            similarity_score = np.corrcoef(absorbance_all_pp_df.iloc[i], golden_values)[0, 1]
-            similarity_score = round(similarity_score, 0)  # Round similarity score to two decimal places
-            st.write(f'Sample {sample_id}: {prediction[0]} g/dL, Similarity Score: {in_range_percentage}')
+
+            # Calculate in-range percentage as similarity score
+            absorbance_values = absorbance_all_pp_df.iloc[i].values
+            out_of_range = (absorbance_values < Min) | (absorbance_values > Max)
+            count_out_of_range = np.sum(out_of_range)
+            total_values = absorbance_values.size
+            in_range_percentage = 100 - ((count_out_of_range / total_values) * 100)
+            in_range_percentage = round(in_range_percentage, 2)  # Round to two decimal places
+
+            st.write(f'Sample {sample_id}: {prediction[0]} g/dL, Similarity Score: {in_range_percentage}%')
 
         
         st.markdown("""
