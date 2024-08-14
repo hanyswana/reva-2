@@ -119,7 +119,7 @@ def json_data():
     file_path = 'lablink-data-2024/REVA LABLINK 2024_125.csv'
     # df = pd.read_csv(file_path, usecols=range(0, 19))
     df = pd.read_csv(file_path, usecols=range(3, 22))
-    sample_ids = pd.read_csv(file_path, usecols=[1])['Sample ID']
+    sample_ids = pd.read_csv(file_path, usecols=[0])['Sample ID']
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
     # absorbance_data = df.iloc[13]
