@@ -119,6 +119,7 @@ def json_data():
     file_path = 'lablink-data-2024/REVA LABLINK 2024_125.csv'
     # df = pd.read_csv(file_path, usecols=range(0, 19))
     df = pd.read_csv(file_path, usecols=range(3, 22))
+    sample_ids = pd.read_csv(file_path, usecols=[1])['Sample ID']
     wavelengths = df.columns
     absorbance_df = df.apply(pd.to_numeric, errors='coerce')
     # absorbance_data = df.iloc[13]
@@ -350,7 +351,8 @@ def main():
         rounded_predictions = np.round(predictions, 1)
         st.write(f'Predictions for {label}:')
         for i, prediction in enumerate(rounded_predictions):
-            st.write(f'Row {i+1}: {prediction[0]} g/dL')
+            sample_id = sample_ids.iloc[i]
+            st.write(f'Sample {sample_id}: {prediction[0]} g/dL')
 
         
         correlation = np.corrcoef(absorbance_all_pp_df.iloc[0], golden_values)[0, 1]
