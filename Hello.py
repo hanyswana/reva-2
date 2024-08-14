@@ -347,7 +347,7 @@ def main():
 
         st.write(f'Predictions for {label}:')
         for i, prediction in enumerate(predictions):
-            st.write(f'Row {i+2}: {prediction[0]} g/dL')
+            st.write(f'Row {i+1}: {prediction[0]} g/dL')
             
         correlation = np.corrcoef(absorbance_all_pp_df.iloc[0], golden_values)[0, 1]
 
