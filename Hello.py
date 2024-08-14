@@ -345,11 +345,14 @@ def main():
         
         predictions_value = predictions[0][0]
 
+        
+        # PREDICT ALL ROWS IN CSV ----------------------------------------------------------------------
+        predictions = np.round(predictions, 1)
         st.write(f'Predictions for {label}:')
         for i, prediction in enumerate(predictions):
-            rounded_prediction = round(prediction[0], 1)  # Round to one decimal place
-            st.write(f'Row {i+1}: {rounded_prediction} g/dL')
-            
+            st.write(f'Row {i+1}: {prediction[0]} g/dL')
+
+        
         correlation = np.corrcoef(absorbance_all_pp_df.iloc[0], golden_values)[0, 1]
 
         Min = np.array(Min, dtype=float)
