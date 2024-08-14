@@ -327,10 +327,11 @@ def main():
     
     for label, model_path in model_paths_with_labels:
 
-        selected_wavelengths = ['_415nm', '_515nm', '_555nm', '_560nm', '_585nm', '_590nm',  '_610nm', '_680nm', '_730nm', '_900nm'] # for API (SNV) - latest new
+        # selected_wavelengths = ['_415nm', '_515nm', '_555nm', '_560nm', '_585nm', '_590nm',  '_610nm', '_680nm', '_730nm', '_900nm'] # for API (SNV) - latest new
         # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + BR) - new
         # selected_wavelengths = ['_415nm', '_515nm', '_555nm', '_560nm', '_585nm', '_590nm', '_610nm', '_680nm', '_730nm', '_900nm'] # for API (SNV + euc + BR) - new
         # selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR) - new
+        selected_wavelengths = ['Spec-1', 'Spec-4', 'Spec-5', 'Spec-6', 'Spec-7', 'Spec-8', 'Spec-9', 'Spec-12', 'Spec-14', 'Spec-18'] # for CSV (SNV) - new lablink 2024
         # selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV (SNV + BR) - new
         # selected_wavelengths = ['415 nm', '515 nm', '555 nm', '560 nm', '585 nm', '590 nm', '610 nm', '680 nm', '730 nm', '900 nm'] # for CSV (SNV + euc + BR) - new
         
