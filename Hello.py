@@ -149,20 +149,20 @@ def json_data():
     absorbance_snv = snv(absorbance_df.values)
     absorbance_snv_df = pd.DataFrame(absorbance_snv, columns=absorbance_df.columns)
     
-    # # 2. Euclidean normalization
-    # normalizer = Normalizer(norm='l2')  # Euclidean normalization
-    # absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
-    # absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
+    # 2. Euclidean normalization
+    normalizer = Normalizer(norm='l2')  # Euclidean normalization
+    absorbance_normalized_euc = normalizer.transform(absorbance_snv_df)
+    absorbance_normalized_euc_df = pd.DataFrame(absorbance_normalized_euc, columns=absorbance_df.columns)
 
     # # 3. Manhattan normalization
     # normalizer = Normalizer(norm='l1')  # Manhattan normalization
     # absorbance_normalized_manh = normalizer.transform(absorbance_snv_df)
     # absorbance_normalized_manh_df = pd.DataFrame(absorbance_normalized_manh, columns=absorbance_df.columns)
 
-    # # 4. Baseline removal
-    # baseline_remover = BaselineRemover()
-    # absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_euc_df)
-    # absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
+    # 4. Baseline removal
+    baseline_remover = BaselineRemover()
+    absorbance_baseline_removed = baseline_remover.transform(absorbance_normalized_euc_df)
+    absorbance_baseline_removed_df = pd.DataFrame(absorbance_baseline_removed, columns=absorbance_df.columns)
 
     # pds_model = joblib.load('pds_model_U11_snv_baseline.joblib')
     # with open('pds_model_U6_snv_baseline.pkl', 'rb') as f:
@@ -172,15 +172,15 @@ def json_data():
     # absorbance_transformed_df = pd.DataFrame(absorbance_transformed, columns=absorbance_df.columns)
     # absorbance_all_pp_df = absorbance_transformed_df
 
-    absorbance_all_pp_df = absorbance_snv_df
+    absorbance_all_pp_df = absorbance_baseline_removed_df
     
     st.write('19 preprocessed data :')
     st.write(absorbance_all_pp_df)
 
-    reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV.csv'
+    # reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV.csv'
     # reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_Baseline.csv'
     # reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_norm_manh_Baseline.csv'
-    # reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_norm_eucl_Baseline.csv'
+    reference_file_path = 'correct-data/corrected-lablink-128-hb_SNV_norm_eucl_Baseline.csv'
     reference_df = pd.read_csv(reference_file_path, usecols=range(3, 22))
     reference_df = reference_df.apply(pd.to_numeric, errors='coerce')
     
@@ -314,8 +314,8 @@ def main():
     model_paths_with_labels = [
         # ('SNV + BR (tf-R45)', 'incorrect-model-lablink/Lablink_134_SNV_Baseline_pls_top_10.parquet_best_model_2024-05-09_20-22-34_R45_77%'),
         # ('SNV + BR (tf)', 'tabnet-model/model_snv_br_2024-06-06_14-42-37')
-        # ('SNV + norm euc + BR (tf-R53)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
-        ('SNV (tf-R59)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_top_10.parquet_best_model_2024-07-12_14-12-24_R59_88%') # correct dataset
+        ('SNV + norm euc + BR (tf-R53)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_norm_eucl_Baseline_top_10.parquet_best_model_2024-07-09_22-18-50_R53_88%') # correct dataset
+        # ('SNV (tf-R59)', 'corrected-model-lablink-128/corrected-lablink-128-hb_SNV_top_10.parquet_best_model_2024-07-12_14-12-24_R59_88%') # correct dataset
     ]
     
     absorbance_df, absorbance_all_pp_df, wavelengths, golden_values, Min, Max, sample_ids = json_data()
@@ -328,7 +328,10 @@ def main():
         # selected_wavelengths = ['_415nm', '_445nm', '_515nm', '_555nm', '_560nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + BR) - new
         # selected_wavelengths = ['_415nm', '_515nm', '_555nm', '_560nm', '_585nm', '_590nm', '_610nm', '_680nm', '_730nm', '_900nm'] # for API (SNV + euc + BR) - new
         # selected_wavelengths = ['_445nm', '_515nm', '_555nm', '_560nm', '_585nm', '_610nm', '_680nm', '_730nm', '_900nm', '_940nm'] # for API (SNV + manh + BR) - new
-        selected_wavelengths = ['Spec-1', 'Spec-4', 'Spec-5', 'Spec-6', 'Spec-7', 'Spec-8', 'Spec-9', 'Spec-12', 'Spec-14', 'Spec-18'] # for CSV (SNV) - new lablink 2024
+        
+        # selected_wavelengths = ['Spec-1', 'Spec-4', 'Spec-5', 'Spec-6', 'Spec-7', 'Spec-8', 'Spec-9', 'Spec-12', 'Spec-14', 'Spec-18'] # for CSV (SNV) - new lablink 2024
+        selected_wavelengths = ['Spec-1', 'Spec-4', 'Spec-5', 'Spec-6', 'Spec-7', 'Spec-8', 'Spec-9', 'Spec-12', 'Spec-14', 'Spec-18'] # for CSV (SNV + euc + BR) - new lablink 2024
+        
         # selected_wavelengths = ['415 nm', '445 nm', '515 nm', '555 nm', '560 nm', '610 nm', '680 nm', '730 nm', '900 nm', '940 nm'] # for CSV (SNV + BR) - new
         # selected_wavelengths = ['415 nm', '515 nm', '555 nm', '560 nm', '585 nm', '590 nm', '610 nm', '680 nm', '730 nm', '900 nm'] # for CSV (SNV + euc + BR) - new
         
